@@ -23,4 +23,9 @@ public class ClothingItem : MonoBehaviour
     {
         _spriteRenderer.sprite = sprite;
     }
+
+    public void AddRenderPriority(int amount)
+    {
+        _spriteRenderer.sortingOrder += amount;
+    } 
 }

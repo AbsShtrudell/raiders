@@ -41,4 +41,12 @@ public class Soldier : MonoBehaviour
         }
     }
 
+    public void AddRenderPriority(int amount)
+    {
+        foreach (var item in _items)
+        {
+            item.Value.AddRenderPriority(amount * _items.Count);
+        }
+    }
+
 }

@@ -6,32 +6,56 @@ public class Squad : MonoBehaviour
 {
     [SerializeField] private GameObject soldierPrefab;
     [SerializeField] private Side _side;
+    [SerializeField, Min(1)] private int soldiersAmount = 3;
+    [SerializeField] private PathCreation.PathCreator pathCreator;
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float distanceFromPrimary = 1f;
     [Zenject.Inject] private Zenject.DiContainer container;
-    private Soldier squadLeader;
     private Soldier[] soldiers;
+    private PrimaryFollowerBehavior primaryFollower = null;
+    private SecondaryFollowerBehavior[] secondaryFollowers;
 
     private void Awake()
     {
-        soldiers = new Soldier[2];
+        soldiers = new Soldier[soldiersAmount];
+        secondaryFollowers = new SecondaryFollowerBehavior[soldiersAmount - 1];
     }
 
     private void Start()
     {
-        squadLeader = container.InstantiatePrefab(soldierPrefab, transform.position, transform.rotation, transform).GetComponent<Soldier>();
-        squadLeader.transform.localScale = Vector3.one;
-        squadLeader.side = _side;
-        squadLeader.ChangeItems();
+        InitializeSoldier(0);
+        var f = soldiers[0].GetComponent<TestPathFollower>();
+        f.MakePrimary(pathCreator, 5f, 0f, PathCreation.EndOfPathInstruction.Loop);
+        primaryFollower = f.behavior as PrimaryFollowerBehavior;
 
-        for (int i = 0; i < soldiers.Length; i++)
+        for (int i = 1; i < soldiers.Length; i++)
         {
-            var pos = transform.position;
-            pos.x -= (i + 1) * transform.localScale.x;
+            InitializeSoldier(i);
+            f = soldiers[i].GetComponent<TestPathFollower>();
+            f.MakeSecondary(pathCreator, primaryFollower, 0f, PathCreation.EndOfPathInstruction.Loop, i * distanceFromPrimary);
+            secondaryFollowers[i - 1] = f.behavior as SecondaryFollowerBehavior;
+        }
+    }
 
-            soldiers[i] = container.InstantiatePrefab(soldierPrefab, pos, transform.rotation, null).GetComponent<Soldier>();
-            soldiers[i].transform.localScale = transform.localScale;
-            soldiers[i].side = _side;
-            soldiers[i].ChangeItems();
+    private void InitializeSoldier(int i)
+    {
+        soldiers[i] = container.InstantiatePrefab(soldierPrefab, transform.position, transform.rotation, transform).GetComponent<Soldier>();
+        soldiers[i].transform.localScale = Vector3.one;
+        soldiers[i].side = _side;
+        soldiers[i].ChangeItems();
+        soldiers[i].AddRenderPriority(soldiers.Length - i);
+    }
 
+    private void OnValidate()
+    {
+        if (primaryFollower == null)
+            return;
+
+        primaryFollower.SetSpeed(speed);
+
+        for (int i = 0; i < secondaryFollowers.Length; i++)
+        {
+            secondaryFollowers[i].SetDistance(distanceFromPrimary * (i + 1));
         }
     }
 }
