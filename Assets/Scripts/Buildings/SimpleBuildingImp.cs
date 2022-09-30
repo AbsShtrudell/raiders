@@ -57,7 +57,7 @@ public class SimpleBuildingImp : IBuildingImp
         }
     }
 
-    public void Attackers()
+    public void GotAttacked()
     {
         if (_slotList.ExtraSlotsCount > 0)
         {
@@ -68,4 +68,6 @@ public class SimpleBuildingImp : IBuildingImp
             _slotList.BlockSlot();
         }
     }
+
+    public class Factory : Zenject.PlaceholderFactory<BuildingData, IBuildingImp> { }
 }

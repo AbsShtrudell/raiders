@@ -1,12 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
-
-public enum BuildingType
-{
-    Simple, Defensive, Economic, Army
-}
+using Zenject;
 
 public class Building : MonoBehaviour
 {
@@ -18,8 +12,20 @@ public class Building : MonoBehaviour
     private MeshFilter _meshFilter;
     private Collider _collider;
 
+    [Inject]
+    private IBuildingImp _buildingImp;
+
+    public int Team
+    { get { return _team; } }
+
     public Action<Building> OnSelected;
     public Action<Building> OnDeselected;
+
+    [Inject]
+    public void Construct(IBuildingImp buildingImp)
+    {
+        this._buildingImp = buildingImp;
+    }
 
     private void Awake()
     {
@@ -43,6 +49,7 @@ public class Building : MonoBehaviour
 
     private void Update()
     {
+        _buildingImp.Update();
     }
 
     public void SquadEnter(int team, TroopsType type)
@@ -54,6 +61,44 @@ public class Building : MonoBehaviour
         else
         {
             //ally interaction
+        }
+    }
+
+    public void Select()
+    {
+        //logic
+        
+        OnSelected?.Invoke(this);
+    }
+
+    public void Deselect()
+    {
+        //logic
+
+        OnDeselected?.Invoke(this);
+    }
+
+    public void SendTroops(Building target)
+    {
+        //logic
+    }
+
+    public class Factory : IFactory<Building>
+    {
+        private DiContainer _container;
+        private IBuildingImp _buildingImp;
+
+        public Factory(DiContainer container, IBuildingImp imp)
+        {
+            _container = container;
+            _buildingImp = imp;
+        }
+
+        public Building Create()
+        {
+            Building building = _container.Instantiate<Building>();
+            building._buildingImp = this._buildingImp;
+            return building;
         }
     }
 }

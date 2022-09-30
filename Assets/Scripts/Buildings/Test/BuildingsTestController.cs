@@ -9,8 +9,8 @@ public class TestController : MonoBehaviour
     [SerializeField] private GameObject _extrSlotSliderRef;
     [SerializeField] private Transform _slotsHolder;
     private SimpleBuildingImp _buildingImp;
-    private List<Slot_Slider> _defaultSlotSliders = new List<Slot_Slider>();
-    private List<Slot_Slider> _extraSlotSliders = new List<Slot_Slider>();
+    private List<SlotSliderTest> _defaultSlotSliders = new List<SlotSliderTest>();
+    private List<SlotSliderTest> _extraSlotSliders = new List<SlotSliderTest>();
 
     private void Awake()
     {
@@ -61,12 +61,12 @@ public class TestController : MonoBehaviour
         }
     }
 
-    private void AddSlotSlider(List<Slot_Slider> list, GameObject slot)
+    private void AddSlotSlider(List<SlotSliderTest> list, GameObject slot)
     {
-        list.Add(GameObject.Instantiate(slot, _slotsHolder).GetComponent<Slot_Slider>());
+        list.Add(GameObject.Instantiate(slot, _slotsHolder).GetComponent<SlotSliderTest>());
     }
 
-    private void RemoveSlotSlider(List<Slot_Slider> list)
+    private void RemoveSlotSlider(List<SlotSliderTest> list)
     {
         var slot = list[list.Count - 1];
         list.Remove(slot);
@@ -80,7 +80,7 @@ public class TestController : MonoBehaviour
 
     public void Attack()
     {
-        _buildingImp.Attackers();
+        _buildingImp.GotAttacked();
     }
 
     public void Reinforcement()
