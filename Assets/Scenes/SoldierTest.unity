@@ -930,7 +930,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soldierPrefab: {fileID: 4364281762661420893, guid: a678b429c9bf3f2409207fefe9ec0463, type: 3}
-  _side: 1
+  _side: 0
   soldiersAmount: 16
   pathCreator: {fileID: 288072614}
   speed: 5

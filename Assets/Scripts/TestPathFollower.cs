@@ -98,13 +98,15 @@ public class TestPathFollower : MonoBehaviour
         _behavior?.Move();
     }
     
-    public void MakePrimary(PathCreator path, float speed, float distanceTravelled, EndOfPathInstruction endOfPathInstruction)
+    public PrimaryFollowerBehavior MakePrimary(PathCreator path, float speed, float distanceTravelled, EndOfPathInstruction endOfPathInstruction)
     {
         _behavior = new PrimaryFollowerBehavior(path, transform, speed, distanceTravelled, endOfPathInstruction);
+        return behavior as PrimaryFollowerBehavior;
     }
 
-    public void MakeSecondary(PathCreator path, PrimaryFollowerBehavior primaryFollower, float distanceTravelled, EndOfPathInstruction endOfPathInstruction, float distance)
+    public SecondaryFollowerBehavior MakeSecondary(PathCreator path, PrimaryFollowerBehavior primaryFollower, float distanceTravelled, EndOfPathInstruction endOfPathInstruction, float distance)
     {
         _behavior = new SecondaryFollowerBehavior(path, transform, distanceTravelled, endOfPathInstruction, primaryFollower, distance);
+        return behavior as SecondaryFollowerBehavior;
     }
 }

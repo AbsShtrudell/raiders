@@ -25,15 +25,14 @@ public class Squad : MonoBehaviour
     {
         InitializeSoldier(0);
         var f = soldiers[0].GetComponent<TestPathFollower>();
-        f.MakePrimary(pathCreator, 5f, 0f, PathCreation.EndOfPathInstruction.Loop);
-        primaryFollower = f.behavior as PrimaryFollowerBehavior;
+        primaryFollower = f.MakePrimary(pathCreator, 5f, 0f, PathCreation.EndOfPathInstruction.Loop);
 
         for (int i = 1; i < soldiers.Length; i++)
         {
             InitializeSoldier(i);
             f = soldiers[i].GetComponent<TestPathFollower>();
-            f.MakeSecondary(pathCreator, primaryFollower, 0f, PathCreation.EndOfPathInstruction.Loop, i * distanceFromPrimary);
-            secondaryFollowers[i - 1] = f.behavior as SecondaryFollowerBehavior;
+            secondaryFollowers[i - 1] =
+                f.MakeSecondary(pathCreator, primaryFollower, 0f, PathCreation.EndOfPathInstruction.Loop, i * distanceFromPrimary);
         }
     }
 

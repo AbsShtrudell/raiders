@@ -12,7 +12,7 @@ public class Soldier : MonoBehaviour
     [SerializeField] private Side _side;
     [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> arsenal;
     private Dictionary<ClothingItem.Type, ClothingItem> _items;
-
+    
     public Side side
     {
         get => _side;
