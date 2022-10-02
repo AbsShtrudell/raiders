@@ -17,5 +17,6 @@ MonoBehaviour:
   _income: 0
   _defenseMultyplier: 0
   _troopsType: 0
-  _buildingType: 0
   _mesh: {fileID: 0}
+  _previous: {fileID: 0}
+  _upgrade: {fileID: 0}

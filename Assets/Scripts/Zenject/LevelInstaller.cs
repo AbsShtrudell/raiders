@@ -3,32 +3,29 @@ using Zenject;
 
 public class LevelInstaller : MonoInstaller
 {
-    [SerializeField] private SideBuildings vikingBuildings;
-    [SerializeField] private SideBuildings englishBuildings;
-    [SerializeField] private SideBuildings rebelBuildings;
-
+    [SerializeField] private SideBuildingsData vikingBuildings;
+    [SerializeField] private SideBuildingsData englishBuildings;
+    [SerializeField] private SideBuildingsData rebelBuildings;
     public override void InstallBindings()
     {
         BindSide(rebelBuildings, Side.Rebels);
         BindSide(englishBuildings, Side.English);
         BindSide(vikingBuildings, Side.Vikings);
+
+        Container.BindInterfacesAndSelfTo<BuildingImpCreator>().AsSingle();
     }
 
-    public void BindSide(SideBuildings buildings, Side side)
+    public void BindSide(SideBuildingsData buildings, Side side)
     {
-        Building.Factory simple =    new Building.Factory(Container, new SimpleBuildingImp(buildings.simpleBuilding));
-        Building.Factory defensive = new Building.Factory(Container, new SimpleBuildingImp(buildings.defensiveBuilding));
-        Building.Factory economics = new Building.Factory(Container, new SimpleBuildingImp(buildings.economicsBuilding));
-        Building.Factory army =      new Building.Factory(Container, new SimpleBuildingImp(buildings.economicsBuilding));
-        Container.Bind<SideFactory>().WithId(side).FromInstance(new SideFactory(simple, defensive, economics, army)).AsSingle();
+        Container.Bind<SideFactory>().WithId(side).FromInstance(new SideFactory(buildings));
     }
+}
 
-    public struct SideBuildings
-    {
-        //to-do add impl type
-        public BuildingData simpleBuilding;
-        public BuildingData defensiveBuilding;
-        public BuildingData economicsBuilding;
-        public BuildingData armyBuilding;
-    }
+[System.Serializable]
+public struct SideBuildingsData
+{
+    public BuildingData simpleBuilding;
+    public BuildingData defensiveBuilding;
+    public BuildingData economicsBuilding;
+    public BuildingData armyBuilding;
 }

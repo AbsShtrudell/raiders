@@ -11,6 +11,7 @@ namespace Graphs
         public Path.IPathAlgorithm<T> pathAlgorithm
         { get; private set; }
 
+        [SerializeField]
         private List<Node<T>> _nodes = new List<Node<T>>();
         public List<Node<T>> Nodes
         { get { return _nodes; } }
@@ -19,7 +20,7 @@ namespace Graphs
 
         public void AddNode(T value)
         {
-            _nodes.Add(new Node<T>(value));
+            _nodes.Add(new Node<T>(value, value.GetHashCode()));
         }
 
         public bool RemoveNode(T value)
@@ -36,7 +37,10 @@ namespace Graphs
             }
             if (buf == null) return false;
 
-            foreach (var node in buf.Adjacents) node.Adjacents.Remove(buf);
+            foreach (var id in buf.Adjacents)
+            {
+                //node.Adjacents.Remove(buf);
+            }
 
             return true;
         }

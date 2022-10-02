@@ -4,22 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SlotSliderTest : MonoBehaviour
+namespace Test.BuildingLogic
 {
-    [SerializeField] private TextMeshProUGUI _text;
-    [SerializeField] private Slider _slider;
-
-    public void SetValue(float value)
+    public class SlotSliderTest : MonoBehaviour
     {
-        _slider.value = value;
-        _text.text = value.ToString();
-    }
+        [SerializeField] private TextMeshProUGUI _text;
+        [SerializeField] private Slider _slider;
 
-    public void SetBlockState(bool value)
-    {
-        if(value)
-            _text.color = Color.red;
-        else
-            _text.color = Color.white;
+        public void SetValue(float value)
+        {
+            _slider.value = value;
+            _text.text = value.ToString();
+        }
+
+        public void SetBlockState(bool value)
+        {
+            if (value)
+                _text.color = Color.red;
+            else
+                _text.color = Color.white;
+        }
     }
 }
