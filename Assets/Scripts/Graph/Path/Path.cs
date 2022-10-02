@@ -9,6 +9,6 @@ namespace Graphs.Path
         public List<Node<T>> nodes
         { get; private set; }
 
-        Path(List<Node<T>> nodes) => this.nodes = nodes;
+        public Path(List<Node<T>> nodes) => this.nodes = nodes;
     }
 }

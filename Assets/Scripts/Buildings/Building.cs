@@ -49,7 +49,7 @@ public class Building : MonoBehaviour
 
     private void Update()
     {
-        _buildingImp.Update();
+        _buildingImp?.Update();
     }
 
     public void SquadEnter(int team, TroopsType type)
@@ -100,5 +100,10 @@ public class Building : MonoBehaviour
             building._buildingImp = this._buildingImp;
             return building;
         }
+    }
+
+    public void SetTeam(int t)
+    {
+        _team = t;
     }
 }
