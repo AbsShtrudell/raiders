@@ -2,11 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Side
-{
-    Viking, English
-}
-
 public class Soldier : MonoBehaviour
 {
     [SerializeField] private Side _side;
