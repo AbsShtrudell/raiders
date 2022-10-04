@@ -6,6 +6,6 @@ namespace Graphs.Path
 {
     public interface IPathAlgorithm<T>
     {
-        public Path<T> FindPath(Node<T> sourceNode, Node<T> targetNode);
+        public Path<T> FindPath(Node<T> sourceNode, Node<T> targetNode, Graph<Building> graph);
     }
 }

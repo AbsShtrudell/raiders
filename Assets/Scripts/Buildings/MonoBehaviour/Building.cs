@@ -12,7 +12,8 @@ public class Building : MonoBehaviour
     [SerializeField] 
     private BuildingType _type = BuildingType.Simple;
 
-    public Side Side => _side;
+    public Side Side
+    { get { return _side; } set { _side = value; } }
     public BuildingType Type => _type;
 
     [SerializeField]
@@ -22,9 +23,6 @@ public class Building : MonoBehaviour
     private Collider _collider;
 
     private BuildingImp _buildingImp;
-
-    public int Team
-    { get { return 0; } }
 
     public Action<Building> OnSelected;
     public Action<Building> OnDeselected;

@@ -49,5 +49,15 @@ namespace Graphs
         {
             return node1.Bind(node2);
         }
+
+        public Node<T> Find(int id)
+        {
+            foreach(var node in Nodes)
+            {
+                if (node.Index == id)
+                    return node;
+            }
+            return null;
+        }
     }
 }
