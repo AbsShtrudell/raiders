@@ -1,20 +1,22 @@
 using UnityEngine;
 using PathCreation;
 using PathCreation.Examples;
+using Dreamteck.Splines;
 
-[RequireComponent(typeof(PathCreator), typeof(RoadMeshCreator))]
+[ExecuteAlways]
+[RequireComponent(typeof(SplineComputer), typeof(PathGenerator))]
 public class Road : MonoBehaviour
 {
     [SerializeField, HideInInspector]
     private Building[] _ends;
-    private PathCreator _pathCreator;
+    private SplineComputer _splineComputer;
 
     public Building[] Ends => _ends;
-    public PathCreator PathCreator => _pathCreator;
+    public SplineComputer PathCreator => _splineComputer;
 
     private void Awake()
     {
-        _pathCreator = GetComponent<PathCreator>();
+        _splineComputer = GetComponent<SplineComputer>();
     }
 
     private void Start()
@@ -26,11 +28,14 @@ public class Road : MonoBehaviour
     {
         if (_ends == null || _ends.Length != 2) return;
 
-        Transform[] points = { _ends[0].transform, _ends[1].transform };
+        SplinePoint[] points = new SplinePoint[2];
 
-        BezierPath bezierPath = new BezierPath(points, false, PathSpace.xyz);
-        _pathCreator.bezierPath = bezierPath;
-        _pathCreator.bezierPath.Space = PathSpace.xz;
+        for(int i = 0; i < 2; i++)
+        {
+            points[i] = new SplinePoint(_ends[i].transform.position);
+        }
+
+        _splineComputer.SetPoints(points);
     }
 
     public class Factory : Zenject.IFactory<Building, Building, Road>
