@@ -12,6 +12,9 @@ public class SoilderItemsInstaller : MonoInstaller
     {
         if (arsenal == null)
         {
+            vikingItems.Awake();
+            englishItems.Awake();
+
             arsenal = new Dictionary<Side, SoldierItems>();
             arsenal.Add(Side.Vikings, vikingItems);
             arsenal.Add(Side.English, englishItems);

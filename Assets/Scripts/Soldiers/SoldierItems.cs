@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoldierItems : MonoBehaviour
+[CreateAssetMenu(menuName = "ScriptableObjects/SoldierItems", fileName = "New Soldier Items")]
+public class SoldierItems : ScriptableObject
 {
     [SerializeField] private Sprite[] _bodies;
     [SerializeField] private Sprite[] _helmets;
@@ -12,7 +13,7 @@ public class SoldierItems : MonoBehaviour
     
     public Dictionary<ClothingItem.Type, Sprite[]> items { get; private set; }
 
-    private void Awake()
+    public void Awake()
     {
         items = new Dictionary<ClothingItem.Type, Sprite[]>();
 
