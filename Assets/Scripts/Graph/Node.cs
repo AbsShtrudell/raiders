@@ -11,7 +11,7 @@ namespace Graphs
         private int _index;
         [SerializeField]
         private List<int> _adjacents = new List<int>();
-        [SerializeReference]
+        [SerializeField]
         private T _value;
 
         public T Value => _value;

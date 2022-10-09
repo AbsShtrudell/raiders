@@ -7,9 +7,7 @@ namespace LevelEditor
 {
     public class Resizer : Panel
     {
-        protected Panel _owner;
         protected float _width = 3;
-
 
         public Resizer(Rect rect, GUIStyle style, Panel owner) : base(new Rect(), style)
         {
@@ -18,11 +16,15 @@ namespace LevelEditor
 
         public override void Draw()
         {
-            rect = new Rect(_owner.rect.position.x + _owner.rect.width, _owner.rect.position.y, _width, _owner.rect.height);
-            GUILayout.BeginArea(rect, _style);
+            Rect = new Rect(_owner.GetRect().position.x + _owner.GetRect().width, _owner.GetRect().position.y, _width, _owner.GetRect().height);
+            GUILayout.BeginArea(Rect, _style);
             GUILayout.EndArea();
 
-            EditorGUIUtility.AddCursorRect(rect, MouseCursor.ResizeHorizontal);
+            EditorGUIUtility.AddCursorRect(Rect, MouseCursor.ResizeHorizontal);
+        }
+
+        public override void ProcessEvents(Event e)
+        {
         }
     }
 }

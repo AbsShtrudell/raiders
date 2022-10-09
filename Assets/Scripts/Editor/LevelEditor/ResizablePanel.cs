@@ -15,13 +15,27 @@ namespace LevelEditor
 
         public override void Draw()
         {
-            GUILayout.BeginArea(rect, _style);
+            Rect = new Rect(Rect.x, Rect.y, Rect.width, _owner.GetRect().height);
+
+            GUILayout.BeginArea(Rect, _style);
             GUILayout.BeginVertical();
+
+            foreach(var child in _children)
+            {
+                child.Draw();
+            }
 
             GUILayout.EndVertical();
             GUILayout.EndArea();
 
             resizer.Draw();
+        }
+
+        public override void ProcessEvents(Event e)
+        {
+            foreach(var child in _children)
+                child.ProcessEvents(e);
+            resizer.ProcessEvents(e);
         }
     }
 }

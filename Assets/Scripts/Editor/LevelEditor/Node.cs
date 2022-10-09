@@ -6,9 +6,8 @@ using System;
 
 namespace LevelEditor
 {
-    public class Node
+    public class Node : Panel
     {
-        private Rect _rect;
         private bool _isDragged;
         private bool _isSelected;
 
@@ -16,39 +15,41 @@ namespace LevelEditor
         private GUIStyle defaultNodeStyle;
         private GUIStyle selectedNodeStyle;
 
-        public Rect Rect
-        { get { return _rect; } }
+        public NodeData data;
 
         public event Action<Node> OnRemoveNode;
         public event Action<Node> OnBindNode;
         public event Action<Node> OnClick;
+        public event Action<Node> OnSelected;
+        public event Action<Node> OnDeselected;
 
-        public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle)
+        public Node(Rect rect, GUIStyle nodeStyle, GUIStyle selectedStyle) :base(rect, nodeStyle)
         {
-            _rect = new Rect(position.x, position.y, width, height);
             style = nodeStyle;
             defaultNodeStyle = nodeStyle;
             selectedNodeStyle = selectedStyle;
+            data = new NodeData(rect.position);
         }
 
         public void Drag(Vector2 delta)
         {
             _rect.position += delta;
+            data.position = Rect.position;
         }
 
-        public void Draw()
+        public override void Draw()
         {
-            GUI.Box(_rect, "", style);
+            GUI.Box(Rect, "", style);
         }
 
-        public bool ProcessEvents(Event e)
+        public override void ProcessEvents(Event e)
         {
             switch (e.type)
             {
                 case EventType.MouseDown:
                     if (e.button == 0)
                     {
-                        if (_rect.Contains(e.mousePosition))
+                        if (IsContains(e.mousePosition))
                         {
                             OnClick?.Invoke(this);
                             _isDragged = true;
@@ -59,9 +60,8 @@ namespace LevelEditor
                             Deselect();
                         }
                     }
-                    if (e.button == 1 && _rect.Contains(e.mousePosition))
+                    if (e.button == 1 && IsContains(e.mousePosition))
                     {
-                        Select();
                         ProcessContextMenu();
                         e.Use();
                     }
@@ -76,12 +76,9 @@ namespace LevelEditor
                     {
                         Drag(e.delta);
                         e.Use();
-                        return true;
                     }
                     break;
             }
-
-            return false;
         }
 
         private void Select()
@@ -89,6 +86,7 @@ namespace LevelEditor
             GUI.changed = true;
             _isSelected = true;
             style = selectedNodeStyle;
+            OnSelected?.Invoke(this);
         }
 
         private void Deselect()
@@ -96,6 +94,7 @@ namespace LevelEditor
             _isSelected = false;
             GUI.changed = true;
             style = defaultNodeStyle;
+            OnDeselected?.Invoke(this);
         }
 
         private void ProcessContextMenu()

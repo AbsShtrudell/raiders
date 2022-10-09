@@ -1,20 +1,22 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
 namespace LevelEditor
 {
-    public abstract class Panel
+    public abstract class Panel : IWindowElement
     {
-        public Rect rect
-        { get; protected set; }
+        protected Rect _rect;
+        public Rect Rect
+        { get { return _rect; } protected set { _rect = value; } }
 
         protected GUIStyle _style;
-        protected float _resizerWidtht = 5f;
+        protected IWindowElement _owner;
+        protected List<IWindowElement> _children = new List<IWindowElement>();
 
         public Panel(Rect rect, GUIStyle style)
         {
-            this.rect = rect;
+            this.Rect = rect;
             this._style = style;
         }
 
@@ -22,7 +24,37 @@ namespace LevelEditor
 
         public bool IsContains(Vector2 position)
         {
-            return rect.Contains(position);
+            return Rect.Contains(position);
+        }
+
+        public void SetOwner(IWindowElement owner)
+        {
+            _owner?.GetChildren().Remove(this);
+
+            _owner = owner;
+            _owner?.AddChild(this);
+            
+        }
+
+        public Rect GetRect()
+        {
+            return Rect;
+        }
+
+        public List<IWindowElement> GetChildren()
+        {
+            return _children;
+        }
+
+        public abstract void ProcessEvents(Event e);
+
+        public void AddChild(IWindowElement child)
+        {
+            if (child == null || _children.Contains(child)) return;
+
+            _children.Add(child);
+
+            child.SetOwner(this);
         }
     }
 }
