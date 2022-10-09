@@ -26,6 +26,7 @@ public class Building : MonoBehaviour
 
     public Action<Building> OnSelected;
     public Action<Building> OnDeselected;
+    public Action OnDisabled;
 
     private void Awake()
     {
@@ -43,7 +44,7 @@ public class Building : MonoBehaviour
 
     private void OnDisable()
     {
-        
+        OnDisabled?.Invoke();
     }
 
     private void Start()

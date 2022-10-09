@@ -50,6 +50,11 @@ namespace Graphs
             return node1.Bind(node2);
         }
 
+        public bool AddEdge(int index1, int index2)
+        {
+            return _nodes[index1].Bind(_nodes[index2]);
+        }
+
         public Node<T> Find(int id)
         {
             foreach(var node in Nodes)

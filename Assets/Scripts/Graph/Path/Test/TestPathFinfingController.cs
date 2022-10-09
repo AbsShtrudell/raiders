@@ -6,7 +6,7 @@ namespace Test.PathFinding
 {
     public class TestPathFinfingController : MonoBehaviour
     {
-        private Graph<Building> _graph;
+        [SerializeField] private Graph<Building> _graph;
 
         private void Start()
         {
