@@ -21,8 +21,11 @@ public class BuildingsGraphEditor : MonoBehaviour
 
     [SerializeField]
     private Graph<Building> _buildingsGraph;
+    [SerializeField]
+    private List<Road> _roads;
 
     public Graph<Building> graph => _buildingsGraph;
+    public List<Road> roads => _roads;
 
     private void OnEnable()
     {
@@ -50,9 +53,42 @@ public class BuildingsGraphEditor : MonoBehaviour
             return;
 
         var b = _buildingsGraph.Nodes[index].Value;
+        Undo.RecordObject(this, "Remove Building");
         _buildingsGraph.RemoveNode(b);
-        if (b.OnDisabled != null) b.OnDisabled();
-        DestroyImmediate(b.gameObject);
+
+        foreach (var road in b.roads)
+        {
+            roads.Remove(road);
+            Undo.DestroyObjectImmediate(road.gameObject);
+        }
+        Undo.DestroyObjectImmediate(b.gameObject);
+        Undo.SetCurrentGroupName("Remove Building");
+
+    }
+
+    public void Update()
+    {
+        var indices = new List<int>();
+
+        foreach (var b in _buildingsGraph.Nodes)
+        {
+            if (b.Value == null)
+            {
+                indices.Add(b.Index);
+            }
+        }
+
+        if (indices.Count != 0 && Undo.GetCurrentGroupName() == "Delete Game Objects")
+        {
+            Undo.RecordObject(this, "Remove buildings");
+
+            foreach (var i in indices)
+            {
+                _buildingsGraph.RemoveNode(i);
+            }
+
+            Undo.SetCurrentGroupName("Remove buildings");
+        }
     }
 
     public void BindRandomBuildings()
@@ -65,9 +101,8 @@ public class BuildingsGraphEditor : MonoBehaviour
         if (_buildingsGraph.AddEdge(b1, b2))
         {
             var road = _roadFactory.Create(b1, b2);
+            _roads.Add(road);
 
-            b1.Value.OnDisabled += road.DestroySelf;
-            b2.Value.OnDisabled += road.DestroySelf;
         }
     }
 
@@ -78,19 +113,43 @@ public class BuildingsGraphEditor : MonoBehaviour
 
         if (bind)
         {
-            if (_buildingsGraph.AddEdge(b1, b2))
+            if (b1.Bind(b2))
             {
                 var road = _roadFactory.Create(b1, b2);
 
-                b1.Value.OnDisabled += road.DestroySelf;
-                b2.Value.OnDisabled += road.DestroySelf;
-                b1.onUnbind += road.DestroySelfOnUnbind;
-                b2.onUnbind += road.DestroySelfOnUnbind;
+                Undo.RegisterCreatedObjectUndo(road.gameObject, "road");
+
+                _roads.Add(road);
+
+                Undo.RecordObject(b1.Value, "b1");
+                b1.Value.roads.Add(road);
+                Undo.RecordObject(b2.Value, "b2");
+                b2.Value.roads.Add(road);
+
             }
         }
         else
         {
-            b1.Unbind(b2);
+
+            if (b1.Unbind(b2))
+            {
+                foreach (var road in b1.Value.roads)
+                {
+                    if (road.Ends[0].Index == b2.Index || road.Ends[1].Index == b2.Index)
+                    {
+                        roads.Remove(road);
+                        Undo.RecordObject(b1.Value, "b1");
+                        b1.Value.roads.Remove(road);
+                        Undo.RecordObject(b2.Value, "b2");
+                        b2.Value.roads.Remove(road);
+                        Undo.DestroyObjectImmediate(road.gameObject);
+
+                        break;
+                    }
+                }
+
+            }
+
         }
     }
 }

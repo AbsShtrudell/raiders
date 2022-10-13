@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using Zenject;
+using System.Collections.Generic;
 
 public class Building : MonoBehaviour
 {
@@ -21,6 +22,10 @@ public class Building : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private MeshFilter _meshFilter;
     private Collider _collider;
+
+    [SerializeField]
+    private List<Road> _roads;
+    public List<Road> roads => _roads;
 
     private BuildingImp _buildingImp;
 

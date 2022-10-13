@@ -19,6 +19,31 @@ public class BuildingsGraphEditorInspector : Editor
         editor = (BuildingsGraphEditor)target;
         CreateBindMatrix();
         InitializeBindMatrix();
+        
+        // PIZDETS
+        //var list = Undo.undoRedoPerformed.GetInvocationList();
+        //for (int i = 0; i < list.Length; i++)
+        //{
+        //    if (list[i].Method.Equals(Undo.UndoRedoCallback.CreateDelegate(typeof(Undo.UndoRedoCallback), this, typeof(BuildingsGraphEditorInspector).GetMethod("ayaya", BindingFlags.Instance | BindingFlags.NonPublic)).Method))
+        //    {
+        //        list[i] = null;
+        //        break;
+        //    }
+        //}
+
+        Undo.undoRedoPerformed += ayaya;
+    }
+
+    private void OnDisable()
+    {
+        Undo.undoRedoPerformed -= ayaya;
+    }
+
+    private void ayaya()
+    {
+        CreateBindMatrix();
+        InitializeBindMatrix();
+
     }
 
     private void CreateBindMatrix()
@@ -63,8 +88,10 @@ public class BuildingsGraphEditorInspector : Editor
         if (GUILayout.Button("-", GUILayout.Width(matrixElementWidth)))
         {
             editor.RemoveBuilding(editor.graph.Nodes.Count - 1);
+
             CreateBindMatrix();
             InitializeBindMatrix();
+
         }
         EditorGUILayout.EndHorizontal();
 
@@ -76,7 +103,7 @@ public class BuildingsGraphEditorInspector : Editor
             for (int j = 0; j < nodeCount; j++)
             {
                 if (i == j) 
-                    EditorGUILayout.LabelField("", GUILayout.Width(matrixElementWidth));
+                    EditorGUILayout.LabelField("", GUILayout.Width(matrixElementWidth));    
                 else
                 {
                     bindMatrix[j + i * nodeCount] = EditorGUILayout.Toggle(bindMatrix[j + i * nodeCount], GUILayout.Width(matrixElementWidth));
@@ -91,6 +118,7 @@ public class BuildingsGraphEditorInspector : Editor
 
         if (GUILayout.Button("Bind"))
         {
+            Undo.RecordObject(editor, "ed");
             for (int i = 0; i < nodeCount; i++)
             {
                 for (int j = i + 1; j < nodeCount; j++)
@@ -98,6 +126,7 @@ public class BuildingsGraphEditorInspector : Editor
                     editor.ChangeBindStatus(bindMatrix[j + i * nodeCount], i, j);
                 }
             }
+            Undo.SetCurrentGroupName("Change bindings");
         }
     }
 

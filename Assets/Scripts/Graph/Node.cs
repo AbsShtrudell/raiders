@@ -19,8 +19,6 @@ namespace Graphs
         public int Index => _index;
         public List<int> Adjacents => _adjacents;
 
-        public Action<Node<T>, Node<T>> onUnbind;
-
         public Node(T value, int index)
         {
             _value = value;
@@ -41,8 +39,6 @@ namespace Graphs
             if (node == null || !_adjacents.Contains(node.Index)) return false;
 
             node.Adjacents.Remove(Index);
-
-            onUnbind?.Invoke(this, node);
 
             return _adjacents.Remove(node.Index);
         }

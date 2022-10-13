@@ -45,14 +45,31 @@ namespace Graphs
             return true;
         }
 
+        public bool RemoveNode(int index)
+        {
+            Node<T> buf = null;
+            foreach (var node in _nodes)
+            {
+                if (node.Index == index)
+                {
+                    buf = node;
+                    _nodes.Remove(node);
+                    break;
+                }
+            }
+            if (buf == null) return false;
+
+            foreach (var id in buf.Adjacents)
+            {
+                //node.Adjacents.Remove(buf);
+            }
+
+            return true;
+        }
+
         public bool AddEdge(Node<T> node1, Node<T> node2)
         {
             return node1.Bind(node2);
-        }
-
-        public bool AddEdge(int index1, int index2)
-        {
-            return _nodes[index1].Bind(_nodes[index2]);
         }
 
         public Node<T> Find(int id)

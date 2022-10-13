@@ -1,17 +1,16 @@
 using UnityEngine;
-using PathCreation;
-using PathCreation.Examples;
 using Dreamteck.Splines;
+using Graphs;
 
 [ExecuteAlways]
 [RequireComponent(typeof(SplineComputer), typeof(PathGenerator))]
 public class Road : MonoBehaviour
 {
-    [SerializeField, HideInInspector]
-    private Building[] _ends;
+    [SerializeField]//, HideInInspector]
+    private Node<Building>[] _ends;
     private SplineComputer _splineComputer;
 
-    public Building[] Ends => _ends;
+    public Node<Building>[] Ends => _ends;
     public SplineComputer PathCreator => _splineComputer;
 
     private void Awake()
@@ -32,7 +31,7 @@ public class Road : MonoBehaviour
 
         for(int i = 0; i < 2; i++)
         {
-            points[i] = new SplinePoint(_ends[i].transform.position);
+            points[i] = new SplinePoint(_ends[i].Value.transform.position);
         }
 
         _splineComputer.SetPoints(points);
@@ -42,10 +41,8 @@ public class Road : MonoBehaviour
     {
         _ends[0].Value.OnDisabled -= DestroySelf;
         _ends[1].Value.OnDisabled -= DestroySelf;
-        _ends[0].onUnbind -= DestroySelfOnUnbind;
-        _ends[1].onUnbind -= DestroySelfOnUnbind;
 
-        if (_meshCreator?.MeshHolder) DestroyImmediate(_meshCreator.MeshHolder);
+        //if (_meshCreator?.MeshHolder) DestroyImmediate(_meshCreator.MeshHolder);
         if (gameObject) DestroyImmediate(gameObject);
     }
 
@@ -55,6 +52,20 @@ public class Road : MonoBehaviour
             _ends[1] == b1 && _ends[0] == b2)
         {
             DestroySelf();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (gameObject.scene.isLoaded) //Was Deleted
+        {
+            if (_ends.Length != 0)
+            {
+            }
+        }
+        else //Was Cleaned Up on Scene Closure
+        {
+            
         }
     }
 
