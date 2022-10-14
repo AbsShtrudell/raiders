@@ -224,6 +224,27 @@ namespace Dreamteck.Splines.Editor
             computerEditor.DrawScene();
             if (splines.Length == 1 && triggersEditor.open) triggersEditor.DrawScene();
             if (splines.Length == 1 && pathEditor.open) pathEditor.DrawScene();
+            InsertPointInput();
+        }
+
+
+        void InsertPointInput()
+        {
+            Vector3 worldPosition = Event.current.mousePosition;
+            Plane plane = new Plane(Vector3.up, 0);
+            Ray ray = Camera.current.ScreenPointToRay(worldPosition);
+            //Debug.DrawRay(ray.GetPoint(0), ray.GetPoint(1) - ray.GetPoint(0).normalized, Color.red, 100);
+            Debug.Log(worldPosition);
+            plane.Raycast(ray, out float dist);
+
+            worldPosition = ray.GetPoint(dist);
+            worldPosition.x = worldPosition.x * -1;
+            Debug.Log(worldPosition);   
+
+            //if (Event.current.type == EventType.MouseDown && Event.current.button == 0 && Event.current.control)
+
+            spline.SetPoint(0, new SplinePoint(worldPosition));
+
         }
     }
 }
