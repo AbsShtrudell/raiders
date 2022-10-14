@@ -230,19 +230,34 @@ namespace Dreamteck.Splines.Editor
 
         void InsertPointInput()
         {
+            if (Event.current.type == EventType.MouseDown && Event.current.button == 0 && Event.current.control)
+            {
+                Vector3 worldPos = MouseWorldPosition();
+
+                int id = 0;
+                for(int i = 0; i < spline.pointCount;i++)
+                {
+                    var point = spline.GetPoint(i);
+                    if (Vector3.Distance(worldPos, point.position) < Vector3.Distance(worldPos, spline.GetPoints()[id].position))
+                    {
+                        id = i; 
+                    }
+                }
+                spline.InsertPoint(id, new SplinePoint(worldPos));
+            }
+        }
+
+        Vector3 MouseWorldPosition()
+        {
             Vector3 mousePos = Event.current.mousePosition;
             Vector3 worldPos;
             mousePos.z = 0;
             Plane plane = new Plane(Vector3.up, 0);
             Ray ray = HandleUtility.GUIPointToWorldRay(mousePos);
             plane.Raycast(ray, out float dist);
-
             worldPos = ray.GetPoint(dist);
-
-
-            if (Event.current.type == EventType.MouseDown && Event.current.button == 0 && Event.current.control)
-                spline.SetPoint(0, new SplinePoint(worldPos));
-
+            worldPos.y = 0;
+            return worldPos;
         }
     }
 }
