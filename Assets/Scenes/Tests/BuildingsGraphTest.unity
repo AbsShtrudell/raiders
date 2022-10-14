@@ -683,63 +683,63 @@ MonoBehaviour:
       size: 0
   sampleCollection:
     samples:
-    - position: {x: 6.229314, y: 0, z: -3.7715888}
+    - position: {x: -1.3549131, y: 0, z: 5.7222342}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.8476317}
+      forward: {x: 0.94739, y: 0, z: 0.32008144}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0
-    - position: {x: 5.537168, y: 0, z: -2.6658568}
+    - position: {x: -1.2043672, y: 0, z: 5.773097}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.8476317}
+      forward: {x: 0.94739, y: 0, z: 0.32008144}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.1111111111111111
-    - position: {x: 4.8450217, y: 0, z: -1.5601246}
+    - position: {x: -1.0538213, y: 0, z: 5.82396}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.84763175}
+      forward: {x: 0.9473901, y: 0, z: 0.32008126}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.2222222222222222
-    - position: {x: 4.152876, y: 0, z: -0.4543923}
+    - position: {x: -0.9032754, y: 0, z: 5.8748226}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.84763175}
+      forward: {x: 0.9473901, y: 0, z: 0.32008132}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.3333333333333333
-    - position: {x: 3.4607298, y: 0, z: 0.6513397}
+    - position: {x: -0.7527295, y: 0, z: 5.9256854}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.53058505, y: 0, z: 0.8476317}
+      forward: {x: 0.94739, y: 0, z: 0.32008156}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.4444444444444444
-    - position: {x: 2.768584, y: 0, z: 1.7570722}
+    - position: {x: -0.6021836, y: 0, z: 5.9765487}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.5305851, y: 0, z: 0.8476317}
+      forward: {x: 0.9473901, y: 0, z: 0.3200813}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.5555555555555556
-    - position: {x: 2.0764384, y: 0, z: 2.8628044}
+    - position: {x: -0.45163763, y: 0, z: 6.0274115}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.84763175}
+      forward: {x: 0.94739014, y: 0, z: 0.32008117}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.6666666666666666
-    - position: {x: 1.3842921, y: 0, z: 3.9685364}
+    - position: {x: -0.30109173, y: 0, z: 6.0782743}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.84763175}
+      forward: {x: 0.9473901, y: 0, z: 0.32008138}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.7777777777777778
-    - position: {x: 0.69214654, y: 0, z: 5.074269}
+    - position: {x: -0.15054575, y: 0, z: 6.129137}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.8476317}
+      forward: {x: 0.94739, y: 0, z: 0.32008153}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.8888888888888888
     - position: {x: 0, y: 0, z: 6.18}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.8476317}
+      forward: {x: 0.94739, y: 0, z: 0.32008144}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 1
@@ -749,16 +749,16 @@ MonoBehaviour:
     clipTo: 1
     loopSamples: 0
   clipFromSample:
-    position: {x: 6.229314, y: 0, z: -3.7715888}
+    position: {x: -1.3549131, y: 0, z: 5.7222342}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.8476317}
+    forward: {x: 0.94739, y: 0, z: 0.32008144}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0
   clipToSample:
     position: {x: 0, y: 0, z: 6.18}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.8476317}
+    forward: {x: 0.94739, y: 0, z: 0.32008144}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 1
@@ -786,7 +786,7 @@ MonoBehaviour:
   meshCollider: {fileID: 0}
   filter: {fileID: 1058544661}
   meshRenderer: {fileID: 1058544660}
-  mesh: {fileID: 1808222265}
+  mesh: {fileID: 1979951335}
   colliderUpdateRate: 0.2
   _slices: 1
   _useShapeCurve: 0
@@ -852,7 +852,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1058544658}
-  m_Mesh: {fileID: 1808222265}
+  m_Mesh: {fileID: 1979951335}
 --- !u!114 &1058544662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -896,12 +896,12 @@ MonoBehaviour:
   spline:
     points:
     - _type: 0
-      position: {x: 6.229314, y: 0, z: -3.7715888}
+      position: {x: -1.3549131, y: 0, z: 5.7222342}
       color: {r: 1, g: 1, b: 1, a: 1}
       normal: {x: 0, y: 1, z: 0}
       size: 1
-      tangent: {x: 6.229314, y: 0, z: -3.7715888}
-      tangent2: {x: 6.229314, y: 0, z: -3.7715888}
+      tangent: {x: -1.3549131, y: 0, z: 5.7222342}
+      tangent2: {x: -1.3549131, y: 0, z: 5.7222342}
     - _type: 0
       position: {x: 0, y: 0, z: 6.18}
       color: {r: 1, g: 1, b: 1, a: 1}
@@ -926,186 +926,186 @@ MonoBehaviour:
       m_RotationOrder: 4
     sampleRate: 10
   _rawSamples:
-  - position: {x: 6.229314, y: 0, z: -3.7715888}
+  - position: {x: -1.3549131, y: 0, z: 5.7222342}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.8476317}
+    forward: {x: 0.94739, y: 0, z: 0.32008144}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0
-  - position: {x: 5.537168, y: 0, z: -2.6658568}
+  - position: {x: -1.2043672, y: 0, z: 5.773097}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.8476317}
+    forward: {x: 0.94739, y: 0, z: 0.32008144}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.1111111111111111
-  - position: {x: 4.8450217, y: 0, z: -1.5601246}
+  - position: {x: -1.0538213, y: 0, z: 5.82396}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.84763175}
+    forward: {x: 0.9473901, y: 0, z: 0.32008126}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.2222222222222222
-  - position: {x: 4.152876, y: 0, z: -0.4543923}
+  - position: {x: -0.9032754, y: 0, z: 5.8748226}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.84763175}
+    forward: {x: 0.9473901, y: 0, z: 0.32008132}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.3333333333333333
-  - position: {x: 3.4607298, y: 0, z: 0.6513397}
+  - position: {x: -0.7527295, y: 0, z: 5.9256854}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.53058505, y: 0, z: 0.8476317}
+    forward: {x: 0.94739, y: 0, z: 0.32008156}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.4444444444444444
-  - position: {x: 2.768584, y: 0, z: 1.7570722}
+  - position: {x: -0.6021836, y: 0, z: 5.9765487}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.5305851, y: 0, z: 0.8476317}
+    forward: {x: 0.9473901, y: 0, z: 0.3200813}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.5555555555555556
-  - position: {x: 2.0764384, y: 0, z: 2.8628044}
+  - position: {x: -0.45163763, y: 0, z: 6.0274115}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.84763175}
+    forward: {x: 0.94739014, y: 0, z: 0.32008117}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.6666666666666666
-  - position: {x: 1.3842921, y: 0, z: 3.9685364}
+  - position: {x: -0.30109173, y: 0, z: 6.0782743}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.84763175}
+    forward: {x: 0.9473901, y: 0, z: 0.32008138}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.7777777777777778
-  - position: {x: 0.69214654, y: 0, z: 5.074269}
+  - position: {x: -0.15054575, y: 0, z: 6.129137}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.8476317}
+    forward: {x: 0.94739, y: 0, z: 0.32008153}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.8888888888888888
   - position: {x: 0, y: 0, z: 6.18}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.8476317}
+    forward: {x: 0.94739, y: 0, z: 0.32008144}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 1
   _transformedSamples:
-  - position: {x: 6.229314, y: 0, z: -3.7715888}
+  - position: {x: -1.3549131, y: 0, z: 5.7222342}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.8476317}
+    forward: {x: 0.94739, y: 0, z: 0.32008144}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0
-  - position: {x: 5.537168, y: 0, z: -2.6658568}
+  - position: {x: -1.2043672, y: 0, z: 5.773097}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.8476317}
+    forward: {x: 0.94739, y: 0, z: 0.32008144}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.1111111111111111
-  - position: {x: 4.8450217, y: 0, z: -1.5601246}
+  - position: {x: -1.0538213, y: 0, z: 5.82396}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.84763175}
+    forward: {x: 0.9473901, y: 0, z: 0.32008126}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.2222222222222222
-  - position: {x: 4.152876, y: 0, z: -0.4543923}
+  - position: {x: -0.9032754, y: 0, z: 5.8748226}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.84763175}
+    forward: {x: 0.9473901, y: 0, z: 0.32008132}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.3333333333333333
-  - position: {x: 3.4607298, y: 0, z: 0.6513397}
+  - position: {x: -0.7527295, y: 0, z: 5.9256854}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.53058505, y: 0, z: 0.8476317}
+    forward: {x: 0.94739, y: 0, z: 0.32008156}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.4444444444444444
-  - position: {x: 2.768584, y: 0, z: 1.7570722}
+  - position: {x: -0.6021836, y: 0, z: 5.9765487}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.5305851, y: 0, z: 0.8476317}
+    forward: {x: 0.9473901, y: 0, z: 0.3200813}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.5555555555555556
-  - position: {x: 2.0764384, y: 0, z: 2.8628044}
+  - position: {x: -0.45163763, y: 0, z: 6.0274115}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.84763175}
+    forward: {x: 0.94739014, y: 0, z: 0.32008117}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.6666666666666666
-  - position: {x: 1.3842921, y: 0, z: 3.9685364}
+  - position: {x: -0.30109173, y: 0, z: 6.0782743}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.84763175}
+    forward: {x: 0.9473901, y: 0, z: 0.32008138}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.7777777777777778
-  - position: {x: 0.69214654, y: 0, z: 5.074269}
+  - position: {x: -0.15054575, y: 0, z: 6.129137}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.8476317}
+    forward: {x: 0.94739, y: 0, z: 0.32008153}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.8888888888888888
   - position: {x: 0, y: 0, z: 6.18}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: -0.530585, y: 0, z: 0.8476317}
+    forward: {x: 0.94739, y: 0, z: 0.32008144}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 1
   sampleCollection:
     samples:
-    - position: {x: 6.229314, y: 0, z: -3.7715888}
+    - position: {x: -1.3549131, y: 0, z: 5.7222342}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.8476317}
+      forward: {x: 0.94739, y: 0, z: 0.32008144}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0
-    - position: {x: 5.537168, y: 0, z: -2.6658568}
+    - position: {x: -1.2043672, y: 0, z: 5.773097}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.8476317}
+      forward: {x: 0.94739, y: 0, z: 0.32008144}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.1111111111111111
-    - position: {x: 4.8450217, y: 0, z: -1.5601246}
+    - position: {x: -1.0538213, y: 0, z: 5.82396}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.84763175}
+      forward: {x: 0.9473901, y: 0, z: 0.32008126}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.2222222222222222
-    - position: {x: 4.152876, y: 0, z: -0.4543923}
+    - position: {x: -0.9032754, y: 0, z: 5.8748226}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.84763175}
+      forward: {x: 0.9473901, y: 0, z: 0.32008132}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.3333333333333333
-    - position: {x: 3.4607298, y: 0, z: 0.6513397}
+    - position: {x: -0.7527295, y: 0, z: 5.9256854}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.53058505, y: 0, z: 0.8476317}
+      forward: {x: 0.94739, y: 0, z: 0.32008156}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.4444444444444444
-    - position: {x: 2.768584, y: 0, z: 1.7570722}
+    - position: {x: -0.6021836, y: 0, z: 5.9765487}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.5305851, y: 0, z: 0.8476317}
+      forward: {x: 0.9473901, y: 0, z: 0.3200813}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.5555555555555556
-    - position: {x: 2.0764384, y: 0, z: 2.8628044}
+    - position: {x: -0.45163763, y: 0, z: 6.0274115}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.84763175}
+      forward: {x: 0.94739014, y: 0, z: 0.32008117}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.6666666666666666
-    - position: {x: 1.3842921, y: 0, z: 3.9685364}
+    - position: {x: -0.30109173, y: 0, z: 6.0782743}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.84763175}
+      forward: {x: 0.9473901, y: 0, z: 0.32008138}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.7777777777777778
-    - position: {x: 0.69214654, y: 0, z: 5.074269}
+    - position: {x: -0.15054575, y: 0, z: 6.129137}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.8476317}
+      forward: {x: 0.94739, y: 0, z: 0.32008153}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.8888888888888888
     - position: {x: 0, y: 0, z: 6.18}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: -0.530585, y: 0, z: 0.8476317}
+      forward: {x: 0.94739, y: 0, z: 0.32008144}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 1
@@ -1133,7 +1133,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1058544658}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 5.62, y: 0.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1321,63 +1321,63 @@ MonoBehaviour:
       size: 0
   sampleCollection:
     samples:
-    - position: {x: -6.8720026, y: 0, z: -9.675909}
+    - position: {x: 0, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.5867969}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0
-    - position: {x: -5.388447, y: 0, z: -8.600808}
+    - position: {x: 0.72, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.5867969}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.1111111111111111
-    - position: {x: -3.9048908, y: 0, z: -7.5257072}
+    - position: {x: 1.44, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.58679694}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.2222222222222222
-    - position: {x: -2.421335, y: 0, z: -6.450606}
+    - position: {x: 2.16, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.8097341, y: 0, z: 0.58679694}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.3333333333333333
-    - position: {x: -0.9377793, y: 0, z: -5.375505}
+    - position: {x: 2.88, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.8097341, y: 0, z: 0.58679694}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.4444444444444444
-    - position: {x: 0.5457767, y: 0, z: -4.300403}
+    - position: {x: 3.6000001, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.58679694}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.5555555555555556
-    - position: {x: 2.0293322, y: 0, z: -3.2253022}
+    - position: {x: 4.32, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.8097341, y: 0, z: 0.58679694}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.6666666666666666
-    - position: {x: 3.5128877, y: 0, z: -2.1502013}
+    - position: {x: 5.04, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.5867969}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.7777777777777778
-    - position: {x: 4.9964433, y: 0, z: -1.0751002}
+    - position: {x: 5.7599998, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.5867969}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.8888888888888888
     - position: {x: 6.48, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.5867969}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 1
@@ -1387,16 +1387,16 @@ MonoBehaviour:
     clipTo: 1
     loopSamples: 0
   clipFromSample:
-    position: {x: -6.8720026, y: 0, z: -9.675909}
+    position: {x: 0, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.5867969}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0
   clipToSample:
     position: {x: 6.48, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.5867969}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 1
@@ -1515,12 +1515,12 @@ MonoBehaviour:
   spline:
     points:
     - _type: 0
-      position: {x: -6.8720026, y: 0, z: -9.675909}
+      position: {x: 0, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       normal: {x: 0, y: 1, z: 0}
       size: 1
-      tangent: {x: -6.8720026, y: 0, z: -9.675909}
-      tangent2: {x: -6.8720026, y: 0, z: -9.675909}
+      tangent: {x: 0, y: 0, z: 0}
+      tangent2: {x: 0, y: 0, z: 0}
     - _type: 0
       position: {x: 6.48, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
@@ -1545,186 +1545,186 @@ MonoBehaviour:
       m_RotationOrder: 4
     sampleRate: 10
   _rawSamples:
-  - position: {x: -6.8720026, y: 0, z: -9.675909}
+  - position: {x: 0, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.5867969}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0
-  - position: {x: -5.388447, y: 0, z: -8.600808}
+  - position: {x: 0.72, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.5867969}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.1111111111111111
-  - position: {x: -3.9048908, y: 0, z: -7.5257072}
+  - position: {x: 1.44, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.58679694}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.2222222222222222
-  - position: {x: -2.421335, y: 0, z: -6.450606}
+  - position: {x: 2.16, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.8097341, y: 0, z: 0.58679694}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.3333333333333333
-  - position: {x: -0.9377793, y: 0, z: -5.375505}
+  - position: {x: 2.88, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.8097341, y: 0, z: 0.58679694}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.4444444444444444
-  - position: {x: 0.5457767, y: 0, z: -4.300403}
+  - position: {x: 3.6000001, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.58679694}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.5555555555555556
-  - position: {x: 2.0293322, y: 0, z: -3.2253022}
+  - position: {x: 4.32, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.8097341, y: 0, z: 0.58679694}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.6666666666666666
-  - position: {x: 3.5128877, y: 0, z: -2.1502013}
+  - position: {x: 5.04, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.5867969}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.7777777777777778
-  - position: {x: 4.9964433, y: 0, z: -1.0751002}
+  - position: {x: 5.7599998, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.5867969}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.8888888888888888
   - position: {x: 6.48, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.5867969}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 1
   _transformedSamples:
-  - position: {x: -6.8720026, y: 0, z: -9.675909}
+  - position: {x: 0, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.5867969}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0
-  - position: {x: -5.388447, y: 0, z: -8.600808}
+  - position: {x: 0.72, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.5867969}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.1111111111111111
-  - position: {x: -3.9048908, y: 0, z: -7.5257072}
+  - position: {x: 1.44, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.58679694}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.2222222222222222
-  - position: {x: -2.421335, y: 0, z: -6.450606}
+  - position: {x: 2.16, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.8097341, y: 0, z: 0.58679694}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.3333333333333333
-  - position: {x: -0.9377793, y: 0, z: -5.375505}
+  - position: {x: 2.88, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.8097341, y: 0, z: 0.58679694}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.4444444444444444
-  - position: {x: 0.5457767, y: 0, z: -4.300403}
+  - position: {x: 3.6000001, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.58679694}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.5555555555555556
-  - position: {x: 2.0293322, y: 0, z: -3.2253022}
+  - position: {x: 4.32, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.8097341, y: 0, z: 0.58679694}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.6666666666666666
-  - position: {x: 3.5128877, y: 0, z: -2.1502013}
+  - position: {x: 5.04, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.5867969}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.7777777777777778
-  - position: {x: 4.9964433, y: 0, z: -1.0751002}
+  - position: {x: 5.7599998, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.5867969}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 0.8888888888888888
   - position: {x: 6.48, y: 0, z: 0}
     up: {x: 0, y: 1, z: 0}
-    forward: {x: 0.80973417, y: 0, z: 0.5867969}
+    forward: {x: 1, y: 0, z: 0}
     color: {r: 1, g: 1, b: 1, a: 1}
     size: 1
     percent: 1
   sampleCollection:
     samples:
-    - position: {x: -6.8720026, y: 0, z: -9.675909}
+    - position: {x: 0, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.5867969}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0
-    - position: {x: -5.388447, y: 0, z: -8.600808}
+    - position: {x: 0.72, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.5867969}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.1111111111111111
-    - position: {x: -3.9048908, y: 0, z: -7.5257072}
+    - position: {x: 1.44, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.58679694}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.2222222222222222
-    - position: {x: -2.421335, y: 0, z: -6.450606}
+    - position: {x: 2.16, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.8097341, y: 0, z: 0.58679694}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.3333333333333333
-    - position: {x: -0.9377793, y: 0, z: -5.375505}
+    - position: {x: 2.88, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.8097341, y: 0, z: 0.58679694}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.4444444444444444
-    - position: {x: 0.5457767, y: 0, z: -4.300403}
+    - position: {x: 3.6000001, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.58679694}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.5555555555555556
-    - position: {x: 2.0293322, y: 0, z: -3.2253022}
+    - position: {x: 4.32, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.8097341, y: 0, z: 0.58679694}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.6666666666666666
-    - position: {x: 3.5128877, y: 0, z: -2.1502013}
+    - position: {x: 5.04, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.5867969}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.7777777777777778
-    - position: {x: 4.9964433, y: 0, z: -1.0751002}
+    - position: {x: 5.7599998, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.5867969}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 0.8888888888888888
     - position: {x: 6.48, y: 0, z: 0}
       up: {x: 0, y: 1, z: 0}
-      forward: {x: 0.80973417, y: 0, z: 0.5867969}
+      forward: {x: 1, y: 0, z: 0}
       color: {r: 1, g: 1, b: 1, a: 1}
       size: 1
       percent: 1
@@ -1809,8 +1809,8 @@ Mesh:
     firstVertex: 0
     vertexCount: 20
     localAABB:
-      m_Center: {x: -0.19600129, y: 0, z: -4.8379545}
-      m_Extent: {x: 6.9693995, y: 0, z: 5.2428217}
+      m_Center: {x: 3.24, y: 0, z: 0}
+      m_Extent: {x: 3.24, y: 0, z: 0.5}
   m_Shapes:
     vertices: []
     shapes: []
@@ -1889,7 +1889,7 @@ Mesh:
       format: 0
       dimension: 0
     m_DataSize: 1280
-    _typelessdata: ed83d2c000000000dc4a21c1000000000000803f0000000040d84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f000000000000803ff74ae5c000000000305614c1000000000000803f0000000073d84bbe0000000057e07a3f000080bf0000803f0000803f0000803f0000803f0000803f0000803fa30aa3c0000000003f1710c1000000000000803f0000000048d84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f00000000398e633fadd1b5c000000000932203c1000000000000803f0000000046d84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f0000803f398e633fb12267c00000000044c7fdc0000000000000803f0000000047d84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f00000000721c473f635886c000000000ecdde3c0000000000000803f000000004ad84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f0000803f721c473f1d3008c0000000000960dbc0000000000000803f000000004ad84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f00000000aaaa2a3f32be2dc000000000b276c1c0000000000000803f0000000048d84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f0000803faaaa2a3f24f624bf00000000cff8b8c0000000000000803f0000000045d84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f00000000e4380e3f3c979dbf00000000780f9fc0000000000000803f0000000048d84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f0000803fe4380e3f30d4563f00000000939196c0000000000000803f0000000048d84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f00000000388ee33eba37813e00000000775079c0000000000000803f0000000049d84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f0000803f388ee33e9ea7144000000000b25468c0000000000000803f000000004bd84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f00000000aaaaaa3e1233de3f00000000038234c0000000000000803f000000004ed84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f0000803faaaaaa3e319a7340000000003e8623c0000000000000803f000000004ed84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f00000000388e633e1c0c4e40000000001e67dfbf000000000000803f000000004ed84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f0000803f388e633e6246a94000000000916fbdbf000000000000803f000000004fd84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f00000000388ee33d587f96400000000065942bbf000000000000803f000000004ed84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f0000803f388ee33daebfd84000000000bd4acfbe000000000000803f0000000076d84bbe0000000058e07a3f000080bf0000803f0000803f0000803f0000803f0000000000000000a4f8c54000000000bd4acf3e000000000000803f0000000041d84bbe000000005ae07a3f000080bf0000803f0000803f0000803f0000803f0000803f00000000
+    _typelessdata: 0000000000000000000000bf000000000000803f0000000037a86dbf000000001651be3e000080bf0000803f0000803f0000803f0000803f000000000000803f00000000000000000000003f000000000000803f0000000037a86dbf000000001651be3e000080bf0000803f0000803f0000803f0000803f0000803f0000803fec51383f00000000000000bf000000000000803f0000000035a86dbf000000001551be3e000080bf0000803f0000803f0000803f0000803f00000000398e633fec51383f000000000000003f000000000000803f0000000037a86dbf000000001351be3e000080bf0000803f0000803f0000803f0000803f0000803f398e633fec51b83f00000000000000bf000000000000803f0000000037a86dbf000000001351be3e000080bf0000803f0000803f0000803f0000803f00000000721c473fec51b83f000000000000003f000000000000803f0000000037a86dbf000000001351be3e000080bf0000803f0000803f0000803f0000803f0000803f721c473f713d0a4000000000000000bf000000000000803f0000000037a86dbf000000001451be3e000080bf0000803f0000803f0000803f0000803f00000000aaaa2a3f713d0a40000000000000003f000000000000803f0000000035a86dbf000000001651be3e000080bf0000803f0000803f0000803f0000803f0000803faaaa2a3fec51384000000000000000bf000000000000803f0000000035a86dbf000000001651be3e000080bf0000803f0000803f0000803f0000803f00000000e4380e3fec513840000000000000003f000000000000803f0000000035a86dbf000000001651be3e000080bf0000803f0000803f0000803f0000803f0000803fe4380e3f6766664000000000000000bf000000000000803f0000000037a86dbf000000001351be3e000080bf0000803f0000803f0000803f0000803f00000000388ee33e67666640000000000000003f000000000000803f0000000037a86dbf000000001351be3e000080bf0000803f0000803f0000803f0000803f0000803f388ee33e713d8a4000000000000000bf000000000000803f0000000037a86dbf000000001351be3e000080bf0000803f0000803f0000803f0000803f00000000aaaaaa3e713d8a40000000000000003f000000000000803f0000000035a86dbf000000001551be3e000080bf0000803f0000803f0000803f0000803f0000803faaaaaa3eae47a14000000000000000bf000000000000803f0000000035a86dbf000000001851be3e000080bf0000803f0000803f0000803f0000803f00000000388e633eae47a140000000000000003f000000000000803f0000000034a86dbf000000001b51be3e000080bf0000803f0000803f0000803f0000803f0000803f388e633eeb51b84000000000000000bf000000000000803f0000000034a86dbf000000001b51be3e000080bf0000803f0000803f0000803f0000803f00000000388ee33deb51b840000000000000003f000000000000803f0000000034a86dbf000000001b51be3e000080bf0000803f0000803f0000803f0000803f0000803f388ee33d295ccf4000000000000000bf000000000000803f0000000034a86dbf000000001c51be3e000080bf0000803f0000803f0000803f0000803f0000000000000000295ccf40000000000000003f000000000000803f0000000034a86dbf000000001c51be3e000080bf0000803f0000803f0000803f0000803f0000803f00000000
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -1943,172 +1943,8 @@ Mesh:
       m_BitSize: 0
     m_UVInfo: 0
   m_LocalAABB:
-    m_Center: {x: -0.19600129, y: 0, z: -4.8379545}
-    m_Extent: {x: 6.9693995, y: 0, z: 5.2428217}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1
-  m_MeshMetrics[1]: 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
---- !u!43 &1808222265
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: path
-  serializedVersion: 10
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 54
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 20
-    localAABB:
-      m_Center: {x: 3.114657, y: 0, z: 1.2042055}
-      m_Extent: {x: 3.5384727, y: 0, z: 5.241087}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 000001000200010003000200020003000400030005000400040005000600050007000600060007000800070009000800080009000a0009000b000a000a000b000c000b000d000c000c000d000e000d000f000e000e000f0010000f0011001000100011001200110013001200
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 20
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 24
-      format: 0
-      dimension: 4
-    - stream: 0
-      offset: 40
-      format: 0
-      dimension: 4
-    - stream: 0
-      offset: 56
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 1280
-    _typelessdata: 70e6d44000000000286760c0000000000000803f00000000235137be000000004add7b3f000080bf0000803f0000803f0000803f0000803f000000000000803fa3c6b94000000000222e81c0000000000000803f00000000385137be000000004add7b3f000080bf0000803f0000803f0000803f0000803f0000803f0000803f61c0be4000000000d8a219c0000000000000803f00000000d25037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f00000000398e633f94a0a34000000000f3973bc0000000000000803f00000000d25037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f0000803f398e633f519aa840000000000fbda5bf000000000000803f00000000d25037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f00000000721c473f847a8d400000000044a7e9bf000000000000803f00000000d35037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f0000803f721c473f427492400000000062a341be000000000000803f00000000d25037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f00000000aaaa2a3feba86e4000000000443d38bf000000000000803f00000000d25037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f0000803faaaa2a3f669c78400000000069a86a3f000000000000803f00000000d25037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f00000000e4380e3fcd5c424000000000faa7c53e000000000000803f00000000d25037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f0000803fe4380e3f48504c40000000006d6e0140000000000000803f00000000d25037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f00000000388ee33eaf10164000000000a4f2be3f000000000000803f00000000d25037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f0000803f388ee33e2b04204000000000bd324840000000000000803f00000000d55037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f00000000aaaaaa3e2489d33f00000000a23d2640000000000000803f00000000d55037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f0000803faaaaaa3e1570e73f00000000877b8740000000000000803f00000000d35037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f00000000388e633ec5e1753f00000000f3016d40000000000000803f00000000d35037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f0000803f388e633edbd78e3f00000000b0ddaa40000000000000803f00000000d25037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f00000000388ee33da262893e0000000022e39940000000000000803f00000000d35037be000000004edd7b3f000080bf0000803f0000803f0000803f0000803f0000803f388ee33d65fed83e00000000d63fce40000000000000803f000000003a5137be000000004add7b3f000080bf0000803f0000803f0000803f0000803f000000000000000065fed8be000000004845bd40000000000000803f00000000265137be000000004add7b3f000080bf0000803f0000803f0000803f0000803f0000803f00000000
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 3.114657, y: 0, z: 1.2042055}
-    m_Extent: {x: 3.5384727, y: 0, z: 5.241087}
+    m_Center: {x: 3.24, y: 0, z: 0}
+    m_Extent: {x: 3.24, y: 0, z: 0.5}
   m_MeshUsageFlags: 0
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
@@ -2351,3 +2187,167 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!43 &1979951335
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: path
+  serializedVersion: 10
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 54
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 20
+    localAABB:
+      m_Center: {x: -6.2974563, y: -0.06, z: 5.9511175}
+      m_Extent: {x: 0.83749723, y: 0, z: 0.7025778}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 000001000200010003000200020003000400030005000400040005000600050007000600060007000800070009000800080009000a0009000b000a000a000b000c000b000d000c000c000d000e000d000f000e000e000f0010000f0011001000100011001200110013001200
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 20
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 24
+      format: 0
+      dimension: 4
+    - stream: 0
+      offset: 40
+      format: 0
+      dimension: 4
+    - stream: 0
+      offset: 56
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 1280
+    _typelessdata: 6f13dac08fc275bd09f4a740000000000000803f00000000dc2c133f00000000f57651bf000080bf0000803f0000803f0000803f0000803f000000000000803f8a51e4c08fc275bd0e45c640000000000000803f00000000d72c133f00000000f97651bf000080bf0000803f0000803f0000803f0000803f0000803f0000803f2942d5c08fc275bdb494a940000000000000803f00000000d62c133f00000000fb7651bf000080bf0000803f0000803f0000803f0000803f00000000398e633f4580dfc08fc275bdb9e5c740000000000000803f00000000d62c133f00000000fb7651bf000080bf0000803f0000803f0000803f0000803f0000803f398e633fe470d0c08fc275bd5e35ab40000000000000803f00000000d52c133f00000000fa7651bf000080bf0000803f0000803f0000803f0000803f00000000721c473fffaedac08fc275bd6386c940000000000000803f00000000d72c133f00000000f87651bf000080bf0000803f0000803f0000803f0000803f0000803f721c473f9e9fcbc08fc275bd0ad6ac40000000000000803f00000000d72c133f00000000f87651bf000080bf0000803f0000803f0000803f0000803f00000000aaaa2a3fb9ddd5c08fc275bd0f27cb40000000000000803f00000000d92c133f00000000f77651bf000080bf0000803f0000803f0000803f0000803f0000803faaaa2a3f58cec6c08fc275bdb576ae40000000000000803f00000000da2c133f00000000f67651bf000080bf0000803f0000803f0000803f0000803f00000000e4380e3f740cd1c08fc275bdbac7cc40000000000000803f00000000dc2c133f00000000f57651bf000080bf0000803f0000803f0000803f0000803f0000803fe4380e3f13fdc1c08fc275bd6017b040000000000000803f00000000de2c133f00000000f47651bf000080bf0000803f0000803f0000803f0000803f00000000388ee33e2e3bccc08fc275bd6568ce40000000000000803f00000000de2c133f00000000f47651bf000080bf0000803f0000803f0000803f0000803f0000803f388ee33ecd2bbdc08fc275bd0bb8b140000000000000803f00000000df2c133f00000000f47651bf000080bf0000803f0000803f0000803f0000803f00000000aaaaaa3ee869c7c08fc275bd1009d040000000000000803f00000000de2c133f00000000f47651bf000080bf0000803f0000803f0000803f0000803f0000803faaaaaa3e875ab8c08fc275bdb658b340000000000000803f00000000dd2c133f00000000f47651bf000080bf0000803f0000803f0000803f0000803f00000000388e633ea398c2c08fc275bdbba9d140000000000000803f00000000dd2c133f00000000f47651bf000080bf0000803f0000803f0000803f0000803f0000803f388e633e4289b3c08fc275bd62f9b440000000000000803f00000000df2c133f00000000f47651bf000080bf0000803f0000803f0000803f0000803f00000000388ee33d5dc7bdc08fc275bd674ad340000000000000803f00000000e02c133f00000000f37651bf000080bf0000803f0000803f0000803f0000803f0000803f388ee33dfcb7aec08fc275bd0d9ab640000000000000803f00000000e12c133f00000000f17651bf000080bf0000803f0000803f0000803f0000803f000000000000000018f6b8c08fc275bd12ebd440000000000000803f00000000e52c133f00000000ef7651bf000080bf0000803f0000803f0000803f0000803f0000803f00000000
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: -6.2974563, y: -0.06, z: 5.9511175}
+    m_Extent: {x: 0.83749723, y: 0, z: 0.7025778}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 
