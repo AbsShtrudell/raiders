@@ -113,15 +113,17 @@ public class BuildingsGraphEditor : MonoBehaviour
         unconnectedRoadsToDestroy.Count +
         nodesToUnbind.Count != 0)
         {
-            Debug.Log("destroyedBuildingsNodeIndices.Count: " + destroyedBuildingsNodeIndices.Count);
-            Debug.Log("destroyedRoadIndices.Count: " + destroyedRoadIndices.Count);
-            Debug.Log("destroyedRoadInBuilding.Count: " + destroyedRoadInBuilding.Count);
-            Debug.Log("connectedRoadsToDestroy.Count: " + connectedRoadsToDestroy.Count);
-            Debug.Log("unconnectedRoadsToDestroy.Count: " + unconnectedRoadsToDestroy.Count);
-            Debug.Log("nodesToUnbind.Count: " + nodesToUnbind.Count);
+            //Debug.Log("destroyedBuildingsNodeIndices.Count: " + destroyedBuildingsNodeIndices.Count);
+            //Debug.Log("destroyedRoadIndices.Count: " + destroyedRoadIndices.Count);
+            //Debug.Log("destroyedRoadInBuilding.Count: " + destroyedRoadInBuilding.Count);
+            //Debug.Log("connectedRoadsToDestroy.Count: " + connectedRoadsToDestroy.Count);
+            //Debug.Log("unconnectedRoadsToDestroy.Count: " + unconnectedRoadsToDestroy.Count);
+            //Debug.Log("nodesToUnbind.Count: " + nodesToUnbind.Count);
             if (Undo.GetCurrentGroupName() == groupName2)
             {
-                Undo.RecordObject(this, "Remove buildings");
+                var recordedObjects = new List<Building>();
+
+                Undo.RegisterCompleteObjectUndo(this, "Remove buildings");
 
                 while (destroyedRoadIndices.Count > 0)
                 {
@@ -132,15 +134,22 @@ public class BuildingsGraphEditor : MonoBehaviour
                 {
                     var br = destroyedRoadInBuilding.Pop();
 
-                    Undo.RecordObject(br.Item1, "b");
+                    if (!recordedObjects.Contains(br.Item1))
+                    {
+                        recordedObjects.Add(br.Item1);
+                        Undo.RegisterCompleteObjectUndo(br.Item1, "b");
+                    }
                     br.Item1.roads.RemoveAt(br.Item2);
                 }
 
                 foreach (var br in connectedRoadsToDestroy)
                 {
-                    Undo.RecordObject(this, "Remove buildings");
                     _roads.Remove(br.Item2);
-                    Undo.RecordObject(br.Item1, "b");
+                    if (!recordedObjects.Contains(br.Item1))
+                    {
+                        recordedObjects.Add(br.Item1);
+                        Undo.RegisterCompleteObjectUndo(br.Item1, "b");
+                    }
                     br.Item1.roads.Remove(br.Item2);
                     Undo.DestroyObjectImmediate(br.Item2.gameObject);
                 }
@@ -149,12 +158,10 @@ public class BuildingsGraphEditor : MonoBehaviour
                 {
                     if (road == null) continue; 
 
-                    Undo.RecordObject(this, "Remove buildings");
                     _roads.Remove(road);
                     Undo.DestroyObjectImmediate(road.gameObject);
                 }
 
-                Undo.RecordObject(this, "Remove buildings");
                 foreach (var nn in nodesToUnbind)
                 {
                     nn.Item1.Unbind(nn.Item2);
