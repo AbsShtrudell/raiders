@@ -19,17 +19,6 @@ public class BuildingsGraphEditorInspector : Editor
         editor = (BuildingsGraphEditor)target;
         CreateBindMatrix();
         InitializeBindMatrix();
-        
-        // PIZDETS
-        //var list = Undo.undoRedoPerformed.GetInvocationList();
-        //for (int i = 0; i < list.Length; i++)
-        //{
-        //    if (list[i].Method.Equals(Undo.UndoRedoCallback.CreateDelegate(typeof(Undo.UndoRedoCallback), this, typeof(BuildingsGraphEditorInspector).GetMethod("ayaya", BindingFlags.Instance | BindingFlags.NonPublic)).Method))
-        //    {
-        //        list[i] = null;
-        //        break;
-        //    }
-        //}
 
         Undo.undoRedoPerformed += ayaya;
     }
@@ -68,12 +57,6 @@ public class BuildingsGraphEditorInspector : Editor
     {
         DrawDefaultInspector();
 
-        //if (GUILayout.Button("Random bind"))
-        //{
-        //    editor.BindRandomBuildings();
-        //    InitializeBindMatrix();
-        //}
-
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("+", GUILayout.Width(matrixElementWidth)))
         {
@@ -84,14 +67,6 @@ public class BuildingsGraphEditorInspector : Editor
         for (int i = 0; i < nodeCount; i++)
         {
             DrawBuildingButton(i);
-        }
-        if (GUILayout.Button("-", GUILayout.Width(matrixElementWidth)))
-        {
-            editor.RemoveBuilding(editor.graph.Nodes.Count - 1);
-
-            CreateBindMatrix();
-            InitializeBindMatrix();
-
         }
         EditorGUILayout.EndHorizontal();
 
@@ -139,7 +114,6 @@ public class BuildingsGraphEditorInspector : Editor
 
             menu.AddItem(new GUIContent("Ping"), false, PingBuilding);
             menu.AddItem(new GUIContent("Select"), false, SelectBuilding);
-            menu.AddItem(new GUIContent("Remove"), false, RemoveBuilding);
             menu.ShowAsContext();
         }
     }
@@ -158,10 +132,4 @@ public class BuildingsGraphEditorInspector : Editor
         SceneView.FrameLastActiveSceneView();  
     }
 
-    private void RemoveBuilding()
-    {
-        editor.RemoveBuilding(selectedIndex);
-        CreateBindMatrix();
-        InitializeBindMatrix();
-    }
 }

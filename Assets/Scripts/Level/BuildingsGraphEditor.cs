@@ -46,25 +46,6 @@ public class BuildingsGraphEditor : MonoBehaviour
         Undo.SetCurrentGroupName("Add Building");
     }
 
-    public void RemoveBuilding(int index)
-    {
-        if (_buildingsGraph.Nodes.Count == 0)
-            return;
-
-        var b = _buildingsGraph.Nodes[index].Value;
-        Undo.RecordObject(this, "Remove Building");
-        _buildingsGraph.RemoveNode(b);
-
-        foreach (var road in b.roads)
-        {
-            roads.Remove(road);
-            Undo.DestroyObjectImmediate(road.gameObject);
-        }
-        Undo.DestroyObjectImmediate(b.gameObject);
-        Undo.SetCurrentGroupName("Remove Building");
-
-    }
-
     private void Update()
     {
         const string groupName = "Remove buildings";
@@ -97,7 +78,8 @@ public class BuildingsGraphEditor : MonoBehaviour
             }
             else
             {
-                for (int i = 0; i < b.Value.roads.Count; i++)
+                var tempRoads = b.Value.roads;
+                for (int i = 0; i < tempRoads.Count; i++)
                 {
                     if (b.Value.roads[i] == null)
                     {
@@ -131,6 +113,12 @@ public class BuildingsGraphEditor : MonoBehaviour
         unconnectedRoadsToDestroy.Count +
         nodesToUnbind.Count != 0)
         {
+            Debug.Log("destroyedBuildingsNodeIndices.Count: " + destroyedBuildingsNodeIndices.Count);
+            Debug.Log("destroyedRoadIndices.Count: " + destroyedRoadIndices.Count);
+            Debug.Log("destroyedRoadInBuilding.Count: " + destroyedRoadInBuilding.Count);
+            Debug.Log("connectedRoadsToDestroy.Count: " + connectedRoadsToDestroy.Count);
+            Debug.Log("unconnectedRoadsToDestroy.Count: " + unconnectedRoadsToDestroy.Count);
+            Debug.Log("nodesToUnbind.Count: " + nodesToUnbind.Count);
             if (Undo.GetCurrentGroupName() == groupName2)
             {
                 Undo.RecordObject(this, "Remove buildings");
@@ -159,6 +147,8 @@ public class BuildingsGraphEditor : MonoBehaviour
 
                 foreach (var road in unconnectedRoadsToDestroy)
                 {
+                    if (road == null) continue; 
+
                     Undo.RecordObject(this, "Remove buildings");
                     _roads.Remove(road);
                     Undo.DestroyObjectImmediate(road.gameObject);
@@ -184,6 +174,41 @@ public class BuildingsGraphEditor : MonoBehaviour
                     var node =  graph.Find(i);
                     var adsasdd = _roadFactory.Create(node, node).gameObject;
                     Undo.RegisterCreatedObjectUndo(adsasdd, "ilya ne bei");
+                    Undo.RevertAllInCurrentGroup();
+                }
+
+                
+                while (destroyedRoadInBuilding.Count > 0)
+                {
+                    var br = destroyedRoadInBuilding.Pop();
+
+                    Undo.RegisterCompleteObjectUndo(br.Item1, "ilya ne bei");
+                    Undo.RevertAllInCurrentGroup();
+                }
+
+                
+                if (destroyedRoadIndices.Count != 0)
+                {
+                    while (destroyedRoadIndices.Count > 0)
+                    {
+                        _roads.RemoveAt(destroyedRoadIndices.Pop());
+                    }
+
+                    foreach (var node in _buildingsGraph.Nodes)
+                    {
+                        foreach (var road in node.Value.roads)
+                        {
+                            if (!_roads.Contains(road))
+                            {
+                                _roads.Add(road);
+                            }
+                        }
+                    }
+                }
+
+                foreach (var road in unconnectedRoadsToDestroy)
+                {
+                    Undo.RegisterCompleteObjectUndo(road, "ilya ne bei");
                     Undo.RevertAllInCurrentGroup();
                 }
             }
