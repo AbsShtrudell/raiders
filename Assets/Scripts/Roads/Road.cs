@@ -20,7 +20,6 @@ public class Road : MonoBehaviour
 
     private void Start()
     {
-        Rebuild();
     }
 
     public void Rebuild()

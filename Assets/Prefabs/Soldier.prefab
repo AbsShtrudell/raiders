@@ -553,6 +553,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9016e815d43c3fb49a3d6de4df79aa25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathCreator: {fileID: 0}
-  endOfPathInstruction: 0
-  speed: 5
+  _behavior:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

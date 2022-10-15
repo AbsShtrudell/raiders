@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7626429491544625262}
   - component: {fileID: 7341637670009593690}
   - component: {fileID: 8299738845714440554}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,3 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422a7bb40f1e1c247b4ce9982ec7a899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _side: 2
+  _type: 0
+  _visual: {fileID: 0}
+  _roads: []

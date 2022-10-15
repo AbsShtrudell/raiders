@@ -76,11 +76,13 @@ public class Building : MonoBehaviour
     public void Select()
     {    
         OnSelected?.Invoke(this);
+        _meshRenderer.material.color = Color.red;
     }
 
     public void Deselect()
     {
         OnDeselected?.Invoke(this);
+        _meshRenderer.material.color = Color.white;
     }
 
     public void SendTroops(Building target)
