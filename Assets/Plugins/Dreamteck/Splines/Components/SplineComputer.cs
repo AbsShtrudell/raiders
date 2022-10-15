@@ -822,6 +822,19 @@ namespace Dreamteck.Splines
             Rebuild(true);
         }
 
+        public void InsertPoint(int id, SplinePoint point)
+        {
+            List<SplinePoint> points = new List<SplinePoint>();
+            foreach(SplinePoint p in GetPoints())
+            {
+                points.Add(p);
+            }
+            points.Insert(id, point);
+            
+            spline.points = points.ToArray();
+            Rebuild(true);
+        }
+
         /// <summary>
         /// Converts a point index to spline percent
         /// </summary>
