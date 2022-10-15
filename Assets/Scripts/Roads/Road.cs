@@ -25,7 +25,7 @@ public class Road : MonoBehaviour
 
     public void Rebuild()
     {
-        if (_ends == null || _ends.Length != 2) return;
+        if (!IsConnected()) return;
 
         SplinePoint[] points = new SplinePoint[2];
 
@@ -37,36 +37,19 @@ public class Road : MonoBehaviour
         _splineComputer.SetPoints(points);
     }
 
-    public void DestroySelf()
+    public bool HasConnectionWith(int index)
     {
-        _ends[0].Value.OnDisabled -= DestroySelf;
-        _ends[1].Value.OnDisabled -= DestroySelf;
-
-        //if (_meshCreator?.MeshHolder) DestroyImmediate(_meshCreator.MeshHolder);
-        if (gameObject) DestroyImmediate(gameObject);
+        return _ends != null && _ends.Length == 2 && (_ends[0].Index == index || _ends[1].Index == index);
     }
 
-    public void DestroySelfOnUnbind(Node<Building> b1, Node<Building> b2)
+    public bool IsConnected()
     {
-        if (_ends[0] == b1 && _ends[1] == b2 ||
-            _ends[1] == b1 && _ends[0] == b2)
-        {
-            DestroySelf();
-        }
+        return _ends != null && _ends.Length == 2 && _ends[0].Value != null && _ends[1].Value != null;
     }
 
     private void OnDestroy()
     {
-        if (gameObject.scene.isLoaded) //Was Deleted
-        {
-            if (_ends.Length != 0)
-            {
-            }
-        }
-        else //Was Cleaned Up on Scene Closure
-        {
-            
-        }
+        
     }
 
     public class Factory : Zenject.IFactory<Node<Building>, Node<Building>, Road>

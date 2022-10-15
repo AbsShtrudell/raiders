@@ -68,11 +68,11 @@ public class BuildingsGraphEditorInspector : Editor
     {
         DrawDefaultInspector();
 
-        if (GUILayout.Button("Random bind"))
-        {
-            editor.BindRandomBuildings();
-            InitializeBindMatrix();
-        }
+        //if (GUILayout.Button("Random bind"))
+        //{
+        //    editor.BindRandomBuildings();
+        //    InitializeBindMatrix();
+        //}
 
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("+", GUILayout.Width(matrixElementWidth)))
@@ -118,7 +118,6 @@ public class BuildingsGraphEditorInspector : Editor
 
         if (GUILayout.Button("Bind"))
         {
-            Undo.RecordObject(editor, "ed");
             for (int i = 0; i < nodeCount; i++)
             {
                 for (int j = i + 1; j < nodeCount; j++)
@@ -149,7 +148,7 @@ public class BuildingsGraphEditorInspector : Editor
     {
         Building b = editor.graph.Nodes[selectedIndex].Value;
 
-        EditorGUIUtility.PingObject(b.gameObject);
+        EditorGUIUtility.PingObject(b);
         SceneView.lastActiveSceneView.LookAt(b.transform.position);
     }
 
