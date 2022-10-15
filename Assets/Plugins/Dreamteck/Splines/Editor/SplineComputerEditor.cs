@@ -234,16 +234,21 @@ namespace Dreamteck.Splines.Editor
             {
                 Vector3 worldPos = MouseWorldPosition();
 
-                int id = 0;
-                for(int i = 0; i < spline.pointCount;i++)
+                int closestId = spline.pointCount - 1;
+                int id = spline.pointCount - 1;
+                for(int i = spline.pointCount - 1; i >= 0;i--)
                 {
-                    var point = spline.GetPoint(i);
-                    if (Vector3.Distance(worldPos, point.position) < Vector3.Distance(worldPos, spline.GetPoints()[id].position))
+                    var point = spline.GetPoint(i).position;
+                    point.y = 0;
+                    var point2 = spline.GetPoints()[id].position;
+                    point2.y = 0;
+                    if (Vector3.Distance(worldPos, point) < Vector3.Distance(worldPos, point2))
                     {
-                        id = i; 
+                        id = i;
+                        if(id + 1 != closestId) closestId = id;
                     }
                 }
-                spline.InsertPoint(id, new SplinePoint(worldPos));
+                spline.InsertPoint(closestId, new SplinePoint(worldPos));
             }
         }
 
