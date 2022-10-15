@@ -222,37 +222,29 @@ public class BuildingsGraphEditor : MonoBehaviour
 
         if (bind)
         {
-            Undo.RecordObject(this, "ed");
             if (b1.Bind(b2))
             {
                 var road = _roadFactory.Create(b1, b2);
 
                 Undo.RegisterCreatedObjectUndo(road.gameObject, "road");
 
-                Undo.RecordObject(this, "ed");
                 _roads.Add(road);
 
-                Undo.RecordObject(b1.Value, "b1");
                 b1.Value.roads.Add(road);
-                Undo.RecordObject(b2.Value, "b2");
                 b2.Value.roads.Add(road);
 
             }
         }
         else
         {
-            Undo.RecordObject(this, "ed");
             if (b1.Unbind(b2))
             {
                 foreach (var road in b1.Value.roads)
                 {
-                    if (road.Ends[0].Index == b2.Index || road.Ends[1].Index == b2.Index)
+                    if (road.HasConnectionWith(b2.Index))
                     {
-                        Undo.RecordObject(this, "ed");
                         _roads.Remove(road);
-                        Undo.RecordObject(b1.Value, "b1");
                         b1.Value.roads.Remove(road);
-                        Undo.RecordObject(b2.Value, "b2");
                         b2.Value.roads.Remove(road);
                         Undo.DestroyObjectImmediate(road.gameObject);
 

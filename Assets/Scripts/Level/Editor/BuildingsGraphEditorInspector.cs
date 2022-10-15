@@ -93,6 +93,11 @@ public class BuildingsGraphEditorInspector : Editor
 
         if (GUILayout.Button("Bind"))
         {
+            Undo.RegisterCompleteObjectUndo(editor, "ed");
+            foreach (var node in editor.graph.Nodes)
+            {
+                Undo.RegisterCompleteObjectUndo(node.Value, "ed");
+            }
             for (int i = 0; i < nodeCount; i++)
             {
                 for (int j = i + 1; j < nodeCount; j++)
