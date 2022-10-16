@@ -15,6 +15,7 @@ public class Squad : MonoBehaviour
     private Queue<Tuple<SplineComputer, Direction>> _roads;
     [SerializeField, Min(0f)] private float _speed = 5f;
     [SerializeField] private float distanceFromPrimary = 1f;
+    [SerializeField] private float xDistance = 0.05f;
     [Zenject.Inject] private Zenject.DiContainer container;
     private Soldier[] soldiers;
     private PrimaryFollowerBehavior primaryFollower = null;
@@ -37,7 +38,7 @@ public class Squad : MonoBehaviour
             InitializeSoldier(i);
             f = soldiers[i].GetComponent<TestPathFollower>();
             secondaryFollowers[i - 1] =
-                f.MakeSecondary(primaryFollower, distanceFromPrimary * i);
+                f.MakeSecondary(primaryFollower, distanceFromPrimary * ((i + 1) / 2), xDistance * i * (i % 2 == 0 ? 1 : -1));
         }
     }
 
@@ -58,7 +59,8 @@ public class Squad : MonoBehaviour
 
         for (int i = 0; i < secondaryFollowers.Length; i++)
         {
-            secondaryFollowers[i].SetDistance(distanceFromPrimary * (i + 1));
+            secondaryFollowers[i].SetDistance(distanceFromPrimary * (i / 2 + 1));
+            secondaryFollowers[i].SetXDistance(xDistance * (i + 1) * (i % 2 == 1 ? 1 : -1));
         }
     }
 

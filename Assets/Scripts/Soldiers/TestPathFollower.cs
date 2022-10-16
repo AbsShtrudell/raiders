@@ -23,9 +23,12 @@ abstract public class FollowerBehavior
     {
         var newPos = path.EvaluatePosition(_distanceTravelled);
 
+        newPos.y += transform.localScale.y;
+
         var scale = transform.localScale;
         scale.x = Mathf.Abs(scale.x) * Mathf.Sign(newPos.x - transform.position.x);
         transform.localScale = scale;
+
 
         transform.position = newPos;
     }
@@ -82,30 +85,50 @@ public class SecondaryFollowerBehavior : FollowerBehavior
 {
     [SerializeField] private PrimaryFollowerBehavior primaryFollower;
     [SerializeField] private float distanceFromPrimary;
+    [SerializeField] private float _x;
 
     public override SplineComputer path { get => primaryFollower.path; protected set {} }
 
-    public SecondaryFollowerBehavior(Transform transform, PrimaryFollowerBehavior primaryFollower, float distance)
+    public SecondaryFollowerBehavior(Transform transform, PrimaryFollowerBehavior primaryFollower, float distance, float x)
         : base(transform)
     {
         this.primaryFollower = primaryFollower;
         distanceFromPrimary = distance / 100f;
         _distanceTravelled = primaryFollower.distanceTravelled;
+        _x = x;
+
+
+        base.Move();
     }
 
     public override void Move()
     {
-        float diff = primaryFollower.distanceTravelled - distanceTravelled;
+        float diff = primaryFollower.distanceTravelled - _distanceTravelled;
 
         if (Mathf.Abs(diff) > distanceFromPrimary)
+        {
             _distanceTravelled = primaryFollower.distanceTravelled - distanceFromPrimary * Mathf.Sign(diff);
 
-        base.Move();
+            base.Move();
+
+            float tempPoint = _distanceTravelled + 0.1f;
+            if (tempPoint > 1f)
+                tempPoint -= 0.2f;
+            Vector3 temp = path.EvaluatePosition(tempPoint);
+            Vector3 normal = Vector3.Cross(temp - transform.position, Vector3.up).normalized;
+
+            transform.position += _x * normal;
+        }
     }
 
     public void SetDistance(float d)
     {
         distanceFromPrimary = d / 100f;
+    }
+
+    public void SetXDistance(float x)
+    {
+        _x = x;
     }
 }
 
@@ -126,9 +149,9 @@ public class TestPathFollower : MonoBehaviour
         return behavior as PrimaryFollowerBehavior;
     }
 
-    public SecondaryFollowerBehavior MakeSecondary(PrimaryFollowerBehavior primaryFollower, float distance)
+    public SecondaryFollowerBehavior MakeSecondary(PrimaryFollowerBehavior primaryFollower, float distance, float x)
     {
-        _behavior = new SecondaryFollowerBehavior(transform, primaryFollower, distance);
+        _behavior = new SecondaryFollowerBehavior(transform, primaryFollower, distance, x);
         return behavior as SecondaryFollowerBehavior;
     }
 }
