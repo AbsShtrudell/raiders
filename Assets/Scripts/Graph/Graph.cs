@@ -9,7 +9,7 @@ namespace Graphs
     public class Graph<T>
     {
         public Path.IPathAlgorithm<T> pathAlgorithm
-        { get; private set; }
+        { get; set; }
 
         [SerializeField]
         private List<Node<T>> _nodes = new List<Node<T>>();
@@ -77,6 +77,16 @@ namespace Graphs
             foreach(var node in Nodes)
             {
                 if (node.Index == id)
+                    return node;
+            }
+            return null;
+        }
+
+        public Node<T> Find(T value)
+        {
+            foreach(var node in Nodes)
+            {
+                if (node.Value.Equals(value))
                     return node;
             }
             return null;

@@ -1,31 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Dreamteck.Splines;
 using UnityEngine;
-using PathCreation;
-using PathCreation.Examples;
 
 [System.Serializable]
-public class FollowerBehavior
+abstract public class FollowerBehavior
 {
-    protected PathCreator path;
+    abstract public SplineComputer path { get; protected set; }
+
     [SerializeField] protected Transform transform;
     [SerializeField] protected float _distanceTravelled = 0f;
-    [SerializeField] protected EndOfPathInstruction _endOfPathInstruction;
 
     public float distanceTravelled => _distanceTravelled;
-    public EndOfPathInstruction endOfPathInstruction => _endOfPathInstruction;    
 
-    public FollowerBehavior(PathCreator vertexPath, Transform transform, float distanceTravelled, EndOfPathInstruction endOfPathInstruction)
+    public FollowerBehavior(Transform transform)
     {
-        path = vertexPath;
         this.transform = transform;
-        _distanceTravelled = distanceTravelled;
-        _endOfPathInstruction = endOfPathInstruction;
     }
 
     public virtual void Move()
     {
-        var newPos = path.path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
+        var newPos = path.EvaluatePosition(_distanceTravelled);
+
         var scale = transform.localScale;
         scale.x = Mathf.Abs(scale.x) * Mathf.Sign(newPos.x - transform.position.x);
         transform.localScale = scale;
@@ -36,26 +33,48 @@ public class FollowerBehavior
 
 public class PrimaryFollowerBehavior : FollowerBehavior
 {
+    public override SplineComputer path { get; protected set; }
     [SerializeField] protected float _speed = 5f;
+    protected Queue<Tuple<SplineComputer, Squad.Direction>> _paths;
+    protected Squad.Direction _direction;
+    protected float _destination = 1f;
 
     public float speed => _speed;
 
-    public PrimaryFollowerBehavior(PathCreator vertexPath, Transform transform, float speed, float distanceTravelled, EndOfPathInstruction endOfPathInstruction)
-        : base(vertexPath, transform, distanceTravelled, endOfPathInstruction)
+    public PrimaryFollowerBehavior(Queue<Tuple<SplineComputer, Squad.Direction>> paths, Transform transform, float speed)
+        : base(transform)
     {
-        _speed = speed;
+        _paths = paths;
+        _speed = speed / 100f;
+
+        CalculateCurrentPath();
+    }
+
+    private void CalculateCurrentPath()
+    {
+        var tuple = _paths.Dequeue();
+        path = tuple.Item1;
+        _direction = tuple.Item2;
+
+        _distanceTravelled = _direction == Squad.Direction.Forward ? 0f : 1f;
+        _destination = _direction == Squad.Direction.Forward ? 1f : 0f;
     }
 
     public override void Move()
     {
-        _distanceTravelled += speed * Time.deltaTime;
+        if (_distanceTravelled == _destination && _paths.Count != 0)
+        {
+            CalculateCurrentPath();
+        }
+
+        _distanceTravelled = Mathf.MoveTowards(_distanceTravelled, _destination, Mathf.Abs(speed * Time.deltaTime));
 
         base.Move();
     }
 
     public void SetSpeed(float s)
     {
-        _speed = s;
+        _speed = s / 100f;
     }
 }
 
@@ -64,11 +83,14 @@ public class SecondaryFollowerBehavior : FollowerBehavior
     [SerializeField] private PrimaryFollowerBehavior primaryFollower;
     [SerializeField] private float distanceFromPrimary;
 
-    public SecondaryFollowerBehavior(PathCreator vertexPath, Transform transform, float distanceTravelled, EndOfPathInstruction endOfPathInstruction, PrimaryFollowerBehavior primaryFollower, float distance)
-        : base(vertexPath, transform, distanceTravelled, endOfPathInstruction)
+    public override SplineComputer path { get => primaryFollower.path; protected set {} }
+
+    public SecondaryFollowerBehavior(Transform transform, PrimaryFollowerBehavior primaryFollower, float distance)
+        : base(transform)
     {
         this.primaryFollower = primaryFollower;
-        distanceFromPrimary = distance;
+        distanceFromPrimary = distance / 100f;
+        _distanceTravelled = primaryFollower.distanceTravelled;
     }
 
     public override void Move()
@@ -83,7 +105,7 @@ public class SecondaryFollowerBehavior : FollowerBehavior
 
     public void SetDistance(float d)
     {
-        distanceFromPrimary = d;
+        distanceFromPrimary = d / 100f;
     }
 }
 
@@ -98,15 +120,15 @@ public class TestPathFollower : MonoBehaviour
         _behavior?.Move();
     }
     
-    public PrimaryFollowerBehavior MakePrimary(PathCreator path, float speed, float distanceTravelled, EndOfPathInstruction endOfPathInstruction)
+    public PrimaryFollowerBehavior MakePrimary(Queue<Tuple<SplineComputer, Squad.Direction>> paths, float speed)
     {
-        _behavior = new PrimaryFollowerBehavior(path, transform, speed, distanceTravelled, endOfPathInstruction);
+        _behavior = new PrimaryFollowerBehavior(paths, transform, speed);
         return behavior as PrimaryFollowerBehavior;
     }
 
-    public SecondaryFollowerBehavior MakeSecondary(PathCreator path, PrimaryFollowerBehavior primaryFollower, float distanceTravelled, EndOfPathInstruction endOfPathInstruction, float distance)
+    public SecondaryFollowerBehavior MakeSecondary(PrimaryFollowerBehavior primaryFollower, float distance)
     {
-        _behavior = new SecondaryFollowerBehavior(path, transform, distanceTravelled, endOfPathInstruction, primaryFollower, distance);
+        _behavior = new SecondaryFollowerBehavior(transform, primaryFollower, distance);
         return behavior as SecondaryFollowerBehavior;
     }
 }

@@ -3,8 +3,9 @@ using UnityEngine;
 using Graphs;
 using UnityEditor;
 using System;
+using Graphs.Path;
 
-[ExecuteInEditMode]
+[ExecuteAlways]
 public class BuildingsGraphEditor : MonoBehaviour
 {
     [SerializeField]
@@ -14,6 +15,8 @@ public class BuildingsGraphEditor : MonoBehaviour
     private Building _buildingVisual;
     [SerializeField]
     private Road _roadVisual;
+    [SerializeField]
+    private GameObject squadPrefab;
 
     private Building.Factory _buildingFactory;
     private Road.Factory _roadFactory;
@@ -28,10 +31,22 @@ public class BuildingsGraphEditor : MonoBehaviour
 
     private void OnEnable()
     {
-        _buildingFactory = new Building.Factory(null, _buildingVisual);
-        _roadFactory = new Road.Factory(_roadVisual);
-        if(_buildingFactory == null)
-            _buildingsGraph = new Graph<Building>(new Graphs.Path.APathBuildings());
+        if (Application.isPlaying)
+        {
+            _buildingsGraph.pathAlgorithm = new APathBuildings();
+            foreach (var node in _buildingsGraph.Nodes)
+            {
+                node.Value.graph = _buildingsGraph;
+                node.Value.squadPrefab = squadPrefab;
+            }
+        }
+        else
+        {
+            _buildingFactory = new Building.Factory(null, _buildingVisual);
+            _roadFactory = new Road.Factory(_roadVisual);
+            if(_buildingFactory == null)
+                _buildingsGraph = new Graph<Building>(new Graphs.Path.APathBuildings());
+        }
     }
 
     public void AddBuilding()
@@ -48,6 +63,9 @@ public class BuildingsGraphEditor : MonoBehaviour
 
     private void Update()
     {
+        if (Application.isPlaying)
+            return;
+
         const string groupName = "Remove buildings";
         const string groupName2 = "Delete Game Objects";
 

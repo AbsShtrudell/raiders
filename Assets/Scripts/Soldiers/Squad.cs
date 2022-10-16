@@ -1,14 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Dreamteck.Splines;
 using UnityEngine;
 
 public class Squad : MonoBehaviour
 {
+    [System.Serializable]
+    public enum Direction { Forward = 1, Backward = -1 }
+
     [SerializeField] private GameObject soldierPrefab;
     [SerializeField] private Side _side;
     [SerializeField, Min(1)] private int soldiersAmount = 3;
-    [SerializeField] private PathCreation.PathCreator pathCreator;
-    [SerializeField] private float speed = 5f;
+    private Queue<Tuple<SplineComputer, Direction>> _roads;
+    [SerializeField, Min(0f)] private float _speed = 5f;
     [SerializeField] private float distanceFromPrimary = 1f;
     [Zenject.Inject] private Zenject.DiContainer container;
     private Soldier[] soldiers;
@@ -21,25 +26,24 @@ public class Squad : MonoBehaviour
         secondaryFollowers = new SecondaryFollowerBehavior[soldiersAmount - 1];
     }
 
-    private void Start()
+    public void MakeSoldiers()
     {
         InitializeSoldier(0);
         var f = soldiers[0].GetComponent<TestPathFollower>();
-        primaryFollower = f.MakePrimary(pathCreator, 5f, 0f, PathCreation.EndOfPathInstruction.Loop);
+        primaryFollower = f.MakePrimary(_roads, _speed);
 
         for (int i = 1; i < soldiers.Length; i++)
         {
             InitializeSoldier(i);
             f = soldiers[i].GetComponent<TestPathFollower>();
             secondaryFollowers[i - 1] =
-                f.MakeSecondary(pathCreator, primaryFollower, 0f, PathCreation.EndOfPathInstruction.Loop, i * distanceFromPrimary);
+                f.MakeSecondary(primaryFollower, distanceFromPrimary * i);
         }
     }
 
     private void InitializeSoldier(int i)
     {
         soldiers[i] = container.InstantiatePrefab(soldierPrefab, transform.position, transform.rotation, transform).GetComponent<Soldier>();
-        soldiers[i].transform.localScale = Vector3.one;
         soldiers[i].side = _side;
         soldiers[i].ChangeItems();
         soldiers[i].AddRenderPriority(soldiers.Length - i);
@@ -50,11 +54,21 @@ public class Squad : MonoBehaviour
         if (primaryFollower == null)
             return;
 
-        primaryFollower.SetSpeed(speed);
+        primaryFollower.SetSpeed(_speed);
 
         for (int i = 0; i < secondaryFollowers.Length; i++)
         {
             secondaryFollowers[i].SetDistance(distanceFromPrimary * (i + 1));
         }
+    }
+
+    public void SetRoads(Queue<Tuple<SplineComputer, Direction>> roads)
+    {
+        _roads = roads;
+    }
+
+    public void SetSide(Side side)
+    {
+        _side = side;
     }
 }

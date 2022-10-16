@@ -20,6 +20,7 @@ public class Road : MonoBehaviour
 
     private void Start()
     {
+        //_splineComputer.EvaluatePosition(,)
     }
 
     public void Rebuild()

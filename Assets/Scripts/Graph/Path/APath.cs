@@ -39,7 +39,7 @@ namespace Graphs.Path
                 }
             }
 
-            return new Path<Building>(null);
+            return null;
         }
     }
 }

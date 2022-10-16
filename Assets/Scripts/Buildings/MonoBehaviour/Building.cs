@@ -2,9 +2,12 @@ using UnityEngine;
 using System;
 using Zenject;
 using System.Collections.Generic;
+using Dreamteck.Splines;
 
 public class Building : MonoBehaviour
 {
+    [Inject]
+    private DiContainer container;
     [Inject] 
     private BuildingImpCreator _bImpCreator;
     [Inject]
@@ -18,6 +21,7 @@ public class Building : MonoBehaviour
     { get { return _side; } set { _side = value; } }
     public BuildingType Type => _type;
 
+    public GameObject squadPrefab {get; set;}
     [SerializeField]
     private Transform _visual;
     [SerializeField]
@@ -31,6 +35,9 @@ public class Building : MonoBehaviour
     public List<Road> roads => _roads;
 
     private BuildingImp _buildingImp;
+
+
+    public Graphs.Graph<Building> graph { get; set; }
 
     public Action<Building> OnSelected;
     public Action<Building> OnDeselected;
@@ -49,7 +56,7 @@ public class Building : MonoBehaviour
     {
         _buildingImp = _bImpCreator?.Create(_type, _side);
         _slotsUI = _sContrCreator?.Create(_side, _buildingImp);
-        _slotsUI.transform.parent = _visual;
+        _slotsUI.transform.SetParent(_visual);
     }
 
     private void OnDisable()
@@ -94,7 +101,37 @@ public class Building : MonoBehaviour
 
     public void SendTroops(Building target)
     {
+        var source = graph.Find(this);
+        var destination = graph.Find(target);
+
+        var path = graph.pathAlgorithm.FindPath(source, destination, graph);
         
+        if (path == null || !_buildingImp.SendTroops())
+        {
+            return;
+        }
+
+        var pathRoads = new Queue<Tuple<SplineComputer, Squad.Direction>>();
+        var squad = container.InstantiatePrefab(squadPrefab).GetComponent<Squad>();
+        squad.SetSide(_side);
+
+        for (int i = 0; i < path.nodes.Count - 1; i++)
+        {
+            foreach (var road in path.nodes[i].Value.roads)
+            {
+                if (road.HasConnectionWith(path.nodes[i + 1].Index))
+                {
+                    var direction = road.Ends[1].Index == path.nodes[i].Index ? Squad.Direction.Backward : Squad.Direction.Forward;
+                    
+                    pathRoads.Enqueue(new Tuple<SplineComputer, Squad.Direction>(road.PathCreator, direction));
+
+                    break;
+                }
+            }
+        }
+
+        squad.SetRoads(pathRoads);
+        squad.MakeSoldiers();
     }
 
     public class Factory : IFactory<Building>
