@@ -7,7 +7,8 @@ public class Building : MonoBehaviour
 {
     [Inject] 
     private BuildingImpCreator _bImpCreator;
-
+    [Inject]
+    private SlotsControllerCreator _sContrCreator;
     [SerializeField] 
     private Side _side = Side.Rebels;
     [SerializeField] 
@@ -19,9 +20,11 @@ public class Building : MonoBehaviour
 
     [SerializeField]
     private Transform _visual;
+    [SerializeField]
     private MeshRenderer _meshRenderer;
     private MeshFilter _meshFilter;
     private Collider _collider;
+    private SlotsController _slotsUI;
 
     [SerializeField]
     private List<Road> _roads;
@@ -45,6 +48,8 @@ public class Building : MonoBehaviour
     private void OnEnable()
     {
         _buildingImp = _bImpCreator?.Create(_type, _side);
+        _slotsUI = _sContrCreator?.Create(_side, _buildingImp);
+        _slotsUI.transform.parent = _visual;
     }
 
     private void OnDisable()
@@ -59,17 +64,19 @@ public class Building : MonoBehaviour
     private void Update()
     {
         _buildingImp?.Update();
+
+        _slotsUI.transform.position = transform.position + Vector3.up * 2;
     }
 
     public void SquadEnter(Side side, TroopsType type)
     {
         if(side != _side)
-        {  
-
+        {
+            _buildingImp.GotAttacked();
         }
         else
         {
-
+            _buildingImp.Reinforcement();
         }
     }
 
@@ -87,6 +94,7 @@ public class Building : MonoBehaviour
 
     public void SendTroops(Building target)
     {
+        
     }
 
     public class Factory : IFactory<Building>
