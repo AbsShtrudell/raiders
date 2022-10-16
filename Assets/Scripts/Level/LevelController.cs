@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Graphs;
 
+[RequireComponent(typeof(BuildingsGraphEditor))]
 public class LevelController : MonoBehaviour
 {
     private Graph<Building> _graph;
+    private List<Road> _roads;
 
-    public void Initialize(Graph<Building> graph)
+    private void Awake()
     {
-        _graph = graph;
-    }
+        BuildingsGraphEditor graphEditor = GetComponent<BuildingsGraphEditor>();
 
-    private void OnEnable()
-    {
-        Debug.Log(_graph);
+        _graph = graphEditor.graph;
+        _roads = graphEditor.roads;
     }
 }
