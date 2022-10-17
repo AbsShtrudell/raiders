@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SimpleBuilding
   m_EditorClassIdentifier: 
   _squadSlot: 3
-  _squadRecoveryTime: 1
+  _squadRecoveryTime: 0.5
   _income: 0
   _defenseMultyplier: 0
   _troopsType: 0

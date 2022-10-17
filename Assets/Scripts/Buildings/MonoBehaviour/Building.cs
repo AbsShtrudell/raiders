@@ -114,6 +114,7 @@ public class Building : MonoBehaviour
         var pathRoads = new Queue<Tuple<SplineComputer, Squad.Direction>>();
         var squad = container.InstantiatePrefab(squadPrefab).GetComponent<Squad>();
         squad.SetSide(_side);
+        squad.SetTarget(target);
 
         for (int i = 0; i < path.nodes.Count - 1; i++)
         {

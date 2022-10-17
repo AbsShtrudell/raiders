@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
     private Side _side = Side.Vikings;
 
     private List<Building> _selectedBuildings = new List<Building>();

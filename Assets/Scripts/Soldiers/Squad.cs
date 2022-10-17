@@ -20,6 +20,7 @@ public class Squad : MonoBehaviour
     private Soldier[] soldiers;
     private PrimaryFollowerBehavior primaryFollower = null;
     private SecondaryFollowerBehavior[] secondaryFollowers;
+    private Building building;
 
     private void Awake()
     {
@@ -32,7 +33,7 @@ public class Squad : MonoBehaviour
         InitializeSoldier(0);
         var f = soldiers[0].GetComponent<TestPathFollower>();
         primaryFollower = f.MakePrimary(_roads, _speed);
-
+        primaryFollower.OnGetDestination += () => { building.SquadEnter(_side, TroopsType.Default); };
         for (int i = 1; i < soldiers.Length; i++)
         {
             InitializeSoldier(i);
@@ -72,5 +73,10 @@ public class Squad : MonoBehaviour
     public void SetSide(Side side)
     {
         _side = side;
+    }
+
+    public void SetTarget(Building building)
+    {
+        this.building = building;
     }
 }

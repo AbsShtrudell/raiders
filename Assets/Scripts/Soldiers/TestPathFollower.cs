@@ -14,9 +14,17 @@ abstract public class FollowerBehavior
 
     public float distanceTravelled => _distanceTravelled;
 
+    public event Action OnGetDestination;
+
     public FollowerBehavior(Transform transform)
     {
         this.transform = transform;
+    }
+
+    public void InvokeOnGetDestination()
+    {
+        Debug.Log("Get Destination");
+        OnGetDestination?.Invoke();
     }
 
     public virtual void Move()
@@ -65,9 +73,16 @@ public class PrimaryFollowerBehavior : FollowerBehavior
 
     public override void Move()
     {
-        if (_distanceTravelled == _destination && _paths.Count != 0)
+        if (_distanceTravelled == _destination)
         {
-            CalculateCurrentPath();
+            if (_paths.Count != 0)
+            {
+                CalculateCurrentPath();
+            }
+            else
+            {
+                InvokeOnGetDestination();
+            }
         }
 
         _distanceTravelled = Mathf.MoveTowards(_distanceTravelled, _destination, Mathf.Abs(speed * Time.deltaTime));
@@ -97,12 +112,13 @@ public class SecondaryFollowerBehavior : FollowerBehavior
         _distanceTravelled = primaryFollower.distanceTravelled;
         _x = x;
 
-
+        primaryFollower.OnGetDestination += () => { InvokeOnGetDestination(); };
         base.Move();
     }
 
     public override void Move()
     {
+
         float diff = primaryFollower.distanceTravelled - _distanceTravelled;
 
         if (Mathf.Abs(diff) > distanceFromPrimary)
@@ -135,7 +151,8 @@ public class SecondaryFollowerBehavior : FollowerBehavior
 public class TestPathFollower : MonoBehaviour
 {
     [SerializeReference] private FollowerBehavior _behavior = null;
-    
+
+    [HideInInspector]
     public FollowerBehavior behavior => _behavior;
 
     private void Update()
@@ -146,12 +163,14 @@ public class TestPathFollower : MonoBehaviour
     public PrimaryFollowerBehavior MakePrimary(Queue<Tuple<SplineComputer, Squad.Direction>> paths, float speed)
     {
         _behavior = new PrimaryFollowerBehavior(paths, transform, speed);
+        _behavior.OnGetDestination += () => { Destroy(this.gameObject); };
         return behavior as PrimaryFollowerBehavior;
     }
 
     public SecondaryFollowerBehavior MakeSecondary(PrimaryFollowerBehavior primaryFollower, float distance, float x)
     {
         _behavior = new SecondaryFollowerBehavior(transform, primaryFollower, distance, x);
+        _behavior.OnGetDestination += () => { Destroy(this.gameObject); };
         return behavior as SecondaryFollowerBehavior;
     }
 }

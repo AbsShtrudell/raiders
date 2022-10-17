@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soldierPrefab: {fileID: 4364281762661420893, guid: a678b429c9bf3f2409207fefe9ec0463, type: 3}
   _side: 0
-  soldiersAmount: 10
-  _speed: 20
-  distanceFromPrimary: 0.7
+  soldiersAmount: 8
+  _speed: 40
+  distanceFromPrimary: 5
   xDistance: 0.03
