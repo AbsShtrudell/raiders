@@ -61,7 +61,7 @@ public class SlotsController : MonoBehaviour
     private void AddSlot(List<SircleSlot> list, SircleSlot.Factory factory)
     {
         var slot = factory.Construct();
-        slot.transform.SetParent(_slotsHolder.transform);
+        slot.transform.parent = _slotsHolder.transform;
         slot.transform.localScale = Vector3.one;
         list.Add(slot);
     }
@@ -99,6 +99,8 @@ public class SlotsController : MonoBehaviour
 
             slotsController._defaultFactory = _defFactory;
             slotsController._extraFactory = _extraFactory;
+
+            slotsController.GetComponent<Canvas>().worldCamera = Camera.main;
 
             return slotsController;
         }

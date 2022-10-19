@@ -33,7 +33,7 @@ public class Squad : MonoBehaviour
         InitializeSoldier(0);
         var f = soldiers[0].GetComponent<TestPathFollower>();
         primaryFollower = f.MakePrimary(_roads, _speed);
-        primaryFollower.OnGetDestination += () => { building.SquadEnter(_side, TroopsType.Default); };
+        primaryFollower.ReachedDestination += () => { building.SquadEnter(_side, TroopsType.Default); };
         for (int i = 1; i < soldiers.Length; i++)
         {
             InitializeSoldier(i);

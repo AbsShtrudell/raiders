@@ -14,17 +14,16 @@ abstract public class FollowerBehavior
 
     public float distanceTravelled => _distanceTravelled;
 
-    public event Action OnGetDestination;
+    public event Action ReachedDestination;
 
     public FollowerBehavior(Transform transform)
     {
         this.transform = transform;
     }
 
-    public void InvokeOnGetDestination()
+    public void OnReachedDestination()
     {
-        Debug.Log("Get Destination");
-        OnGetDestination?.Invoke();
+        ReachedDestination?.Invoke();
     }
 
     public virtual void Move()
@@ -81,7 +80,7 @@ public class PrimaryFollowerBehavior : FollowerBehavior
             }
             else
             {
-                InvokeOnGetDestination();
+                OnReachedDestination();
             }
         }
 
@@ -112,7 +111,7 @@ public class SecondaryFollowerBehavior : FollowerBehavior
         _distanceTravelled = primaryFollower.distanceTravelled;
         _x = x;
 
-        primaryFollower.OnGetDestination += () => { InvokeOnGetDestination(); };
+        primaryFollower.ReachedDestination += () => { OnReachedDestination(); };
         base.Move();
     }
 
@@ -163,14 +162,14 @@ public class TestPathFollower : MonoBehaviour
     public PrimaryFollowerBehavior MakePrimary(Queue<Tuple<SplineComputer, Squad.Direction>> paths, float speed)
     {
         _behavior = new PrimaryFollowerBehavior(paths, transform, speed);
-        _behavior.OnGetDestination += () => { Destroy(this.gameObject); };
+        _behavior.ReachedDestination += () => { Destroy(this.gameObject); };
         return behavior as PrimaryFollowerBehavior;
     }
 
     public SecondaryFollowerBehavior MakeSecondary(PrimaryFollowerBehavior primaryFollower, float distance, float x)
     {
         _behavior = new SecondaryFollowerBehavior(transform, primaryFollower, distance, x);
-        _behavior.OnGetDestination += () => { Destroy(this.gameObject); };
+        _behavior.ReachedDestination += () => { Destroy(this.gameObject); };
         return behavior as SecondaryFollowerBehavior;
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9141018745581980289}
   - component: {fileID: 5943573751603336553}
   - component: {fileID: 1565340617265195275}
+  - component: {fileID: -6921529458524376845}
   m_Layer: 5
   m_Name: SlotsCanvas
   m_TagString: Untagged
@@ -59,7 +60,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 778043193
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &9141018745581980289
@@ -84,7 +85,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5943573751603336553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,6 +116,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slotsHolder: {fileID: 3227664898682909133}
+--- !u!114 &-6921529458524376845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138447582203086187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be11fe33955180c41ba83ae6d0ee11cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8675263495134045207
 GameObject:
   m_ObjectHideFlags: 0

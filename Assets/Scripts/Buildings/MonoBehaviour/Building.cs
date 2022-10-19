@@ -54,9 +54,9 @@ public class Building : MonoBehaviour
 
     private void OnEnable()
     {
-        _buildingImp = _bImpCreator?.Create(_type, _side);
+        InitBuildingImp(_type, _side);
         _slotsUI = _sContrCreator?.Create(_side, _buildingImp);
-        _slotsUI.transform.SetParent(_visual);
+        _slotsUI.gameObject.transform.SetParent(_visual);
     }
 
     private void OnDisable()
@@ -72,14 +72,39 @@ public class Building : MonoBehaviour
     {
         _buildingImp?.Update();
 
-        _slotsUI.transform.position = transform.position + Vector3.up * 2;
+        _slotsUI.transform.localPosition = Vector3.up * 2;
+    }
+
+    private void InitBuildingImp(BuildingType type, Side side)
+    {
+        _buildingImp = _bImpCreator?.Create(type, side);
+
+        _buildingImp.Captured += ChangeTeam;
+    }
+
+    private void ChangeTeam(Side side)
+    {
+        _side = side;
+
+        if (_buildingImp.BuildingData.PreviousLevel)
+        {
+            InitBuildingImp(_buildingImp.BuildingData.PreviousLevel.Type, side);
+            _type = _buildingImp.BuildingData.Type;
+        }
+        else
+        {
+            InitBuildingImp(_buildingImp.BuildingData.Type, side);
+        }
+        Destroy(_slotsUI.gameObject);
+        _slotsUI = _sContrCreator?.Create(_side, _buildingImp);
+        _slotsUI.transform.SetParent(_visual);
     }
 
     public void SquadEnter(Side side, TroopsType type)
     {
         if(side != _side)
         {
-            _buildingImp.GotAttacked();
+            _buildingImp.GotAttacked(side);
         }
         else
         {

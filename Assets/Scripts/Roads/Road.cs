@@ -3,7 +3,7 @@ using Dreamteck.Splines;
 using Graphs;
 
 [ExecuteAlways]
-[RequireComponent(typeof(SplineComputer), typeof(PathGenerator))]
+[RequireComponent(typeof(SplineComputer))]
 public class Road : MonoBehaviour
 {
     [SerializeField]//, HideInInspector]

@@ -82,9 +82,9 @@ namespace Test
                 _buildingImp.Update();
             }
 
-            public void Attack()
+            public void Attack(Side side)
             {
-                _buildingImp.GotAttacked();
+                _buildingImp.GotAttacked(side);
             }
 
             public void Reinforcement()

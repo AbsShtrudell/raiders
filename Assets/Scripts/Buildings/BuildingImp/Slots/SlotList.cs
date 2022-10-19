@@ -14,10 +14,13 @@ public class SlotList
     private float _squadRecoveryTime;
     private int _blokcedSlots = 0;
     private int _size;
+    private Side _occupyingSide;
 
     public event Action AllSlotsEmpty;
     public event Action<List<Slot>> ExtraSlotsChanged;
     public event Action<List<Slot>> DefaultSlotsChanged;
+
+    public Side OccupyingSide => _occupyingSide;
 
     public float GeneralProgress
     { get 
@@ -135,6 +138,12 @@ public class SlotList
             DefaultSlotsChanged?.Invoke(_slots);
             break;
         }
+    }
+
+    public void BlockSlot(Side blockingSide)
+    {
+        BlockSlot();
+        _occupyingSide = blockingSide;
     }
 
     public bool EmptySlot()

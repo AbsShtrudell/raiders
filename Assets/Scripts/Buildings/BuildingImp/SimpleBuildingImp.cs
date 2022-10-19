@@ -34,7 +34,7 @@ public class SimpleBuildingImp : BuildingImp
         }
     }
 
-    public override void GotAttacked()
+    public override void GotAttacked(Side side)
     {
         if (_slotList.ExtraSlotsCount > 0)
         {
@@ -42,8 +42,18 @@ public class SimpleBuildingImp : BuildingImp
         }
         else
         {
-            _slotList.BlockSlot();
+            if (_slotList.IsBlocked && _slotList.OccupyingSide != side)
+                _slotList.UnblockSlot();
+            else
+                _slotList.BlockSlot(side);
         }
+    }
+
+    public override void Update()
+    {
+        _slotList.Update();
+
+        if (_slotList.IsBlocked && _slotList.GeneralProgress <= 0) OnCaptured(_slotList.OccupyingSide);
     }
 
     public new class Factory : IFactory<BuildingData, BuildingImp>
