@@ -63,6 +63,13 @@ public class SlotsController : MonoBehaviour
         var slot = factory.Construct();
         slot.transform.parent = _slotsHolder.transform;
         slot.transform.localScale = Vector3.one;
+        
+        var pos = slot.transform.localPosition;
+        pos.z = 0;
+        slot.transform.localPosition = pos;
+
+        slot.transform.localEulerAngles = Vector3.zero;
+
         list.Add(slot);
     }
 
