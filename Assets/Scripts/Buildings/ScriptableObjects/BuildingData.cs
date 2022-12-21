@@ -7,7 +7,8 @@ public class BuildingData : ScriptableObject
 {
     [SerializeField, Min(1)] private int _squadSlot;
     [SerializeField, Min(0.01f)] private float _squadRecoveryTime;
-    [SerializeField, Min(0)] private int _income;
+    [SerializeField, Min(0)] private uint _income;
+    [SerializeField, Min(0)] private uint _upkeep;
     [SerializeField, Min(1)] private int _defenseMultyplier;
     [SerializeField] private BuildingType _type;
     [SerializeField] private TroopsType _troopsType;
@@ -17,7 +18,8 @@ public class BuildingData : ScriptableObject
 
     public int SquadSlots => _squadSlot;
     public float SquadRecoveryTime => _squadRecoveryTime;
-    public int Income => _income;
+    public uint Income => _income;
+    public uint Upkeep => _upkeep;
     public int DefenseMultyplier => _defenseMultyplier;
     public TroopsType TroopsType => _troopsType;
     public Mesh Mesh => _mesh;

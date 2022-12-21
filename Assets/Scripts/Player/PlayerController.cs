@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
 
     private bool _multiSelect = false;
 
+    public Side Side => _side;
+
     private void Awake()
     {
         _input = GetComponent<PlayerInput>();

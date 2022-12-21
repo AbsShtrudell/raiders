@@ -36,7 +36,7 @@ public class Building : MonoBehaviour
 
     private BuildingImp _buildingImp;
 
-
+    public BuildingImp BuildingImp => _buildingImp;
     public Graphs.Graph<Building> graph { get; set; }
 
     public Action<Building> OnSelected;

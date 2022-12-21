@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _squadSlot: 3
   _squadRecoveryTime: 0.5
-  _income: 0
+  _income: 10
+  _upkeep: 0
   _defenseMultyplier: 0
+  _type: 0
   _troopsType: 0
   _mesh: {fileID: 0}
   _previous: {fileID: 0}
