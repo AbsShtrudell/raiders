@@ -31,6 +31,11 @@ public class LevelController : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(BuildingsUpdateTimer());
+
+        foreach (Node<Building> building in _graph.Nodes)
+        {
+            building.Value.UpgradeQueue += UpgradeBuilding;
+        }
     }
 
     private void OnDisable()
@@ -65,5 +70,20 @@ public class LevelController : MonoBehaviour
                         sideController.Value.SpendCoins((uint)building.Value.BuildingImp.BuildingData.Upkeep);
             }
         }
+    }
+
+    private void UpgradeBuilding(BuildingData data, bool free, Building building)
+    {
+        SideController sideController;
+        _sideControllers.TryGetValue(building.Side, out sideController);
+
+        if (sideController == null) return;
+
+        if(!free)
+            if (sideController.CanSpendCoins(data.Cost))
+                sideController.SpendCoins(data.Cost);
+            else return;
+
+        building.ChangeBuilding(data);
     }
 }

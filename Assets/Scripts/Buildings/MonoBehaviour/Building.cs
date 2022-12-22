@@ -29,6 +29,7 @@ public class Building : MonoBehaviour
     private MeshFilter _meshFilter;
     private Collider _collider;
     private SlotsController _slotsUI;
+    private UpgradeController _upgradeUI;
 
     [SerializeField]
     private List<Road> _roads;
@@ -39,9 +40,10 @@ public class Building : MonoBehaviour
     public BuildingImp BuildingImp => _buildingImp;
     public Graphs.Graph<Building> graph { get; set; }
 
-    public Action<Building> OnSelected;
-    public Action<Building> OnDeselected;
-    public Action OnDisabled;
+    public Action<Building> Selected;
+    public Action<Building> Deselected;
+    public Action<BuildingData, bool, Building> UpgradeQueue;
+    public Action Disabled;
 
     private void Awake()
     {
@@ -55,13 +57,12 @@ public class Building : MonoBehaviour
     private void OnEnable()
     {
         InitBuildingImp(_type, _side);
-        _slotsUI = _sContrCreator?.Create(_side, _buildingImp);
-        _slotsUI.gameObject.transform.SetParent(_visual);
+        InitUI();
     }
 
     private void OnDisable()
     {
-        OnDisabled?.Invoke();
+        Disabled?.Invoke();
     }
 
     private void Start()
@@ -73,6 +74,20 @@ public class Building : MonoBehaviour
         _buildingImp?.Update();
 
         _slotsUI.transform.localPosition = Vector3.up * 2;
+    }
+
+    private void InitUI()
+    {
+        _slotsUI = _sContrCreator?.Create(_side, _buildingImp);
+        _slotsUI.gameObject.transform.SetParent(_visual);
+        _upgradeUI = _slotsUI.GetComponent<UpgradeController>();
+        if (_upgradeUI != null)
+            _upgradeUI.InitButtons(BuildingImp.BuildingData, OnUpgradeQueued);
+
+        if (Side == Side.Vikings)
+            _upgradeUI.Show();
+        else
+            _upgradeUI.Hide();
     }
 
     private void InitBuildingImp(BuildingType type, Side side)
@@ -96,8 +111,7 @@ public class Building : MonoBehaviour
             InitBuildingImp(_buildingImp.BuildingData.Type, side);
         }
         Destroy(_slotsUI.gameObject);
-        _slotsUI = _sContrCreator?.Create(_side, _buildingImp);
-        _slotsUI.transform.SetParent(_visual);
+        InitUI();
     }
 
     public void SquadEnter(Side side, TroopsType type)
@@ -114,14 +128,35 @@ public class Building : MonoBehaviour
 
     public void Select()
     {    
-        OnSelected?.Invoke(this);
+        Selected?.Invoke(this);
         _meshRenderer.material.color = Color.red;
     }
 
     public void Deselect()
     {
-        OnDeselected?.Invoke(this);
+        Deselected?.Invoke(this);
         _meshRenderer.material.color = Color.white;
+    }
+
+    public void OnUpgradeQueued(int variant)
+    {
+        if (variant < 0)
+        {
+            if(BuildingImp.BuildingData.PreviousLevel != null)
+                UpgradeQueue.Invoke(BuildingImp.BuildingData.PreviousLevel, true, this);
+        }
+        else if (BuildingImp.BuildingData.Upgrades.Count > variant)
+        {
+            UpgradeQueue.Invoke(BuildingImp.BuildingData.Upgrades[variant], false, this);
+        }
+    }
+
+    public void ChangeBuilding(BuildingData buildingData)
+    {
+        BuildingImp.ChangeBuildingData(buildingData);
+
+        GameObject.Destroy(_slotsUI.gameObject);
+        InitUI();
     }
 
     public void SendTroops(Building target)
