@@ -20,7 +20,6 @@ MonoBehaviour:
   _type: 0
   _troopsType: 0
   _mesh: {fileID: 0}
-  _previous: {fileID: 11400000}
-  _upgrades:
-  - {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
-  _cost: 10
+  _previous: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+  _upgrades: []
+  _cost: 5
