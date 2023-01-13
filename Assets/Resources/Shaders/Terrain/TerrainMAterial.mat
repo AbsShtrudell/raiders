@@ -55,7 +55,7 @@ Material:
     - _QueueOffset: 0
     m_Colors:
     - _CliffColor: {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 0}
-    - _RoadColor: {r: 0.3584906, g: 0.25410715, b: 0.13358848, a: 1}
+    - _RoadColor: {r: 0.3962264, g: 0.3067115, b: 0.1999822, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &9210456014627516110
 MonoBehaviour:

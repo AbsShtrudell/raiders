@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class RoadsDrawer : MonoBehaviour
 {
+    [SerializeField] private Terrain _terrain;
     [SerializeField] private List<SplineComputer> _roads;
     [SerializeField] Vector2Int _textureSize;
-    [SerializeField] private Terrain _terrain;
+    [SerializeField] int _roadWidth = 3;
 
     public void Draw()
     {
@@ -43,7 +44,7 @@ public class RoadsDrawer : MonoBehaviour
         for (float i = 0; i < 1; i += 0.005f)
         {
             Vector2 position = TranslateWorldPosition(spline.EvaluatePosition(i));
-            texture.DrawCircle(Color.green, (int)position.x, (int)position.y, 10);
+            texture.DrawCircle(Color.green, (int)position.x, (int)position.y, _roadWidth);
         }
 
         texture.Apply();
