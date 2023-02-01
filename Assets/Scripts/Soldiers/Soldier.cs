@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Raiders
 {
@@ -9,6 +10,9 @@ namespace Raiders
         [SerializeField] private Side _side;
         [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> arsenal;
         private Dictionary<ClothingItem.Type, ClothingItem> _items;
+        private Shield _shield;
+    	private Weapon _weapon;
+    	private NavMeshAgent _agent;
 
         public Side side
         {
@@ -26,7 +30,43 @@ namespace Raiders
             {
                 _items.Add(item.type, item);
             }
+            _shield = GetComponentInChildren<Shield>();
+        	_weapon = GetComponentInChildren<Weapon>();
+        	_agent = GetComponent<NavMeshAgent>();
+        	_agent.updatePosition = false;
         }
+        
+private void Update()
+    {
+        if (!_agent.hasPath)
+            return;
+
+        var direction = _agent.nextPosition - transform.position;
+        direction.y = 0;
+
+        _shield.Rotate(direction);
+
+        if (direction.x > 0) //&& direction.z < 0)
+        {
+            foreach (var item in _items)
+            {
+                item.Value.UnflipX();
+            }
+
+            _weapon.UnflipX();
+        }
+        else if (direction.x < 0) //&& direction.z < 0)
+        {
+            foreach (var item in _items)
+            {
+                item.Value.FlipX();
+            }
+
+            _weapon.FlipX();
+        }
+
+        transform.position = _agent.nextPosition;
+    }
 
         public void ChangeItems()
         {
@@ -45,6 +85,11 @@ namespace Raiders
                 item.Value.AddRenderPriority(amount * _items.Count);
             }
         }
+        
+        public void GoTo(Vector3 destination)
+    	{
+        	_agent.SetDestination(destination);        
+    	}
 
     }
 }
