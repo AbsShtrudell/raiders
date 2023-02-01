@@ -6,16 +6,17 @@ public class Shield : MonoBehaviour
 {
     [SerializeField, Min(0f)] private float _distance = 0.554f;
 
-    void Start()
+    private void Start()
     {
         transform.localPosition = new Vector3(_distance, 0f, 0f);
+        transform.forward = Vector3.right;
     }
 
-    void Update()
+    public void Rotate(Vector3 direction)
     {
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), float.PositiveInfinity, LayerMask.GetMask("Terrain")))
-        {
-            Debug.Log("d");
-        }
+        float angle = Vector3.SignedAngle(Vector3.right, direction, Vector3.up);
+
+        transform.localPosition = Quaternion.Euler(0f, angle, 0f) * new Vector3(_distance, 0f, 0f);
+        transform.forward = direction;
     }
 }

@@ -11,12 +11,14 @@ public class ClothingItem : MonoBehaviour
 
     [SerializeField] private Type _type;
     private SpriteRenderer _spriteRenderer;
+    private float _initialXCoord;
 
     public Type type => _type;
 
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _initialXCoord = transform.localPosition.x;
     }
 
     public void SetSprite(Sprite sprite)
@@ -28,4 +30,22 @@ public class ClothingItem : MonoBehaviour
     {
         _spriteRenderer.sortingOrder += amount;
     } 
+
+    public void FlipX()
+    {
+        _spriteRenderer.flipX = true;
+        
+        var position = transform.localPosition;
+        position.x = -_initialXCoord;
+        transform.localPosition = position;
+    }
+
+    public void UnflipX()
+    {
+        _spriteRenderer.flipX = false;
+        
+        var position = transform.localPosition;
+        position.x = _initialXCoord;
+        transform.localPosition = position;
+    }
 }

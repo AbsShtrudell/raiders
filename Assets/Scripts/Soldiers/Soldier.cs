@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class Soldier : MonoBehaviour
+public class Soldier : MonoBehaviour, IControllable
 {
     [SerializeField] private Side _side;
-    [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> arsenal;
+    [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> _arsenal;
     private Dictionary<ClothingItem.Type, ClothingItem> _items;
+    private Shield _shield;
+    private Weapon _weapon;
+    private NavMeshAgent _agent;
     
     public Side side
     {
@@ -24,13 +28,50 @@ public class Soldier : MonoBehaviour
         {
             _items.Add(item.type, item);
         }
+
+        _shield = GetComponentInChildren<Shield>();
+        _weapon = GetComponentInChildren<Weapon>();
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.updatePosition = false;
+    }
+
+    private void Update()
+    {
+        if (!_agent.hasPath)
+            return;
+
+        var direction = _agent.nextPosition - transform.position;
+        direction.y = 0;
+
+        _shield.Rotate(direction);
+
+        if (direction.x > 0) //&& direction.z < 0)
+        {
+            foreach (var item in _items)
+            {
+                item.Value.UnflipX();
+            }
+
+            _weapon.UnflipX();
+        }
+        else if (direction.x < 0) //&& direction.z < 0)
+        {
+            foreach (var item in _items)
+            {
+                item.Value.FlipX();
+            }
+
+            _weapon.FlipX();
+        }
+
+        transform.position = _agent.nextPosition;
     }
 
     public void ChangeItems()
     {
         foreach (var item in _items)
         {
-            var sprites = arsenal[side].items[item.Key];
+            var sprites = _arsenal[side].items[item.Key];
 
             item.Value.SetSprite(sprites[Random.Range(0, sprites.Length)]);
         }
@@ -44,4 +85,10 @@ public class Soldier : MonoBehaviour
         }
     }
 
+    public void GoTo(Vector3 destination)
+    {
+        _agent.SetDestination(destination);
+
+        
+    }
 }
