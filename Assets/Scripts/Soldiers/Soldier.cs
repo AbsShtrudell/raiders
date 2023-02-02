@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Soldier : MonoBehaviour, IControllable
 {
     [SerializeField] private Side _side;
+    [SerializeField] private float currentHealth;
     [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> _arsenal;
     private Dictionary<ClothingItem.Type, ClothingItem> _items;
     private Shield _shield;
@@ -52,15 +53,22 @@ public class Soldier : MonoBehaviour, IControllable
                 item.Value.UnflipX();
             }
 
-            _weapon.UnflipX();
         }
-        else if (direction.x < 0) //&& direction.z < 0)
+        else
         {
             foreach (var item in _items)
             {
                 item.Value.FlipX();
             }
+        }
 
+        
+        if (direction.z < 0)
+        {                
+            _weapon.UnflipX();
+        }
+        else
+        {
             _weapon.FlipX();
         }
 
