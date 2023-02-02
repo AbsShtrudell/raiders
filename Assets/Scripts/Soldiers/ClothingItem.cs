@@ -11,6 +11,7 @@ namespace Raiders
     private float _initialXCoord;
 
     public Type type => _type;
+    public Sprite currentSprite => _spriteRenderer.sprite;
 
     private void Awake()
     {

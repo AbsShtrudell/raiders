@@ -46,30 +46,48 @@ private void Update()
 
         _shield.Rotate(direction);
 
-        if (direction.x > 0) //&& direction.z < 0)
-        {
-            foreach (var item in _items)
+        if (direction.x > 0)
+        {        
+            if (direction.z < 0)
             {
-                item.Value.UnflipX();
+                foreach (var item in _items)
+                {
+                    item.Value.UnflipX();
+                    item.Value.SetSprite(_currentSprites[item.Key].front);
+                }
+                _weapon.UnflipX();
+            }
+            else
+            {
+                foreach (var item in _items)
+                {
+                    item.Value.FlipX();
+                    item.Value.SetSprite(_currentSprites[item.Key].back);
+                }
+                _weapon.FlipX();
             }
 
         }
         else
         {
-            foreach (var item in _items)
+            if (direction.z < 0)
             {
-                item.Value.FlipX();
+                foreach (var item in _items)
+                {
+                    item.Value.FlipX();
+                    item.Value.SetSprite(_currentSprites[item.Key].front);
+                }
+                _weapon.UnflipX();
             }
-        }
-
-        
-        if (direction.z < 0)
-        {                
-            _weapon.UnflipX();
-        }
-        else
-        {
-            _weapon.FlipX();
+            else
+            {
+                foreach (var item in _items)
+                {
+                    item.Value.UnflipX();
+                    item.Value.SetSprite(_currentSprites[item.Key].back);
+                }
+                _weapon.FlipX();
+            }
         }
 
         transform.position = _agent.nextPosition;
@@ -81,7 +99,9 @@ private void Update()
             {
                 var sprites = arsenal[side].items[item.Key];
 
-                item.Value.SetSprite(sprites[Random.Range(0, sprites.Length)]);
+            	_currentSprites[item.Key] = sprites[Random.Range(0, sprites.Length)];
+
+            	item.Value.SetSprite(_currentSprites[item.Key].front);
             }
         }
 
@@ -92,11 +112,15 @@ private void Update()
                 item.Value.AddRenderPriority(amount * _items.Count);
             }
         }
-        
-        public void GoTo(Vector3 destination)
-    	{
-        	_agent.SetDestination(destination);        
-    	}
+    }
 
+    public void GoTo(Vector3 destination)
+    {
+        _agent.SetDestination(destination);        
+    }
+
+    public void SetHealth(float health)
+    {
+        _currentHealth = health;
     }
 }

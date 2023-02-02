@@ -4,14 +4,31 @@ using UnityEngine;
 
 namespace Raiders
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/SoldierItems", fileName = "New Soldier Items")]
+	[CreateAssetMenu(menuName = "ScriptableObjects/SoldierItems", fileName = "New Soldier Items")]
     public class SoldierItems : ScriptableObject
     {
-        [SerializeField] private Sprite[] _bodies;
-        [SerializeField] private Sprite[] _helmets;
-        [SerializeField] private Sprite[] _faces;
-        [SerializeField] private Sprite[] _shields;
-        [SerializeField] private Sprite[] _weapons;
+
+    [System.Serializable]
+    public class FrontBackSprites
+    {
+        [SerializeField] private Sprite _front;
+        [SerializeField] private Sprite _back;
+
+        public Sprite front => _front;
+        public Sprite back => _back;
+    }
+
+    [SerializeField] private FrontBackSprites[] _bodies;
+    [SerializeField] private FrontBackSprites[] _helmets;
+    [SerializeField] private FrontBackSprites[] _faces;
+    [SerializeField] private FrontBackSprites[] _shields;
+    [SerializeField] private FrontBackSprites[] _weapons;
+    
+    public Dictionary<ClothingItem.Type, FrontBackSprites[]> items { get; private set; }
+
+    public void Awake()
+    {
+        items = new Dictionary<ClothingItem.Type, FrontBackSprites[]>();
 
         public Dictionary<ClothingItem.Type, Sprite[]> items { get; private set; }
 
@@ -25,5 +42,7 @@ namespace Raiders
             items.Add(ClothingItem.Type.Shield, _shields);
             items.Add(ClothingItem.Type.Weapon, _weapons);
         }
+    }
+    
     }
 }
