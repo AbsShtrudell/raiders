@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace Raiders
 {
-    public class Soldier : MonoBehaviour
+    public class Soldier : MonoBehaviour, IControllable
     {
         [SerializeField] private Side _side;
         [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> arsenal;
@@ -53,15 +53,22 @@ private void Update()
                 item.Value.UnflipX();
             }
 
-            _weapon.UnflipX();
         }
-        else if (direction.x < 0) //&& direction.z < 0)
+        else
         {
             foreach (var item in _items)
             {
                 item.Value.FlipX();
             }
+        }
 
+        
+        if (direction.z < 0)
+        {                
+            _weapon.UnflipX();
+        }
+        else
+        {
             _weapon.FlipX();
         }
 
