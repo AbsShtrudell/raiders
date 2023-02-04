@@ -1,14 +1,17 @@
+using System.Collections.Generic;
+
 public class SideFactory : Zenject.IFactory<BuildingType ,BuildingImp>
 {
-    private SideBuildingsData _buildingsData;
+    private Dictionary<BuildingType, BuildingData> _buildingsData;
 
-    public SideFactory(SideBuildingsData buildings)
+    public SideFactory(Dictionary<BuildingType, BuildingData> buildings)
     {
         _buildingsData = buildings;
     }
 
     public BuildingImp Create(BuildingType type)
     {
+        /*
         BuildingImp buildingImp = null;
 
         switch (type)
@@ -28,5 +31,7 @@ public class SideFactory : Zenject.IFactory<BuildingType ,BuildingImp>
         }
 
         return buildingImp;
+        */
+        return null;
     }
 }

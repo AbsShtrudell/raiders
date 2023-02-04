@@ -14,7 +14,7 @@ public class UpgradeController : MonoBehaviour
 
     private List<Button> _upgradeButtons = new List<Button>();
 
-    public void InitButtons(BuildingData data, System.Action<int> action)
+    public void InitButtons(IBuildingData data, System.Action<int> action)
     {
         foreach (var button in _upgradeButtons)
         {

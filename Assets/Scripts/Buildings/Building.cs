@@ -42,7 +42,7 @@ public class Building : MonoBehaviour
 
     public Action<Building> Selected;
     public Action<Building> Deselected;
-    public Action<BuildingData, bool, Building> UpgradeQueue;
+    public Action<IBuildingData, bool, Building> UpgradeQueue;
     public Action Disabled;
 
     private void Awake()
@@ -101,7 +101,7 @@ public class Building : MonoBehaviour
     {
         _side = side;
 
-        if (_buildingImp.BuildingData.PreviousLevel)
+        if (_buildingImp.BuildingData.PreviousLevel != null)
         {
             InitBuildingImp(_buildingImp.BuildingData.PreviousLevel.Type, side);
             _type = _buildingImp.BuildingData.Type;
@@ -151,7 +151,7 @@ public class Building : MonoBehaviour
         }
     }
 
-    public void ChangeBuilding(BuildingData buildingData)
+    public void ChangeBuilding(IBuildingData buildingData)
     {
         BuildingImp.ChangeBuildingData(buildingData);
 

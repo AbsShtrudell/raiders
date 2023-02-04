@@ -72,7 +72,7 @@ public class LevelController : MonoBehaviour
         }
     }
 
-    private void UpgradeBuilding(BuildingData data, bool free, Building building)
+    private void UpgradeBuilding(IBuildingData data, bool free, Building building)
     {
         SideController sideController;
         _sideControllers.TryGetValue(building.Side, out sideController);

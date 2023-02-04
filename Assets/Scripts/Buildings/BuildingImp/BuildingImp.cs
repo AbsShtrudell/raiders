@@ -2,15 +2,15 @@ using System;
 
 public abstract class BuildingImp
 {
-    private BuildingData _buildingData;
+    private IBuildingData _buildingData;
     protected SlotList _slotList;
 
-    public BuildingData BuildingData => _buildingData;
+    public IBuildingData BuildingData => _buildingData;
     public SlotList SlotList => _slotList;
 
     public event Action<Side> Captured;
 
-    public BuildingImp(BuildingData data)
+    public BuildingImp(IBuildingData data)
     {
         _buildingData = data;
         _slotList = new SlotList(_buildingData.SquadSlots, _buildingData.SquadRecoveryTime);
@@ -29,7 +29,7 @@ public abstract class BuildingImp
         Captured?.Invoke(side);
     }
 
-    public void ChangeBuildingData(BuildingData buildingData)
+    public void ChangeBuildingData(IBuildingData buildingData)
     {
         _buildingData = buildingData;
         _slotList = new SlotList(_buildingData.SquadSlots, _buildingData.SquadRecoveryTime);

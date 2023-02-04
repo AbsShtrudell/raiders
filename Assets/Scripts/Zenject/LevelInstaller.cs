@@ -1,31 +1,25 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class LevelInstaller : MonoInstaller
 {
-    [SerializeField] private SideBuildingsData vikingBuildings;
-    [SerializeField] private SideBuildingsData englishBuildings;
-    [SerializeField] private SideBuildingsData rebelBuildings;
+    [SerializeField] private List<Pair<Side, List<Pair<BuildingType, BuildingData>>>> buildings;
+
     public override void InstallBindings()
     {
-        BindSide(rebelBuildings, Side.Rebels);
-        BindSide(englishBuildings, Side.English);
-        BindSide(vikingBuildings, Side.Vikings);
-
-        Container.BindInterfacesAndSelfTo<BuildingImpCreator>().AsSingle();
+        Container.Bind<BuildingImpCreator>().FromInstance(new BuildingImpCreator(getSideFactories())).AsSingle();
     }
 
-    public void BindSide(SideBuildingsData buildings, Side side)
+    public Dictionary<Side, SideFactory> getSideFactories()
     {
-        Container.Bind<SideFactory>().WithId(side).FromInstance(new SideFactory(buildings));
-    }
-}
+        Dictionary<Side, SideFactory> sideFactories = new Dictionary<Side, SideFactory>();
 
-[System.Serializable]
-public struct SideBuildingsData
-{
-    public BuildingData simpleBuilding;
-    public BuildingData defensiveBuilding;
-    public BuildingData economicsBuilding;
-    public BuildingData armyBuilding;
+        foreach (var building in buildings) {
+            //sideFactories.Add(building.First, new SideFactory(building.Second));
+        }
+
+        return sideFactories;
+    }
 }
