@@ -1,32 +1,26 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Zenject;
 
-public class SlotsControllerCreator : IInitializable
+namespace Raiders
 {
-    [Inject(Id = Side.Vikings)]
-    private SlotsController.Factory _vikFactory;
-    [Inject(Id = Side.English)]
-    private SlotsController.Factory _engFactory;
-    [Inject(Id = Side.Rebels)]
-    private SlotsController.Factory _rebFactory;
-
-    public SlotsController Create(Side side, BuildingImp imp)
+    public class SlotsControllerCreator
     {
-        switch(side)
+        private Dictionary<Side, ISlotsControllerFactory> slotControllerFactories;
+
+        public SlotsControllerCreator(Dictionary<Side, ISlotsControllerFactory> slotControllerFactories)
         {
-            case Side.Vikings:
-                return _vikFactory.Construct(imp);
-            case Side.English:
-                return _engFactory.Construct(imp);
-            case Side.Rebels:
-                return _rebFactory.Construct(imp);
+            this.slotControllerFactories = slotControllerFactories;
         }
-        return null;
-    }
 
-    public void Initialize()
-    {
+        public SlotsController Create(Side side, BuildingImp imp)
+        {
+            ISlotsControllerFactory factory;
+
+            slotControllerFactories.TryGetValue(side, out factory);
+
+            if (factory == null) throw new System.Exception(string.Format("Can't find SlotsController for {0} side", side));
+
+            return factory.Construct(imp);
+        }
     }
 }

@@ -574,22 +574,18 @@ MonoBehaviour:
   buildings:
   - First: 0
     Second:
-      simpleBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
-      defensiveBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
-      economicsBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
-      armyBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    - First: 1
+      Second: {fileID: 0}
+    - First: 0
+      Second: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    - First: 2
+      Second: {fileID: 0}
+    - First: 3
+      Second: {fileID: 0}
   - First: 1
-    Second:
-      simpleBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
-      defensiveBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
-      economicsBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
-      armyBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    Second: []
   - First: 2
-    Second:
-      simpleBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
-      defensiveBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
-      economicsBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
-      armyBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    Second: []
 --- !u!4 &438522797
 Transform:
   m_ObjectHideFlags: 0

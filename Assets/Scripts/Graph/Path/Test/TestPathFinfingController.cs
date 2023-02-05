@@ -1,9 +1,7 @@
 using UnityEngine;
-using Graphs;
-using Graphs.Path;
 
-namespace Test.PathFinding
-{
+namespace Raiders.Graphs.Test
+{ 
     public class TestPathFinfingController : MonoBehaviour
     {
         [SerializeField] private Graph<Building> _graph;

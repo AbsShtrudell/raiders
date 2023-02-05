@@ -1,22 +1,25 @@
 using System.Collections.Generic;
 
-public class BuildingImpCreator
+namespace Raiders
 {
-    private Dictionary<Side, SideFactory> _sideFactories;
-
-    public BuildingImpCreator(Dictionary<Side, SideFactory> sideFactories)
+    public class BuildingImpCreator
     {
-        _sideFactories = sideFactories;
-    }
+        private Dictionary<Side, SideFactory> _sideFactories;
 
-    public BuildingImp Create(BuildingType type, Side side)
-    {
-        SideFactory sideFactory;
+        public BuildingImpCreator(Dictionary<Side, SideFactory> sideFactories)
+        {
+            _sideFactories = sideFactories;
+        }
 
-        _sideFactories.TryGetValue(side, out sideFactory);
+        public BuildingImp Create(BuildingType type, Side side)
+        {
+            SideFactory sideFactory;
 
-        if (sideFactory == null) return null;
+            _sideFactories.TryGetValue(side, out sideFactory);
 
-        return sideFactory.Create(type);
+            if (sideFactory == null) return null;
+
+            return sideFactory.Create(type);
+        }
     }
 }

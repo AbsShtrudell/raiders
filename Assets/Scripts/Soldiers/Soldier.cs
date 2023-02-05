@@ -2,46 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Soldier : MonoBehaviour
+namespace Raiders
 {
-    [SerializeField] private Side _side;
-    [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> arsenal;
-    private Dictionary<ClothingItem.Type, ClothingItem> _items;
-    
-    public Side side
+    public class Soldier : MonoBehaviour
     {
-        get => _side;
-        set => _side = value;
-    }
-    
-    private void Awake()
-    {
-        _items = new Dictionary<ClothingItem.Type, ClothingItem>();
+        [SerializeField] private Side _side;
+        [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> arsenal;
+        private Dictionary<ClothingItem.Type, ClothingItem> _items;
 
-        var children = GetComponentsInChildren<ClothingItem>();
-
-        foreach (var item in children)
+        public Side side
         {
-            _items.Add(item.type, item);
+            get => _side;
+            set => _side = value;
         }
-    }
 
-    public void ChangeItems()
-    {
-        foreach (var item in _items)
+        private void Awake()
         {
-            var sprites = arsenal[side].items[item.Key];
+            _items = new Dictionary<ClothingItem.Type, ClothingItem>();
 
-            item.Value.SetSprite(sprites[Random.Range(0, sprites.Length)]);
+            var children = GetComponentsInChildren<ClothingItem>();
+
+            foreach (var item in children)
+            {
+                _items.Add(item.type, item);
+            }
         }
-    }
 
-    public void AddRenderPriority(int amount)
-    {
-        foreach (var item in _items)
+        public void ChangeItems()
         {
-            item.Value.AddRenderPriority(amount * _items.Count);
-        }
-    }
+            foreach (var item in _items)
+            {
+                var sprites = arsenal[side].items[item.Key];
 
+                item.Value.SetSprite(sprites[Random.Range(0, sprites.Length)]);
+            }
+        }
+
+        public void AddRenderPriority(int amount)
+        {
+            foreach (var item in _items)
+            {
+                item.Value.AddRenderPriority(amount * _items.Count);
+            }
+        }
+
+    }
 }

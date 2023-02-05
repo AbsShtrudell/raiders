@@ -1,35 +1,37 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BuildingDataProxy : IBuildingData
+namespace Raiders
 {
-    private BuildingData _buildingData;
-
-    public BuildingDataProxy(BuildingData buildingData)
+    public abstract class BuildingDataProxy : IBuildingData
     {
-        _buildingData = buildingData;
+        private BuildingData _buildingData;
+
+        public BuildingDataProxy(BuildingData buildingData)
+        {
+            _buildingData = buildingData;
+        }
+
+        public virtual int SquadSlots => _buildingData.SquadSlots;
+
+        public virtual float SquadRecoveryTime => _buildingData.SquadRecoveryTime;
+
+        public virtual uint Income => _buildingData.Income;
+
+        public virtual uint Upkeep => _buildingData.Upkeep;
+
+        public virtual int DefenseMultyplier => _buildingData.DefenseMultyplier;
+
+        public virtual TroopsType TroopsType => _buildingData.TroopsType;
+
+        public virtual Mesh Mesh => _buildingData.Mesh;
+
+        public virtual List<IBuildingData> Upgrades => _buildingData.Upgrades;
+
+        public virtual IBuildingData PreviousLevel => _buildingData.PreviousLevel;
+
+        public virtual BuildingType Type => _buildingData.Type;
+
+        public virtual uint Cost => _buildingData.Cost;
     }
-
-    public virtual int SquadSlots => _buildingData.SquadSlots;
-
-    public virtual float SquadRecoveryTime => _buildingData.SquadRecoveryTime;
-
-    public virtual uint Income => _buildingData.Income;
-
-    public virtual uint Upkeep => _buildingData.Upkeep;
-
-    public virtual int DefenseMultyplier => _buildingData.DefenseMultyplier;
-
-    public virtual TroopsType TroopsType => _buildingData.TroopsType;
-
-    public virtual Mesh Mesh => _buildingData.Mesh;
-
-    public virtual List<IBuildingData> Upgrades => _buildingData.Upgrades;
-
-    public virtual IBuildingData PreviousLevel => _buildingData.PreviousLevel;
-
-    public virtual BuildingType Type => _buildingData.Type;
-
-    public virtual uint Cost => _buildingData.Cost;
 }

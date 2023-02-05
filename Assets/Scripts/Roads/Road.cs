@@ -1,68 +1,72 @@
 using UnityEngine;
 using Dreamteck.Splines;
-using Graphs;
+using Raiders.Graphs;
+using Zenject;
 
-[ExecuteAlways]
-[RequireComponent(typeof(SplineComputer))]
-public class Road : MonoBehaviour
+namespace Raiders
 {
-    [SerializeField]//, HideInInspector]
-    private Node<Building>[] _ends;
-    private SplineComputer _splineComputer;
-
-    public Node<Building>[] Ends => _ends;
-    public SplineComputer PathCreator => _splineComputer;
-
-    private void Awake()
+    [ExecuteAlways]
+    [RequireComponent(typeof(SplineComputer))]
+    public class Road : MonoBehaviour
     {
-        _splineComputer = GetComponent<SplineComputer>();
-    }
+        [SerializeField]//, HideInInspector]
+        private Node<Building>[] _ends;
+        private SplineComputer _splineComputer;
 
-    private void Start()
-    {
-        //_splineComputer.EvaluatePosition(,)
-    }
+        public Node<Building>[] Ends => _ends;
+        public SplineComputer PathCreator => _splineComputer;
 
-    public void Rebuild()
-    {
-        if (!IsConnected()) return;
-
-        SplinePoint[] points = new SplinePoint[2];
-
-        for(int i = 0; i < 2; i++)
+        private void Awake()
         {
-            points[i] = new SplinePoint(_ends[i].Value.transform.position);
+            _splineComputer = GetComponent<SplineComputer>();
         }
 
-        _splineComputer.SetPoints(points);
-    }
-
-    public bool HasConnectionWith(int index)
-    {
-        return _ends != null && _ends.Length == 2 && (_ends[0].Index == index || _ends[1].Index == index);
-    }
-
-    public bool IsConnected()
-    {
-        return _ends != null && _ends.Length == 2 && _ends[0].Value != null && _ends[1].Value != null;
-    }
-
-    private void OnDestroy()
-    {
-        
-    }
-
-    public class Factory : Zenject.IFactory<Node<Building>, Node<Building>, Road>
-    {
-        private Road _visuals;
-
-        public Factory(Road visuals) => _visuals = visuals;
-
-        public Road Create(Node<Building> param1, Node<Building> param2)
+        private void Start()
         {
-            Road road = GameObject.Instantiate(_visuals.gameObject).GetComponent<Road>();
-            road._ends = new Node<Building>[] { param1, param2 };
-            return road;
+            //_splineComputer.EvaluatePosition(,)
+        }
+
+        public void Rebuild()
+        {
+            if (!IsConnected()) return;
+
+            SplinePoint[] points = new SplinePoint[2];
+
+            for (int i = 0; i < 2; i++)
+            {
+                points[i] = new SplinePoint(_ends[i].Value.transform.position);
+            }
+
+            _splineComputer.SetPoints(points);
+        }
+
+        public bool HasConnectionWith(int index)
+        {
+            return _ends != null && _ends.Length == 2 && (_ends[0].Index == index || _ends[1].Index == index);
+        }
+
+        public bool IsConnected()
+        {
+            return _ends != null && _ends.Length == 2 && _ends[0].Value != null && _ends[1].Value != null;
+        }
+
+        private void OnDestroy()
+        {
+
+        }
+
+        public class Factory : IFactory<Node<Building>, Node<Building>, Road>
+        {
+            private Road _visuals;
+
+            public Factory(Road visuals) => _visuals = visuals;
+
+            public Road Create(Node<Building> param1, Node<Building> param2)
+            {
+                Road road = GameObject.Instantiate(_visuals.gameObject).GetComponent<Road>();
+                road._ends = new Node<Building>[] { param1, param2 };
+                return road;
+            }
         }
     }
 }

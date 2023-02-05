@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(Soldier))]
-public class SoldierEditor : Editor
+namespace Raiders
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(Soldier))]
+    public class SoldierEditor : Editor
     {
-        DrawDefaultInspector();
-
-        var soldier = target as Soldier;
-        if (GUILayout.Button("Change items"))
+        public override void OnInspectorGUI()
         {
-            soldier.ChangeItems();
+            DrawDefaultInspector();
+
+            var soldier = target as Soldier;
+            if (GUILayout.Button("Change items"))
+            {
+                soldier.ChangeItems();
+            }
         }
     }
 }

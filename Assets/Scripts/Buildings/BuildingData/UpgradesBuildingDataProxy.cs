@@ -2,46 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradesBuildingDataProxy : BuildingDataProxy
+namespace Raiders
 {
-    private IBuildingData _previousUpgrade;
-    private List<IBuildingData> _nextUpgrades;
-
-    public UpgradesBuildingDataProxy(BuildingData buildingData, IBuildingData previousUpgrade, List<IBuildingData> nextUpgrades) : base(buildingData)
+    public class UpgradesBuildingDataProxy : BuildingDataProxy
     {
-        _previousUpgrade = previousUpgrade;
-        _nextUpgrades = nextUpgrades;
-    }
+        private IBuildingData _previousUpgrade;
+        private List<IBuildingData> _nextUpgrades;
 
-    public UpgradesBuildingDataProxy(BuildingData buildingData, IBuildingData previousUpgrade) : base(buildingData)
-    {
-        _previousUpgrade = previousUpgrade;
-        _nextUpgrades = null;
-    }
+        public UpgradesBuildingDataProxy(BuildingData buildingData, IBuildingData previousUpgrade, List<IBuildingData> nextUpgrades) : base(buildingData)
+        {
+            _previousUpgrade = previousUpgrade;
+            _nextUpgrades = nextUpgrades;
+        }
 
-    public UpgradesBuildingDataProxy(BuildingData buildingData, List<IBuildingData> nextUpgrades) : base(buildingData)
-    {
-        _previousUpgrade = null;
-        _nextUpgrades = nextUpgrades;
-    }
+        public UpgradesBuildingDataProxy(BuildingData buildingData, IBuildingData previousUpgrade) : base(buildingData)
+        {
+            _previousUpgrade = previousUpgrade;
+            _nextUpgrades = null;
+        }
 
-    public UpgradesBuildingDataProxy(BuildingData buildingData) : base(buildingData)
-    {
-        _previousUpgrade = null;
-        _nextUpgrades = null;
-    }
+        public UpgradesBuildingDataProxy(BuildingData buildingData, List<IBuildingData> nextUpgrades) : base(buildingData)
+        {
+            _previousUpgrade = null;
+            _nextUpgrades = nextUpgrades;
+        }
 
-    public override List<IBuildingData> Upgrades => _nextUpgrades != null? _nextUpgrades : base.Upgrades;
+        public UpgradesBuildingDataProxy(BuildingData buildingData) : base(buildingData)
+        {
+            _previousUpgrade = null;
+            _nextUpgrades = null;
+        }
 
-    public override IBuildingData PreviousLevel => _previousUpgrade != null? _previousUpgrade : base.PreviousLevel;
+        public override List<IBuildingData> Upgrades => _nextUpgrades != null ? _nextUpgrades : base.Upgrades;
 
-    public void SetUpgrades(List<IBuildingData> nextUpgrades)
-    {
-        _nextUpgrades = nextUpgrades;
-    }
+        public override IBuildingData PreviousLevel => _previousUpgrade != null ? _previousUpgrade : base.PreviousLevel;
 
-    public void SetPreviousLevel(IBuildingData previousUpgrade)
-    {
-        _previousUpgrade = previousUpgrade;
+        public void SetUpgrades(List<IBuildingData> nextUpgrades)
+        {
+            _nextUpgrades = nextUpgrades;
+        }
+
+        public void SetPreviousLevel(IBuildingData previousUpgrade)
+        {
+            _previousUpgrade = previousUpgrade;
+        }
     }
 }
