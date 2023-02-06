@@ -11,13 +11,11 @@ namespace Raiders
             _sideFactories = sideFactories;
         }
 
-        public BuildingImp Create(BuildingType type, Side side)
+        public IBuildingImp Create(BuildingType type, Side side)
         {
-            SideFactory sideFactory;
+            _sideFactories.TryGetValue(side, out SideFactory sideFactory);
 
-            _sideFactories.TryGetValue(side, out sideFactory);
-
-            if (sideFactory == null) return null;
+            if (sideFactory == null) throw new System.Exception(string.Format("Can't find Side Factory for {0} side", side));
 
             return sideFactory.Create(type);
         }

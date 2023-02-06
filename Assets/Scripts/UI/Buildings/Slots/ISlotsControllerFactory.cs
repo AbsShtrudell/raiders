@@ -8,6 +8,6 @@ namespace Raiders
 {
     public interface ISlotsControllerFactory
     {
-        public SlotsController Construct(BuildingImp imp);
+        public SlotsController Construct(IBuildingImp imp);
     }
 }

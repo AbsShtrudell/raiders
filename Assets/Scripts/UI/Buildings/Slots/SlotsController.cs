@@ -100,7 +100,7 @@ namespace Raiders
                 _controllerRef = controllerRef;
             }
 
-            public SlotsController Construct(BuildingImp imp)
+            public SlotsController Construct(IBuildingImp imp)
             {
                 var slotsController = Instantiate(_controllerRef);
 

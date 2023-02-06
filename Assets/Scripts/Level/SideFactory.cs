@@ -11,13 +11,13 @@ namespace Raiders
             _buildingsData = buildings;
         }
 
-        public BuildingImp Create(BuildingType type)
+        public IBuildingImp Create(BuildingType type)
         {
             IBuildingData buildingData = _buildingsData[type];
 
             if (buildingData == null) throw new System.Exception("Can't find data for this type");
 
-            return new SimpleBuildingImp(buildingData);
+            return new DefaultBuildingImp(buildingData);
         }
     }
 }

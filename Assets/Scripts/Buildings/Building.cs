@@ -11,35 +11,33 @@ namespace Raiders
         [Inject]
         private DiContainer container;
         [Inject]
-        private BuildingImpCreator _bImpCreator;
+        private BuildingImpCreator _buildingImpCreator;
         [Inject]
-        private SlotsControllerCreator _sContrCreator;
+        private SlotsControllerCreator _slotsContrCreator;
+
         [SerializeField]
         private Side _side = Side.Rebels;
         [SerializeField]
-        private BuildingType _type = BuildingType.Simple;
-
-        public Side Side
-        { get { return _side; } set { _side = value; } }
-        public BuildingType Type => _type;
-
-        public GameObject squadPrefab { get; set; }
+        private BuildingType _type;
         [SerializeField]
         private Transform _visual;
         [SerializeField]
         private MeshRenderer _meshRenderer;
+        [SerializeField]
+        private List<Road> _roads;
+
         private MeshFilter _meshFilter;
         private Collider _collider;
         private SlotsController _slotsUI;
         private UpgradeController _upgradeUI;
 
-        [SerializeField]
-        private List<Road> _roads;
+        private IBuildingImp _buildingImp;
+
+        public Side Side { get { return _side; } set { _side = value; } }
+        public BuildingType Type { get { return _type; } set { _type = value; } }
+        public GameObject squadPrefab { get; set; }
         public List<Road> roads => _roads;
-
-        private BuildingImp _buildingImp;
-
-        public BuildingImp BuildingImp => _buildingImp;
+        public IBuildingImp BuildingImp => _buildingImp;
         public Graphs.Graph<Building> graph { get; set; }
 
         public Action<Building> Selected;
@@ -80,7 +78,7 @@ namespace Raiders
 
         private void InitUI()
         {
-            _slotsUI = _sContrCreator?.Create(_side, _buildingImp);
+            _slotsUI = _slotsContrCreator?.Create(_side, _buildingImp);
             _slotsUI.gameObject.transform.SetParent(_visual);
             _upgradeUI = _slotsUI.GetComponent<UpgradeController>();
             if (_upgradeUI != null)
@@ -94,7 +92,7 @@ namespace Raiders
 
         private void InitBuildingImp(BuildingType type, Side side)
         {
-            _buildingImp = _bImpCreator?.Create(type, side);
+            _buildingImp = _buildingImpCreator?.Create(type, side);
 
             _buildingImp.Captured += ChangeTeam;
         }
@@ -120,7 +118,7 @@ namespace Raiders
         {
             if (side != _side)
             {
-                _buildingImp.GotAttacked(side);
+                _buildingImp.GotAttacked(side, null);
             }
             else
             {
@@ -155,7 +153,7 @@ namespace Raiders
 
         public void ChangeBuilding(IBuildingData buildingData)
         {
-            BuildingImp.ChangeBuildingData(buildingData);
+            BuildingImp.BuildingData = buildingData;
 
             GameObject.Destroy(_slotsUI.gameObject);
             InitUI();
@@ -218,7 +216,7 @@ namespace Raiders
                 }
                 else
                 {
-                    building = GameObject.Instantiate(_visual.gameObject).GetComponent<Building>();
+                    building = Instantiate(_visual.gameObject).GetComponent<Building>();
                 }
                 return building;
             }
