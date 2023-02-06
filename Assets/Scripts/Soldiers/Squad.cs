@@ -52,7 +52,7 @@ namespace Raiders
             soldiers[i].ChangeItems();
             soldiers[i].AddRenderPriority(soldiers.Length - i);
             soldiers[i].squad = this;
-            soldiers[i].SetHealth(_unitInfo.health);
+            soldiers[i].SetHealth(_unitInfo.Health);
         }
 
         public void SpawnEmptySoldiers()
