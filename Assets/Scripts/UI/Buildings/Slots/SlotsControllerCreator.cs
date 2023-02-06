@@ -12,7 +12,7 @@ namespace Raiders
             this.slotControllerFactories = slotControllerFactories;
         }
 
-        public SlotsController Create(Side side, BuildingImp imp)
+        public SlotsController Create(Side side, IBuildingImp imp)
         {
             ISlotsControllerFactory factory;
 

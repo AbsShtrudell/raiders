@@ -5,10 +5,10 @@ using System;
 
 namespace Raiders
 {
-    public class SlotList
+    public class SlotList : ISlotList
     {
-        private float enemySpeed = 1f; //delete
-        private float extraDecaySpeed = 1f; //delete
+        private float enemySpeed = 1f;
+        private float extraDecaySpeed = 1f;
 
         private List<Slot> _slots;
         private List<Slot> _extraSlots;
@@ -45,7 +45,7 @@ namespace Raiders
         public int ExtraSlotsCount
         { get { return _extraSlots.Count; } }
 
-        public SlotList(int size, float _squadRecoveryTime)
+        public SlotList(int size, float squadRecoveryTime)
         {
             _slots = new List<Slot>(size);
             for (int i = 0; i < size; i++)
@@ -54,8 +54,8 @@ namespace Raiders
             }
             _extraSlots = new List<Slot>(0);
 
-            this._size = size;
-            this._squadRecoveryTime = _squadRecoveryTime;
+            _size = size;
+            _squadRecoveryTime = squadRecoveryTime;
         }
 
         public void Update()
@@ -129,7 +129,7 @@ namespace Raiders
             return false;
         }
 
-        public void BlockSlot()
+        private void BlockSlot()
         {
             if (_blokcedSlots >= _size) return;
 

@@ -1,10 +1,9 @@
-using Zenject;
 
 namespace Raiders
 {
-    public class SimpleBuildingImp : BuildingImp
+    public class DefaultBuildingImp : BaseBuildingImp
     {
-        public SimpleBuildingImp(IBuildingData buildingData) : base(buildingData)
+        public DefaultBuildingImp(IBuildingData buildingData) : base(buildingData)
         {
 
         }
@@ -34,7 +33,7 @@ namespace Raiders
             }
         }
 
-        public override void GotAttacked(Side side)
+        public override void GotAttacked(Side side, SquadTypeInfo squadInfo)
         {
             if (_slotList.ExtraSlotsCount > 0)
             {
@@ -56,13 +55,9 @@ namespace Raiders
             if (_slotList.IsBlocked && _slotList.GeneralProgress <= 0) OnCaptured(_slotList.OccupyingSide);
         }
 
-        public new class Factory : IFactory<BuildingData, BuildingImp>
+        public class Factory : IBuildingImpFactory
         {
-            public BuildingImp Create(BuildingData data)
-            {
-                BuildingImp imp = new SimpleBuildingImp(data);
-                return imp;
-            }
+            public IBuildingImp Create(BuildingData data) => new DefaultBuildingImp(data);
         }
     }
 }
