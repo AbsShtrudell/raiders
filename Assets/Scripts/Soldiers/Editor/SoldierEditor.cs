@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace Raiders
+namespace Raiders.Editors
 {
     [CustomEditor(typeof(Soldier))]
     public class SoldierEditor : Editor

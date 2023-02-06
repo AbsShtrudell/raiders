@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-namespace Raiders.LevelEditor
+namespace Raiders.Editors.LevelEditor
 {
     public class Node
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Raiders.LevelEditor
+namespace Raiders.Editors.LevelEditor
 {
     public class ResizablePanel : Panel
     {

@@ -10,6 +10,7 @@ namespace Raiders.Installation
     public class LevelInstaller : MonoInstaller
     {
         [SerializeField] private List<SideBuildingsData> buildingsDataSet;
+
         public override void InstallBindings()
         {
             checkDataSet();
