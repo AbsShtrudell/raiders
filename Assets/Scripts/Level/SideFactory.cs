@@ -1,23 +1,32 @@
-using System.Collections.Generic;
-
-namespace Raiders
+public class SideFactory : Zenject.IFactory<BuildingType ,BuildingImp>
 {
-    public class SideFactory
+    private SideBuildingsData _buildingsData;
+
+    public SideFactory(SideBuildingsData buildings)
     {
-        private Dictionary<BuildingType, IBuildingData> _buildingsData;
+        _buildingsData = buildings;
+    }
 
-        public SideFactory(Dictionary<BuildingType, IBuildingData> buildings)
+    public BuildingImp Create(BuildingType type)
+    {
+        BuildingImp buildingImp = null;
+
+        switch (type)
         {
-            _buildingsData = buildings;
+            case BuildingType.Simple:
+                buildingImp = new SimpleBuildingImp(_buildingsData.simpleBuilding);
+                break;
+            case BuildingType.Defensive:
+                buildingImp = new SimpleBuildingImp(_buildingsData.defensiveBuilding);
+                break;
+            case BuildingType.Economic:
+                buildingImp = new SimpleBuildingImp(_buildingsData.economicsBuilding);
+                break;
+            case BuildingType.Army:
+                buildingImp = new SimpleBuildingImp(_buildingsData.armyBuilding);
+                break;
         }
 
-        public IBuildingImp Create(BuildingType type)
-        {
-            IBuildingData buildingData = _buildingsData[type];
-
-            if (buildingData == null) throw new System.Exception("Can't find data for this type");
-
-            return new DefaultBuildingImp(buildingData);
-        }
+        return buildingImp;
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEditor;
 
-namespace Raiders.Editors.LevelEditor
+namespace LevelEditor
 {
     public abstract class Panel
     {

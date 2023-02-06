@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace Raiders.Test
+namespace Test.BuildingLogic
 {
     public class SlotSliderTest : MonoBehaviour
     {

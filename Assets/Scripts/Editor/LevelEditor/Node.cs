@@ -4,15 +4,14 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-namespace Raiders.Editors.LevelEditor
+namespace LevelEditor
 {
     public class Node
     {
         private Rect _rect;
         private bool _isDragged;
-#pragma warning disable 0414
         private bool _isSelected;
-#pragma warning restore 0414
+
         private GUIStyle style;
         private GUIStyle defaultNodeStyle;
         private GUIStyle selectedNodeStyle;

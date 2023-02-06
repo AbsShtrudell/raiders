@@ -1,91 +1,89 @@
-using Raiders.Graphs;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Graphs;
 
-namespace Raiders
+[RequireComponent(typeof(BuildingsGraphEditor))]
+public class LevelController : MonoBehaviour
 {
-    [RequireComponent(typeof(BuildingsGraphEditor))]
-    public class LevelController : MonoBehaviour
+    private Graph<Building> _graph;
+    private List<Road> _roads;
+    private Dictionary<Side, SideController> _sideControllers = new Dictionary<Side, SideController>();
+    private bool _isUpdateStoped = false;
+
+    [SerializeField]
+    private float _incomeFrequency;
+    [SerializeField]
+    private List<Side> _sides;
+
+    public Dictionary<Side, SideController> SideControllers => _sideControllers;
+
+    private void Awake()
     {
-        private Graph<Building> _graph;
-        private List<Road> _roads;
-        private Dictionary<Side, SideController> _sideControllers = new Dictionary<Side, SideController>();
-        private bool _isUpdateStoped = false;
+        BuildingsGraphEditor graphEditor = GetComponent<BuildingsGraphEditor>();
 
-        [SerializeField]
-        private float _incomeFrequency;
-        [SerializeField]
-        private List<Side> _sides;
+        _graph = graphEditor.graph;
+        _roads = graphEditor.roads;
 
-        public Dictionary<Side, SideController> SideControllers => _sideControllers;
+        InitSideControllers();
+    }
 
-        private void Awake()
+    private void OnEnable()
+    {
+        StartCoroutine(BuildingsUpdateTimer());
+
+        foreach (Node<Building> building in _graph.Nodes)
         {
-            BuildingsGraphEditor graphEditor = GetComponent<BuildingsGraphEditor>();
-
-            _graph = graphEditor.graph;
-            _roads = graphEditor.roads;
-
-            InitSideControllers();
+            building.Value.UpgradeQueue += UpgradeBuilding;
         }
+    }
 
-        private void OnEnable()
+    private void OnDisable()
+    {
+        _isUpdateStoped = true;
+    }
+
+    private void InitSideControllers()
+    {
+        foreach(Side side in _sides)
         {
-            StartCoroutine(BuildingsUpdateTimer());
+            _sideControllers.Add(side, new SideController());
+        }
+    }
 
-            foreach (Node<Building> building in _graph.Nodes)
+    private IEnumerator BuildingsUpdateTimer()
+    {
+        while (_isUpdateStoped != true)
+        {
+            yield return new WaitForSeconds(_incomeFrequency);
+
+            foreach (var sideController in _sideControllers)
             {
-                building.Value.UpgradeQueue += UpgradeBuilding;
+                Debug.Log("Update coins for: " + sideController.Key.ToString());
+
+                foreach (Node<Building> building in _graph.Nodes)
+                    if (building.Value.Side == sideController.Key)
+                        sideController.Value.AddCoins((uint)building.Value.BuildingImp.BuildingData.Income);
+
+                foreach (Node<Building> building in _graph.Nodes)
+                    if (building.Value.Side == sideController.Key)
+                        sideController.Value.SpendCoins((uint)building.Value.BuildingImp.BuildingData.Upkeep);
             }
         }
+    }
 
-        private void OnDisable()
-        {
-            _isUpdateStoped = true;
-        }
+    private void UpgradeBuilding(BuildingData data, bool free, Building building)
+    {
+        SideController sideController;
+        _sideControllers.TryGetValue(building.Side, out sideController);
 
-        private void InitSideControllers()
-        {
-            foreach (Side side in _sides)
-            {
-                _sideControllers.Add(side, new SideController());
-            }
-        }
+        if (sideController == null) return;
 
-        private IEnumerator BuildingsUpdateTimer()
-        {
-            while (_isUpdateStoped != true)
-            {
-                yield return new WaitForSeconds(_incomeFrequency);
+        if(!free)
+            if (sideController.CanSpendCoins(data.Cost))
+                sideController.SpendCoins(data.Cost);
+            else return;
 
-                foreach (var sideController in _sideControllers)
-                {
-                    Debug.Log("Update coins for: " + sideController.Key.ToString());
-
-                    foreach (Node<Building> building in _graph.Nodes)
-                        if (building.Value.Side == sideController.Key)
-                            sideController.Value.AddCoins((uint)building.Value.BuildingImp.BuildingData.Income);
-
-                    foreach (Node<Building> building in _graph.Nodes)
-                        if (building.Value.Side == sideController.Key)
-                            sideController.Value.SpendCoins((uint)building.Value.BuildingImp.BuildingData.Upkeep);
-                }
-            }
-        }
-
-        private void UpgradeBuilding(IBuildingData data, bool free, Building building)
-        {
-            SideController sideController = _sideControllers[building.Side];
-
-            if (sideController == null) return;
-
-            if (!free)
-                if (sideController.CanSpendCoins(data.Cost))
-                    sideController.SpendCoins(data.Cost);
-                else return;
-
-            building.ChangeBuilding(data);
-        }
+        building.ChangeBuilding(data);
     }
 }

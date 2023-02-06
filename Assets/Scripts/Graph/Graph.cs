@@ -1,13 +1,14 @@
+using Graphs.Path;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Raiders.Graphs
+namespace Graphs
 {
     [System.Serializable]
     public class Graph<T>
     {
-        public IPathAlgorithm<T> pathAlgorithm
+        public Path.IPathAlgorithm<T> pathAlgorithm
         { get; set; }
 
         [SerializeField]

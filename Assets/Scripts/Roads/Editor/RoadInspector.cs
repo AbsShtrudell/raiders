@@ -3,21 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace Raiders.Editors
+[CustomEditor(typeof(Road))]
+public class RoadInspector : Editor
 {
-    [CustomEditor(typeof(Road))]
-    public class RoadInspector : Editor
+    public override void OnInspectorGUI()
     {
-        public override void OnInspectorGUI()
+        DrawDefaultInspector();
+        
+        var road = (Road)target;
+
+        if(GUILayout.Button("Rebuild"))
         {
-            DrawDefaultInspector();
-
-            var road = (Road)target;
-
-            if (GUILayout.Button("Rebuild"))
-            {
-                road.Rebuild();
-            }
+            road.Rebuild();
         }
     }
 }

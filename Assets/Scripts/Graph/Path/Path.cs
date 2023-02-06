@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Raiders.Graphs
+namespace Graphs.Path
 {
     public class Path<T>
     {

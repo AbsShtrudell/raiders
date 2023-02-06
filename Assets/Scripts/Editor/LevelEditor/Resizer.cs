@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace Raiders.Editors.LevelEditor
+namespace LevelEditor
 {
     public class Resizer : Panel
     {

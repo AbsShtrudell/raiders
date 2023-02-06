@@ -552,6 +552,7 @@ GameObject:
   m_Component:
   - component: {fileID: 438522797}
   - component: {fileID: 438522795}
+  - component: {fileID: 438522796}
   m_Layer: 0
   m_Name: LevelInstaller
   m_TagString: Untagged
@@ -571,7 +572,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c831a33c33549b94a9408b688b4d197b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingsDataSet: []
+  vikingBuildings:
+    simpleBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    defensiveBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    economicsBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    armyBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+  englishBuildings:
+    simpleBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    defensiveBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    economicsBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    armyBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+  rebelBuildings:
+    simpleBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    defensiveBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    economicsBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    armyBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+--- !u!114 &438522796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438522794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c831a33c33549b94a9408b688b4d197b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vikingBuildings:
+    simpleBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    defensiveBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    economicsBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    armyBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+  englishBuildings:
+    simpleBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    defensiveBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    economicsBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    armyBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+  rebelBuildings:
+    simpleBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    defensiveBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    economicsBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+    armyBuilding: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
 --- !u!4 &438522797
 Transform:
   m_ObjectHideFlags: 0
@@ -3708,16 +3750,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slotsControllerRef: {fileID: 1565340617265195275, guid: 1788fe8cc094caf45bd8f7b50403ab8d, type: 3}
-  _slotsRef:
-  - side: 0
-    defaultSlotRef: {fileID: 5359878905229698955, guid: 4725419e71857db429e8459c30bc597d, type: 3}
-    extraSlotRef: {fileID: 7799436407483748313, guid: 85f91d7a9c4359841aa1482aa1159cc2, type: 3}
-  - side: 1
-    defaultSlotRef: {fileID: 4693902128224766162, guid: 0f453d7fdef35ac4e9a04023364ed62f, type: 3}
-    extraSlotRef: {fileID: 7799436407483748313, guid: 85f91d7a9c4359841aa1482aa1159cc2, type: 3}
-  - side: 2
-    defaultSlotRef: {fileID: 8184571348483049162, guid: 02fce69ad202bc04fb19de0292ef9a76, type: 3}
-    extraSlotRef: {fileID: 7799436407483748313, guid: 85f91d7a9c4359841aa1482aa1159cc2, type: 3}
+  _vikingSlotRef: {fileID: 5359878905229698955, guid: 4725419e71857db429e8459c30bc597d, type: 3}
+  _englishSlotRef: {fileID: 4693902128224766162, guid: 0f453d7fdef35ac4e9a04023364ed62f, type: 3}
+  _rebelsSlotRef: {fileID: 8184571348483049162, guid: 02fce69ad202bc04fb19de0292ef9a76, type: 3}
+  _extraSlotRef: {fileID: 7799436407483748313, guid: 85f91d7a9c4359841aa1482aa1159cc2, type: 3}
 --- !u!4 &1577308361
 Transform:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Raiders.Graphs
+namespace Graphs
 {
     [System.Serializable]
     public class Node<T>
