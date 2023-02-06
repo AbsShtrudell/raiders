@@ -8,11 +8,15 @@ namespace Raiders
     public class Soldier : MonoBehaviour, IControllable
     {
         [SerializeField] private Side _side;
+        [SerializeField] private float _currentHealth;
         [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> arsenal;
         private Dictionary<ClothingItem.Type, ClothingItem> _items;
+        private Dictionary<ClothingItem.Type, SoldierItems.FrontBackSprites> _currentSprites;
         private Shield _shield;
     	private Weapon _weapon;
     	private NavMeshAgent _agent;
+            
+        public Squad squad { get; set; }
 
         public Side side
         {
@@ -23,6 +27,7 @@ namespace Raiders
         private void Awake()
         {
             _items = new Dictionary<ClothingItem.Type, ClothingItem>();
+            _currentSprites = new Dictionary<ClothingItem.Type, SoldierItems.FrontBackSprites>();
 
             var children = GetComponentsInChildren<ClothingItem>();
 
@@ -36,62 +41,62 @@ namespace Raiders
         	_agent.updatePosition = false;
         }
         
-private void Update()
-    {
-        if (!_agent.hasPath)
-            return;
-
-        var direction = _agent.nextPosition - transform.position;
-        direction.y = 0;
-
-        _shield.Rotate(direction);
-
-        if (direction.x > 0)
-        {        
-            if (direction.z < 0)
-            {
-                foreach (var item in _items)
-                {
-                    item.Value.UnflipX();
-                    item.Value.SetSprite(_currentSprites[item.Key].front);
-                }
-                _weapon.UnflipX();
-            }
-            else
-            {
-                foreach (var item in _items)
-                {
-                    item.Value.FlipX();
-                    item.Value.SetSprite(_currentSprites[item.Key].back);
-                }
-                _weapon.FlipX();
-            }
-
-        }
-        else
+        private void Update()
         {
-            if (direction.z < 0)
-            {
-                foreach (var item in _items)
+            if (!_agent.hasPath)
+                return;
+
+            var direction = _agent.nextPosition - transform.position;
+            direction.y = 0;
+
+            _shield.Rotate(direction);
+
+            if (direction.x > 0)
+            {        
+                if (direction.z < 0)
                 {
-                    item.Value.FlipX();
-                    item.Value.SetSprite(_currentSprites[item.Key].front);
+                    foreach (var item in _items)
+                    {
+                        item.Value.UnflipX();
+                        item.Value.SetSprite(_currentSprites[item.Key].front);
+                    }
+                    _weapon.UnflipX();
                 }
-                _weapon.UnflipX();
+                else
+                {
+                    foreach (var item in _items)
+                    {
+                        item.Value.FlipX();
+                        item.Value.SetSprite(_currentSprites[item.Key].back);
+                    }
+                    _weapon.FlipX();
+                }
+
             }
             else
             {
-                foreach (var item in _items)
+                if (direction.z < 0)
                 {
-                    item.Value.UnflipX();
-                    item.Value.SetSprite(_currentSprites[item.Key].back);
+                    foreach (var item in _items)
+                    {
+                        item.Value.FlipX();
+                        item.Value.SetSprite(_currentSprites[item.Key].front);
+                    }
+                    _weapon.UnflipX();
                 }
-                _weapon.FlipX();
+                else
+                {
+                    foreach (var item in _items)
+                    {
+                        item.Value.UnflipX();
+                        item.Value.SetSprite(_currentSprites[item.Key].back);
+                    }
+                    _weapon.FlipX();
+                }
             }
-        }
 
-        transform.position = _agent.nextPosition;
-    }
+            transform.position = _agent.nextPosition;
+        }
 
         public void ChangeItems()
         {
@@ -111,16 +116,16 @@ private void Update()
             {
                 item.Value.AddRenderPriority(amount * _items.Count);
             }
+        }    
+
+        public void GoTo(Vector3 destination)
+        {
+            _agent.SetDestination(destination);        
         }
-    }
 
-    public void GoTo(Vector3 destination)
-    {
-        _agent.SetDestination(destination);        
-    }
-
-    public void SetHealth(float health)
-    {
-        _currentHealth = health;
+        public void SetHealth(float health)
+        {
+            _currentHealth = health;
+        }
     }
 }

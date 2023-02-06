@@ -571,21 +571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c831a33c33549b94a9408b688b4d197b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildings:
-  - First: 0
-    Second:
-    - First: 1
-      Second: {fileID: 0}
-    - First: 0
-      Second: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
-    - First: 2
-      Second: {fileID: 0}
-    - First: 3
-      Second: {fileID: 0}
-  - First: 1
-    Second: []
-  - First: 2
-    Second: []
+  buildingsDataSet: []
 --- !u!4 &438522797
 Transform:
   m_ObjectHideFlags: 0

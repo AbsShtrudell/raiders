@@ -17,6 +17,7 @@ namespace Raiders
         [SerializeField, Min(0f)] private float _speed = 5f;
         [SerializeField] private float distanceFromPrimary = 1f;
         [SerializeField] private float xDistance = 0.05f;
+        [SerializeField] private UnitInfo _unitInfo;
         [Zenject.Inject] private Zenject.DiContainer container;
         private Soldier[] soldiers;
         private PrimaryFollowerBehavior primaryFollower = null;
@@ -50,6 +51,16 @@ namespace Raiders
             soldiers[i].side = _side;
             soldiers[i].ChangeItems();
             soldiers[i].AddRenderPriority(soldiers.Length - i);
+            soldiers[i].squad = this;
+            soldiers[i].SetHealth(_unitInfo.health);
+        }
+
+        public void SpawnEmptySoldiers()
+        {
+            for (int i = 0; i < soldiers.Length; i++)
+            {
+                InitializeSoldier(i);
+            }
         }
 
         private void OnValidate()
