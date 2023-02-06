@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95296f568ca8c2143bf4b1ae6a5a7558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soldierPrefab: {fileID: 4364281762661420893, guid: a678b429c9bf3f2409207fefe9ec0463, type: 3}
+  soldierPrefab: {fileID: 8539505255893761340, guid: a63d541536e95d44cb8b044d569c0e28, type: 3}
   _side: 0
   soldiersAmount: 8
   _speed: 40
