@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SecondaryPathFollower : PathCreation.Examples.PathFollower
+namespace Raiders
 {
-    
+    public class SecondaryPathFollower
+    {
+
+    }
 }

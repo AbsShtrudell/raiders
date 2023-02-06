@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FaceCamera : MonoBehaviour
+namespace Raiders.UI
 {
-    void Update()
+    public class FaceCamera : MonoBehaviour
     {
-        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        void Update()
+        {
+            transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+        }
     }
 }

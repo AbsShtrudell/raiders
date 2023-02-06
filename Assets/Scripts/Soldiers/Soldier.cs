@@ -3,141 +3,129 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Soldier : MonoBehaviour, IControllable
+namespace Raiders
 {
-    [SerializeField] private Side _side;
-    [SerializeField] private float _currentHealth;
-    [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> _arsenal;
-    private Dictionary<ClothingItem.Type, ClothingItem> _items;
-    private Dictionary<ClothingItem.Type, SoldierItems.FrontBackSprites> _currentSprites;
-    private Shield _shield;
-    private Weapon _weapon;
-    private NavMeshAgent _agent;
-    
-    public Squad squad { get; set; }
-    
-    public Side side
+    public class Soldier : MonoBehaviour, IControllable
     {
-        get => _side;
-        set => _side = value;
-    }
-    
-    private void Awake()
-    {
-        _items = new Dictionary<ClothingItem.Type, ClothingItem>();
-        _currentSprites = new Dictionary<ClothingItem.Type, SoldierItems.FrontBackSprites>();
+        [SerializeField] private Side _side;
+        [SerializeField] private float _currentHealth;
+        [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> arsenal;
+        private Dictionary<ClothingItem.Type, ClothingItem> _items;
+        private Dictionary<ClothingItem.Type, SoldierItems.FrontBackSprites> _currentSprites;
+        private Shield _shield;
+    	private Weapon _weapon;
+    	private NavMeshAgent _agent;
+            
+        public Squad squad { get; set; }
 
-        var children = GetComponentsInChildren<ClothingItem>();
-
-        foreach (var item in children)
+        public Side side
         {
-            _items.Add(item.type, item);
-
-            //hueta, chisto dlya testa nezavisimogo unita
-            //foreach (var i in _arsenal[side].items[item.type])
-            //{
-            //    if (i == null)
-            //        continue;
-//
-            //    if (i.front == item.currentSprite || i.back == item.currentSprite)
-            //    {
-            //        _currentSprites.Add(item.type, i);
-            //        break;
-            //    }
-            //}
+            get => _side;
+            set => _side = value;
         }
 
-        _shield = GetComponentInChildren<Shield>();
-        _weapon = GetComponentInChildren<Weapon>();
-        _agent = GetComponent<NavMeshAgent>();
-        _agent.updatePosition = false;
-        transform.position = _agent.nextPosition;
-    }
+        private void Awake()
+        {
+            _items = new Dictionary<ClothingItem.Type, ClothingItem>();
+            _currentSprites = new Dictionary<ClothingItem.Type, SoldierItems.FrontBackSprites>();
 
-    private void Update()
-    {
-        if (!_agent.hasPath)
-            return;
+            var children = GetComponentsInChildren<ClothingItem>();
 
-        var direction = _agent.nextPosition - transform.position;
-        direction.y = 0;
-
-        _shield.Rotate(direction);
-
-        if (direction.x > 0)
-        {        
-            if (direction.z < 0)
+            foreach (var item in children)
             {
-                foreach (var item in _items)
+                _items.Add(item.type, item);
+            }
+            _shield = GetComponentInChildren<Shield>();
+        	_weapon = GetComponentInChildren<Weapon>();
+        	_agent = GetComponent<NavMeshAgent>();
+        	_agent.updatePosition = false;
+        }
+        
+        private void Update()
+        {
+            if (!_agent.hasPath)
+                return;
+
+            var direction = _agent.nextPosition - transform.position;
+            direction.y = 0;
+
+            _shield.Rotate(direction);
+
+            if (direction.x > 0)
+            {        
+                if (direction.z < 0)
                 {
-                    item.Value.UnflipX();
-                    item.Value.SetSprite(_currentSprites[item.Key].front);
+                    foreach (var item in _items)
+                    {
+                        item.Value.UnflipX();
+                        item.Value.SetSprite(_currentSprites[item.Key].front);
+                    }
+                    _weapon.UnflipX();
                 }
-                _weapon.UnflipX();
+                else
+                {
+                    foreach (var item in _items)
+                    {
+                        item.Value.FlipX();
+                        item.Value.SetSprite(_currentSprites[item.Key].back);
+                    }
+                    _weapon.FlipX();
+                }
+
             }
             else
             {
-                foreach (var item in _items)
+                if (direction.z < 0)
                 {
-                    item.Value.FlipX();
-                    item.Value.SetSprite(_currentSprites[item.Key].back);
+                    foreach (var item in _items)
+                    {
+                        item.Value.FlipX();
+                        item.Value.SetSprite(_currentSprites[item.Key].front);
+                    }
+                    _weapon.UnflipX();
                 }
-                _weapon.FlipX();
+                else
+                {
+                    foreach (var item in _items)
+                    {
+                        item.Value.UnflipX();
+                        item.Value.SetSprite(_currentSprites[item.Key].back);
+                    }
+                    _weapon.FlipX();
+                }
             }
 
+            transform.position = _agent.nextPosition;
         }
-        else
+
+        public void ChangeItems()
         {
-            if (direction.z < 0)
+            foreach (var item in _items)
             {
-                foreach (var item in _items)
-                {
-                    item.Value.FlipX();
-                    item.Value.SetSprite(_currentSprites[item.Key].front);
-                }
-                _weapon.UnflipX();
+                var sprites = arsenal[side].items[item.Key];
+
+            	_currentSprites[item.Key] = sprites[Random.Range(0, sprites.Length)];
+
+            	item.Value.SetSprite(_currentSprites[item.Key].front);
             }
-            else
+        }
+
+        public void AddRenderPriority(int amount)
+        {
+            foreach (var item in _items)
             {
-                foreach (var item in _items)
-                {
-                    item.Value.UnflipX();
-                    item.Value.SetSprite(_currentSprites[item.Key].back);
-                }
-                _weapon.FlipX();
+                item.Value.AddRenderPriority(amount * _items.Count);
             }
-        }
+        }    
 
-        transform.position = _agent.nextPosition;
-    }
-
-    public void ChangeItems()
-    {
-        foreach (var item in _items)
+        public void GoTo(Vector3 destination)
         {
-            var sprites = _arsenal[side].items[item.Key];
-
-            _currentSprites[item.Key] = sprites[Random.Range(0, sprites.Length)];
-
-            item.Value.SetSprite(_currentSprites[item.Key].front);
+            _agent.SetDestination(destination);        
         }
-    }
 
-    public void AddRenderPriority(int amount)
-    {
-        foreach (var item in _items)
+        public void SetHealth(float health)
         {
-            item.Value.AddRenderPriority(amount * _items.Count);
+            _currentHealth = health;
         }
-    }
-
-    public void GoTo(Vector3 destination)
-    {
-        _agent.SetDestination(destination);        
-    }
-
-    public void SetHealth(float health)
-    {
-        _currentHealth = health;
     }
 }

@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IControllable
+namespace Raiders
 {
-    public void GoTo(Vector3 destination);
+    public interface IControllable
+    {
+        public void GoTo(Vector3 destination);
+    }
 }

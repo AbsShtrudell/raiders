@@ -1,34 +1,23 @@
-using Zenject;
+using System.Collections.Generic;
 
-public class BuildingImpCreator : IInitializable
+namespace Raiders
 {
-    [Inject(Id = Side.Vikings)]
-    private SideFactory _vikingFactory;
-    [Inject(Id = Side.English)]
-    private SideFactory _englishFactory;
-    [Inject(Id = Side.Rebels)]
-    private SideFactory _rebelFactory;
-
-    public void Initialize()
-    { }
-
-    public BuildingImp Create(BuildingType type, Side side)
+    public class BuildingImpCreator
     {
-        BuildingImp building = null;
+        private Dictionary<Side, SideFactory> _sideFactories;
 
-        switch (side)
+        public BuildingImpCreator(Dictionary<Side, SideFactory> sideFactories)
         {
-            case Side.Vikings:
-                building = _vikingFactory.Create(type);
-                break;
-            case Side.English:
-                building = _englishFactory.Create(type);
-                break;
-            case Side.Rebels:
-                building = _rebelFactory.Create(type);
-                break;
+            _sideFactories = sideFactories;
         }
 
-        return building;
+        public IBuildingImp Create(BuildingType type, Side side)
+        {
+            _sideFactories.TryGetValue(side, out SideFactory sideFactory);
+
+            if (sideFactory == null) throw new System.Exception(string.Format("Can't find Side Factory for {0} side", side));
+
+            return sideFactory.Create(type);
+        }
     }
 }

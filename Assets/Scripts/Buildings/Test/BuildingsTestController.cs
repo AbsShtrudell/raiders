@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Test
+namespace Raiders.Test
 {
     namespace BuildingLogic
     {
@@ -12,13 +12,13 @@ namespace Test
             [SerializeField] private GameObject _defSlotSliderRef;
             [SerializeField] private GameObject _extrSlotSliderRef;
             [SerializeField] private Transform _slotsHolder;
-            private SimpleBuildingImp _buildingImp;
+            private IBuildingImp _buildingImp;
             private List<SlotSliderTest> _defaultSlotSliders = new List<SlotSliderTest>();
             private List<SlotSliderTest> _extraSlotSliders = new List<SlotSliderTest>();
 
             private void Awake()
             {
-                _buildingImp = new SimpleBuildingImp(_buildingData);
+                _buildingImp = new DefaultBuildingImp(_buildingData);
             }
 
             private void OnEnable()
@@ -84,7 +84,7 @@ namespace Test
 
             public void Attack(Side side)
             {
-                _buildingImp.GotAttacked(side);
+                _buildingImp.GotAttacked(side, null);
             }
 
             public void Reinforcement()

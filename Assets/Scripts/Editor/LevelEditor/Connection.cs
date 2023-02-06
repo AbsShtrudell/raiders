@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using System;
 
-namespace LevelEditor
+namespace Raiders.Editors.LevelEditor
 {
     public class Connection 
     {

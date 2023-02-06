@@ -1,31 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(RoadsDrawer))]
-public class RoadsDrawerEditor : Editor
+namespace Raiders.Editors
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(RoadsDrawer))]
+    public class RoadsDrawerEditor : Editor
     {
-        DrawDefaultInspector();
-
-        RoadsDrawer roadsDrawer = (RoadsDrawer)target;
-
-        GUILayout.Space(15);
-
-        GUILayout.BeginHorizontal();
-
-        if (GUILayout.Button("Draw"))
+        public override void OnInspectorGUI()
         {
-            roadsDrawer.Draw();
-        }
+            DrawDefaultInspector();
 
-        if (GUILayout.Button("Clear"))
-        {
-            roadsDrawer.Clear();
-        }
+            RoadsDrawer roadsDrawer = (RoadsDrawer)target;
 
-        GUILayout.EndHorizontal();
+            GUILayout.Space(15);
+
+            GUILayout.BeginHorizontal();
+
+            if (GUILayout.Button("Draw"))
+            {
+                roadsDrawer.Draw();
+            }
+
+            if (GUILayout.Button("Clear"))
+            {
+                roadsDrawer.Clear();
+            }
+
+            GUILayout.EndHorizontal();
+        }
     }
 }

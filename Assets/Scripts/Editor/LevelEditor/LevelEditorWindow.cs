@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
-namespace LevelEditor
+namespace Raiders.Editors.LevelEditor
 {
     public class LevelEditorWindow : EditorWindow
     {

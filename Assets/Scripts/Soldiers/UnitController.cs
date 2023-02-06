@@ -4,63 +4,66 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class UnitController : MonoBehaviour
+namespace Raiders
 {
-    private List<IControllable> _selectedUnits = new List<IControllable>();
-    private PlayerInput _input;
-
-    private void Awake()
+    public class UnitController : MonoBehaviour
     {
-        _input = GetComponent<PlayerInput>();
-    }
-
-    private void OnEnable()
-    {
-        _input.actions["Select"].performed += Select;
-        //_input.actions["MultiSelectModifier"].performed += MultiSelectStart;
-        //_input.actions["MultiSelectModifier"].canceled += MultiSelectEnd;
-        _input.actions["SendTroops"].performed += SendTroops;
-    }
-
-    private void OnDisable()
-    {
-        _input.actions["Select"].performed -= Select;
-        //_input.actions["MultiSelectModifier"].performed -= MultiSelectStart;
-        //_input.actions["MultiSelectModifier"].canceled -= MultiSelectEnd;
-        _input.actions["SendTroops"].performed -= SendTroops;
-    }
-
-    void Update()
-    {
-        
-    }
-
-    private void Select(InputAction.CallbackContext obj)
-    {
-        var cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(cameraRay, out var hit, float.PositiveInfinity, LayerMask.GetMask("Unit")))
+        private List<IControllable> _selectedUnits = new List<IControllable>();
+        private PlayerInput _input;
+    
+        private void Awake()
         {
-            _selectedUnits.Clear();
-            _selectedUnits.Add(hit.collider.GetComponent<IControllable>());
+            _input = GetComponent<PlayerInput>();
         }
-        else
+    
+        private void OnEnable()
         {
-            _selectedUnits.Clear();
+            _input.actions["Select"].performed += Select;
+            //_input.actions["MultiSelectModifier"].performed += MultiSelectStart;
+            //_input.actions["MultiSelectModifier"].canceled += MultiSelectEnd;
+            _input.actions["SendTroops"].performed += SendTroops;
         }
-    }
-
-    private void SendTroops(InputAction.CallbackContext obj)
-    {
-        var cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(cameraRay, out var hit, float.PositiveInfinity, LayerMask.GetMask("Terrain")))
+    
+        private void OnDisable()
         {
-            foreach (var unit in _selectedUnits)
+            _input.actions["Select"].performed -= Select;
+            //_input.actions["MultiSelectModifier"].performed -= MultiSelectStart;
+            //_input.actions["MultiSelectModifier"].canceled -= MultiSelectEnd;
+            _input.actions["SendTroops"].performed -= SendTroops;
+        }
+    
+        void Update()
+        {
+            
+        }
+    
+        private void Select(InputAction.CallbackContext obj)
+        {
+            var cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+    
+            if (Physics.Raycast(cameraRay, out var hit, float.PositiveInfinity, LayerMask.GetMask("Unit")))
             {
-                unit.GoTo(hit.point);
+                _selectedUnits.Clear();
+                _selectedUnits.Add(hit.collider.GetComponent<IControllable>());
+            }
+            else
+            {
+                _selectedUnits.Clear();
             }
         }
+    
+        private void SendTroops(InputAction.CallbackContext obj)
+        {
+            var cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+    
+            if (Physics.Raycast(cameraRay, out var hit, float.PositiveInfinity, LayerMask.GetMask("Terrain")))
+            {
+                foreach (var unit in _selectedUnits)
+                {
+                    unit.GoTo(hit.point);
+                }
+            }
+        }
+    
     }
-
 }
