@@ -34,7 +34,7 @@ namespace Raiders
         private IBuildingImp _buildingImp;
 
         public Side Side { get { return _side; } set { _side = value; } }
-        public BuildingType Type { get { return _type; } set { _type = value; } }
+        public BuildingType Type { get { return _type; } set { _type = value; } } 
         public GameObject squadPrefab { get; set; }
         public List<Road> roads => _roads;
         public IBuildingImp BuildingImp => _buildingImp;
