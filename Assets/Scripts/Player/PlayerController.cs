@@ -53,18 +53,13 @@ namespace Raiders
 
         private void SendTroops(InputAction.CallbackContext obj)
         {
-            RaycastHit hit;
-            var building = RaycastBuilding(out hit);
+            var building = RaycastBuilding(out _);
 
             if (building)
             {
                 foreach (var b in _selectedBuildings)
-                {
                     if (b != building)
-                    {
                         b.SendTroops(building);
-                    }
-                }
 
                 DeselectAll();
             }
@@ -72,8 +67,7 @@ namespace Raiders
 
         private void Select(InputAction.CallbackContext obj)
         {
-            RaycastHit hit;
-            var building = RaycastBuilding(out hit);
+            var building = RaycastBuilding(out _);
 
             if (_multiSelect)
             {

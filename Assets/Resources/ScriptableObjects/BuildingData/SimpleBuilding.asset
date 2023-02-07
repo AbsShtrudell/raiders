@@ -21,5 +21,6 @@ MonoBehaviour:
   _troopsType: 0
   _mesh: {fileID: 0}
   _previous: {fileID: 0}
-  _upgrades: []
+  _upgrades:
+  - {fileID: 11400000}
   _cost: 5
