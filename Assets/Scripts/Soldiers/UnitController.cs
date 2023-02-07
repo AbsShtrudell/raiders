@@ -8,7 +8,7 @@ namespace Raiders
 {
     public class UnitController : MonoBehaviour
     {
-        private List<IControllable> _selectedUnits = new List<IControllable>();
+        private HashSet<IControllable> _selectedUnits = new HashSet<IControllable>();
         private PlayerInput _input;
     
         private void Awake()
@@ -44,7 +44,7 @@ namespace Raiders
             if (Physics.Raycast(cameraRay, out var hit, float.PositiveInfinity, LayerMask.GetMask("Unit")))
             {
                 _selectedUnits.Clear();
-                _selectedUnits.Add(hit.collider.GetComponent<IControllable>());
+                _selectedUnits.Add(hit.collider.GetComponent<IControllable>().mainControllable);
             }
             else
             {

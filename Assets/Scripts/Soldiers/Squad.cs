@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Raiders
 {
-    public class Squad : MonoBehaviour
+    public class Squad : MonoBehaviour, IControllable
     {
         [System.Serializable]
         public enum Direction { Forward = 1, Backward = -1 }
@@ -19,27 +19,29 @@ namespace Raiders
         [SerializeField] private float xDistance = 0.05f;
         [SerializeField] private UnitInfo _unitInfo;
         [Zenject.Inject] private Zenject.DiContainer container;
-        private Soldier[] soldiers;
+        private Soldier[] _soldiers;
         private PrimaryFollowerBehavior primaryFollower = null;
         private SecondaryFollowerBehavior[] secondaryFollowers;
         private Building building;
 
+        public IControllable mainControllable => this;
+
         private void Awake()
         {
-            soldiers = new Soldier[soldiersAmount];
+            _soldiers = new Soldier[soldiersAmount];
             secondaryFollowers = new SecondaryFollowerBehavior[soldiersAmount - 1];
         }
 
         public void MakeSoldiers()
         {
             InitializeSoldier(0);
-            var f = soldiers[0].GetComponent<TestPathFollower>();
+            var f = _soldiers[0].GetComponent<TestPathFollower>();
             primaryFollower = f.MakePrimary(_roads, _speed);
             primaryFollower.ReachedDestination += () => { building.SquadEnter(_side, TroopsType.Default); };
-            for (int i = 1; i < soldiers.Length; i++)
+            for (int i = 1; i < _soldiers.Length; i++)
             {
                 InitializeSoldier(i);
-                f = soldiers[i].GetComponent<TestPathFollower>();
+                f = _soldiers[i].GetComponent<TestPathFollower>();
                 secondaryFollowers[i - 1] =
                     f.MakeSecondary(primaryFollower, distanceFromPrimary * ((i + 1) / 2), xDistance * i * (i % 2 == 0 ? 1 : -1));
             }
@@ -47,17 +49,17 @@ namespace Raiders
 
         private void InitializeSoldier(int i)
         {
-            soldiers[i] = container.InstantiatePrefab(soldierPrefab, transform.position, transform.rotation, transform).GetComponent<Soldier>();
-            soldiers[i].side = _side;
-            soldiers[i].ChangeItems();
-            soldiers[i].AddRenderPriority(soldiers.Length - i);
-            soldiers[i].squad = this;
-            soldiers[i].SetHealth(_unitInfo.Health);
+            _soldiers[i] = container.InstantiatePrefab(soldierPrefab, transform.position, transform.rotation, transform).GetComponent<Soldier>();
+            _soldiers[i].side = _side;
+            _soldiers[i].ChangeItems();
+            _soldiers[i].AddRenderPriority(_soldiers.Length - i);
+            _soldiers[i].squad = this;
+            _soldiers[i].SetHealth(_unitInfo.Health);
         }
 
         public void SpawnEmptySoldiers()
         {
-            for (int i = 0; i < soldiers.Length; i++)
+            for (int i = 0; i < _soldiers.Length; i++)
             {
                 InitializeSoldier(i);
             }
@@ -90,6 +92,18 @@ namespace Raiders
         public void SetTarget(Building building)
         {
             this.building = building;
+        }
+
+        public void GoTo(Vector3 destination)
+        {
+            _soldiers[0].GoTo(destination);
+
+            var direction = (destination - _soldiers[0].transform.position).normalized;
+
+            for (int i = 1; i < _soldiers.Length; i++)
+            {
+                _soldiers[i].GoTo(destination - direction * i);
+            }
         }
     }
 }

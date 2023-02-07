@@ -24,6 +24,8 @@ namespace Raiders
             set => _side = value;
         }
 
+        public IControllable mainControllable => squad;
+
         private void Awake()
         {
             _items = new Dictionary<ClothingItem.Type, ClothingItem>();
@@ -39,6 +41,7 @@ namespace Raiders
         	_weapon = GetComponentInChildren<Weapon>();
         	_agent = GetComponent<NavMeshAgent>();
         	_agent.updatePosition = false;
+            transform.position = _agent.nextPosition;
         }
         
         private void Update()
@@ -54,48 +57,59 @@ namespace Raiders
             if (direction.x > 0)
             {        
                 if (direction.z < 0)
-                {
-                    foreach (var item in _items)
-                    {
-                        item.Value.UnflipX();
-                        item.Value.SetSprite(_currentSprites[item.Key].front);
-                    }
-                    _weapon.UnflipX();
-                }
+                    LookSouthEast();
                 else
-                {
-                    foreach (var item in _items)
-                    {
-                        item.Value.FlipX();
-                        item.Value.SetSprite(_currentSprites[item.Key].back);
-                    }
-                    _weapon.FlipX();
-                }
-
+                    LookNorthEast();
             }
             else
             {
                 if (direction.z < 0)
-                {
-                    foreach (var item in _items)
-                    {
-                        item.Value.FlipX();
-                        item.Value.SetSprite(_currentSprites[item.Key].front);
-                    }
-                    _weapon.UnflipX();
-                }
+                    LookSouthWest();
                 else
-                {
-                    foreach (var item in _items)
-                    {
-                        item.Value.UnflipX();
-                        item.Value.SetSprite(_currentSprites[item.Key].back);
-                    }
-                    _weapon.FlipX();
-                }
+                    LookNorthWest();
             }
 
             transform.position = _agent.nextPosition;
+        }
+
+        private void LookNorthWest()
+        {
+            foreach (var item in _items)
+            {
+                item.Value.UnflipX();
+                item.Value.SetSprite(_currentSprites[item.Key].back);
+            }
+            _weapon.FlipX();
+        }
+
+        private void LookSouthWest()
+        {
+            foreach (var item in _items)
+            {
+                item.Value.FlipX();
+                item.Value.SetSprite(_currentSprites[item.Key].front);
+            }
+            _weapon.UnflipX();
+        }
+
+        private void LookNorthEast()
+        {
+            foreach (var item in _items)
+            {
+                item.Value.FlipX();
+                item.Value.SetSprite(_currentSprites[item.Key].back);
+            }
+            _weapon.FlipX();
+        }
+
+        private void LookSouthEast()
+        {
+            foreach (var item in _items)
+            {
+                item.Value.UnflipX();
+                item.Value.SetSprite(_currentSprites[item.Key].front);
+            }
+            _weapon.UnflipX();
         }
 
         public void ChangeItems()

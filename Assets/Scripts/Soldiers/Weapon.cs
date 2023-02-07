@@ -7,12 +7,12 @@ namespace Raiders
     public class Weapon : MonoBehaviour
     {
         private float _initialXCoord;
-        private float _initialXScale;
+        private float _initialYRotation;
     
         private void Awake()
         {
             _initialXCoord = transform.localPosition.x;
-            _initialXScale = transform.localScale.x;
+            _initialYRotation = transform.localEulerAngles.y;
         }
     
         public void FlipX()
@@ -21,9 +21,9 @@ namespace Raiders
             position.x = -_initialXCoord;
             transform.localPosition = position;
     
-            var scale = transform.localScale;
-            scale.x = -_initialXScale;
-            transform.localScale = scale;
+            var euler = transform.localEulerAngles;
+            euler.y = _initialYRotation + 180;
+            transform.localEulerAngles = euler;
         }
     
         public void UnflipX()
@@ -32,9 +32,9 @@ namespace Raiders
             position.x = _initialXCoord;
             transform.localPosition = position;
     
-            var scale = transform.localScale;
-            scale.x = _initialXScale;
-            transform.localScale = scale;
+            var euler = transform.localEulerAngles;
+            euler.y = _initialYRotation;
+            transform.localEulerAngles = euler;
         }
     }
 }
