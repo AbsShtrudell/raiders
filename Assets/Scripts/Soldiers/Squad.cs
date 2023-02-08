@@ -98,11 +98,15 @@ namespace Raiders
         {
             _soldiers[0].GoTo(destination);
 
-            var direction = (destination - _soldiers[0].transform.position).normalized;
+            var normal = Vector3.Cross(_soldiers[0].direction, Vector3.up);
 
             for (int i = 1; i < _soldiers.Length; i++)
             {
-                _soldiers[i].GoTo(destination - direction * i);
+                var columnPosition = Vector3.zero;
+                columnPosition.z = distanceFromPrimary * ((i + 1) / 2);
+                columnPosition.x = xDistance * (i % 2 == 1 ? 1 : -1);
+
+                _soldiers[i].Follow(_soldiers[0], columnPosition);
             }
         }
     }

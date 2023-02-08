@@ -2446,6 +2446,14 @@ PrefabInstance:
       propertyPath: _unitInfo
       value: 
       objectReference: {fileID: 11400000, guid: acfa3e94e2d106e4c980176416d44da6, type: 2}
+    - target: {fileID: 544878860613824861, guid: 3998d5fec67c52944acab0a0fb4a7be1, type: 3}
+      propertyPath: xDistance
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 544878860613824861, guid: 3998d5fec67c52944acab0a0fb4a7be1, type: 3}
+      propertyPath: distanceFromPrimary
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3998d5fec67c52944acab0a0fb4a7be1, type: 3}
 --- !u!1 &1451181787

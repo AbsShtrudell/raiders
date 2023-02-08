@@ -15,8 +15,10 @@ namespace Raiders
         private Shield _shield;
     	private Weapon _weapon;
     	private NavMeshAgent _agent;
+        private Coroutine _followRoutine;
             
         public Squad squad { get; set; }
+        public Vector3 direction { get; private set; }
 
         public Side side
         {
@@ -24,6 +26,8 @@ namespace Raiders
             set => _side = value;
         }
 
+        public bool hasPath => _agent.hasPath;
+        public bool pathPending => _agent.pathPending;
         public IControllable mainControllable => squad;
 
         private void Awake()
@@ -41,6 +45,7 @@ namespace Raiders
         	_weapon = GetComponentInChildren<Weapon>();
         	_agent = GetComponent<NavMeshAgent>();
         	_agent.updatePosition = false;
+            _agent.updateRotation = false;
             transform.position = _agent.nextPosition;
         }
         
@@ -49,13 +54,24 @@ namespace Raiders
             if (!_agent.hasPath)
                 return;
 
-            var direction = _agent.nextPosition - transform.position;
-            direction.y = 0;
+            if (_agent.nextPosition != transform.position)
+            {
+                direction = _agent.nextPosition - transform.position;
+                direction.Set(direction.x, 0, direction.z);
+                direction = direction.normalized;
 
+                LookTowardDirection();
+            }
+
+            transform.position = _agent.nextPosition;
+        }
+
+        private void LookTowardDirection()
+        {
             _shield.Rotate(direction);
 
             if (direction.x > 0)
-            {        
+            {
                 if (direction.z < 0)
                     LookSouthEast();
                 else
@@ -68,8 +84,6 @@ namespace Raiders
                 else
                     LookNorthWest();
             }
-
-            transform.position = _agent.nextPosition;
         }
 
         private void LookNorthWest()
@@ -134,12 +148,47 @@ namespace Raiders
 
         public void GoTo(Vector3 destination)
         {
-            _agent.SetDestination(destination);        
+            _agent.SetDestination(destination);
         }
 
         public void SetHealth(float health)
         {
             _currentHealth = health;
+        }
+
+        public void Follow(Soldier primary, Vector3 columnPosition)
+        {
+            if (_followRoutine != null)
+                StopCoroutine(_followRoutine);
+
+            _followRoutine = StartCoroutine(Following(primary, columnPosition));
+        }
+
+        private IEnumerator Following(Soldier primary, Vector3 columnPosition)
+        {
+            yield return new WaitWhile(() => primary.pathPending);
+
+            while (primary.hasPath)
+            {
+                float angle = Vector3.SignedAngle(Vector3.forward, primary.direction, Vector3.up);
+
+                var delta = Quaternion.Euler(0, angle, 0) * columnPosition;
+
+                _agent.SetDestination(primary.transform.position - delta);
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            yield return new WaitWhile(() => _agent.hasPath);
+
+            direction = primary.direction;
+            LookTowardDirection();
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + direction);
         }
     }
 }
