@@ -18,6 +18,13 @@ namespace Raiders
         [SerializeField] private float distanceFromPrimary = 1f;
         [SerializeField] private float xDistance = 0.05f;
         [SerializeField] private UnitInfo _unitInfo;
+        [SerializeField] private SplineComputer _spline;
+
+        [Header("Followers")]        
+        [SerializeField] private float _followingSpeedModifier = 2f;
+        [SerializeField] private float _followingAccelerationModifier = 5f;
+        [SerializeField] private float _stoppingDistanceModifier = 5f;
+
         [Zenject.Inject] private Zenject.DiContainer container;
         private Soldier[] _soldiers;
         private PrimaryFollowerBehavior primaryFollower = null;
@@ -25,6 +32,10 @@ namespace Raiders
         private Building building;
 
         public IControllable mainControllable => this;
+        public SplineComputer spline => _spline;
+        public float followingSpeedModifier => _followingSpeedModifier;
+        public float followingAccelerationModifier => _followingAccelerationModifier;
+        public float stoppingDistanceModifier => _stoppingDistanceModifier;
 
         private void Awake()
         {
@@ -59,9 +70,13 @@ namespace Raiders
 
         public void SpawnEmptySoldiers()
         {
-            for (int i = 0; i < _soldiers.Length; i++)
+            InitializeSoldier(0);
+            _soldiers[0].squadRole = new Leader(_soldiers[0], this);
+
+            for (int i = 1; i < _soldiers.Length; i++)
             {
                 InitializeSoldier(i);
+                _soldiers[i].squadRole = new Follower(_soldiers[i], this);
             }
         }
 
@@ -96,7 +111,8 @@ namespace Raiders
 
         public void GoTo(Vector3 destination)
         {
-            _soldiers[0].GoTo(destination);
+            (_soldiers[0].squadRole as Leader).currentDestination = destination;
+            _soldiers[0].squadRole.Move();
 
             var normal = Vector3.Cross(_soldiers[0].direction, Vector3.up);
 
@@ -106,7 +122,10 @@ namespace Raiders
                 columnPosition.z = distanceFromPrimary * ((i + 1) / 2);
                 columnPosition.x = xDistance * (i % 2 == 1 ? 1 : -1);
 
-                _soldiers[i].Follow(_soldiers[0], columnPosition);
+                var follower = _soldiers[i].squadRole as Follower;
+                follower.leader = _soldiers[0];
+                follower.columnPosition = columnPosition;
+                follower.Move();
             }
         }
     }
