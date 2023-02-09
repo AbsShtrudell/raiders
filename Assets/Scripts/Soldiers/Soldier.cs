@@ -8,7 +8,11 @@ namespace Raiders
     public class Soldier : MonoBehaviour, IControllable
     {
         [SerializeField] private Side _side;
-        [SerializeField] private float _currentHealth;
+        [SerializeField] private float _currentHealth;        
+        [SerializeField] private float _followingSpeedModifier = 3f;
+        [SerializeField] private float _followingAccelerationModifier = 10f;
+        [SerializeField] private float _stoppingDistanceModifier = 5f;
+
         [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> arsenal;
         private Dictionary<ClothingItem.Type, ClothingItem> _items;
         private Dictionary<ClothingItem.Type, SoldierItems.FrontBackSprites> _currentSprites;
@@ -16,7 +20,9 @@ namespace Raiders
     	private Weapon _weapon;
     	private NavMeshAgent _agent;
         private Coroutine _followRoutine;
-            
+        private float _defaultSpeed;
+        private float _defaultAcceleration;
+
         public Squad squad { get; set; }
         public Vector3 direction { get; private set; }
 
@@ -47,6 +53,9 @@ namespace Raiders
         	_agent.updatePosition = false;
             _agent.updateRotation = false;
             transform.position = _agent.nextPosition;
+
+            _defaultSpeed = _agent.speed;
+            _defaultAcceleration = _agent.acceleration;
         }
         
         private void Update()
@@ -175,6 +184,19 @@ namespace Raiders
                 var delta = Quaternion.Euler(0, angle, 0) * columnPosition;
 
                 _agent.SetDestination(primary.transform.position - delta);
+                var destination = primary.transform.position - delta;
+                _agent.SetDestination(destination);
+
+                if (Vector3.Distance(transform.position, destination) > _agent.stoppingDistance * _stoppingDistanceModifier)
+                {
+                    _agent.speed = _defaultSpeed * _followingSpeedModifier;
+                    _agent.acceleration = _defaultAcceleration * _followingAccelerationModifier;
+                }
+                else
+                {
+                    _agent.speed = _defaultSpeed;
+                    _agent.acceleration = _defaultAcceleration;
+                }
 
                 yield return new WaitForEndOfFrame();
             }

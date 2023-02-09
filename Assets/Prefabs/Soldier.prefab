@@ -415,6 +415,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _side: 0
   _currentHealth: 0
+  _followingSpeedModifier: 2
+  _followingAccelerationModifier: 5
 --- !u!114 &1708012539365307869
 MonoBehaviour:
   m_ObjectHideFlags: 0
