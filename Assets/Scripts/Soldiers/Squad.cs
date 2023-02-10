@@ -19,6 +19,7 @@ namespace Raiders
         [SerializeField] private float xDistance = 0.05f;
         [SerializeField] private UnitInfo _unitInfo;
         [SerializeField] private SplineComputer _spline;
+        [SerializeField] private bool _isSplineMovement = false;
 
         [Header("Followers")]        
         [SerializeField] private float _followingSpeedModifier = 2f;
@@ -36,6 +37,7 @@ namespace Raiders
         public float followingSpeedModifier => _followingSpeedModifier;
         public float followingAccelerationModifier => _followingAccelerationModifier;
         public float stoppingDistanceModifier => _stoppingDistanceModifier;
+        public bool isSplineMovement => _isSplineMovement;
 
         private void Awake()
         {
