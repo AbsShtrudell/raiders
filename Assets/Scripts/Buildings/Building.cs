@@ -1,26 +1,44 @@
 using UnityEngine;
 using System;
+using Zenject;
 using System.Collections.Generic;
+using Dreamteck.Splines;
 
 namespace Raiders
 {
-    public partial class Building : MonoBehaviour
+    public class Building : MonoBehaviour
     {
+        [Inject]
+        private DiContainer container;
+        [Inject]
+        private BuildingImpCreator _buildingImpCreator;
+        [Inject]
+        private SlotsControllerCreator _slotsContrCreator;
+
+        [SerializeField]
+        private Side _side = Side.Rebels;
+        [SerializeField]
+        private BuildingType _type;
+        [SerializeField]
+        private Transform _visual;
+        [SerializeField]
+        private MeshRenderer _meshRenderer;
         [SerializeField]
         private List<Road> _roads;
 
-        private MeshRenderer _meshRenderer;
+        private MeshFilter _meshFilter;
+        private Collider _collider;
         private SlotsController _slotsUI;
         private UpgradeController _upgradeUI;
 
-        private Side _side;
         private IBuildingImp _buildingImp;
-        private BuildingImpCreator _buildingImpCreator;
-        private SlotsControllerCreator _slotsContrCreator;
 
         public Side Side { get { return _side; } set { _side = value; } }
+        public BuildingType Type { get { return _type; } set { _type = value; } } 
+        public GameObject squadPrefab { get; set; }
         public List<Road> roads => _roads;
         public IBuildingImp BuildingImp => _buildingImp;
+        public Graphs.Graph<Building> graph { get; set; }
 
         public Action<Building> Selected;
         public Action<Building> Deselected;
@@ -29,12 +47,26 @@ namespace Raiders
 
         private void Awake()
         {
-            _meshRenderer = GetComponent<MeshRenderer>();
+            if (_visual == null) _visual = transform;
+
+            _meshRenderer = _visual.GetComponent<MeshRenderer>();
+            _meshFilter = _visual.GetComponent<MeshFilter>();
+            _collider = _visual.GetComponent<Collider>();
+        }
+
+        private void OnEnable()
+        {
+            InitBuildingImp(_type, _side);
+            InitUI();
         }
 
         private void OnDisable()
         {
             Disabled?.Invoke();
+        }
+
+        private void Start()
+        {
         }
 
         private void Update()
@@ -44,22 +76,10 @@ namespace Raiders
             _slotsUI.transform.localPosition = Vector3.up * 2;
         }
 
-        public void Init(Side side, BuildingType type, BuildingImpCreator buildingImpCreator, SlotsControllerCreator slotsControllerCreator)
+        private void InitUI()
         {
-            _side = side;
-            _buildingImpCreator = buildingImpCreator;
-            _slotsContrCreator = slotsControllerCreator;
-
-            ChangeBuildingImp(type, _side);
-            ChangeUI();
-        }
-
-        private void ChangeUI()
-        {
-            Destroy(_slotsUI.gameObject);
-
             _slotsUI = _slotsContrCreator?.Create(_side, _buildingImp);
-            _slotsUI.gameObject.transform.SetParent(gameObject.transform);
+            _slotsUI.gameObject.transform.SetParent(_visual);
             _upgradeUI = _slotsUI.GetComponent<UpgradeController>();
             if (_upgradeUI != null)
                 _upgradeUI.InitButtons(BuildingImp.BuildingData, OnUpgradeQueued);
@@ -70,7 +90,7 @@ namespace Raiders
                 _upgradeUI.Hide();
         }
 
-        private void ChangeBuildingImp(BuildingType type, Side side)
+        private void InitBuildingImp(BuildingType type, Side side)
         {
             _buildingImp = _buildingImpCreator?.Create(type, side);
 
@@ -83,13 +103,15 @@ namespace Raiders
 
             if (_buildingImp.BuildingData.PreviousLevel != null)
             {
-                ChangeBuildingImp(_buildingImp.BuildingData.PreviousLevel.Type, side);
+                InitBuildingImp(_buildingImp.BuildingData.PreviousLevel.Type, side);
+                _type = _buildingImp.BuildingData.Type;
             }
             else
             {
-                ChangeBuildingImp(_buildingImp.BuildingData.Type, side);
+                InitBuildingImp(_buildingImp.BuildingData.Type, side);
             }
-            ChangeUI();
+            Destroy(_slotsUI.gameObject);
+            InitUI();
         }
 
         public void SquadEnter(Side side, TroopsType type)
@@ -133,12 +155,12 @@ namespace Raiders
         {
             BuildingImp.BuildingData = buildingData;
 
-            ChangeUI();
+            GameObject.Destroy(_slotsUI.gameObject);
+            InitUI();
         }
 
         public void SendTroops(Building target)
         {
-            /*
             var source = graph.Find(this);
             var destination = graph.Find(target);
 
@@ -171,25 +193,32 @@ namespace Raiders
 
             squad.SetRoads(pathRoads);
             squad.MakeSoldiers();
-            */
         }
 
-        public class Factory : IBuildingFactory
+        public class Factory : IFactory<Building>
         {
+            private DiContainer _container;
             private Building _visual;
-            private BuildingImpCreator _buildingImpCreator;
-            private SlotsControllerCreator _slotsContrCreator;
 
-            public Factory(Building visual, BuildingImpCreator buildingImpCreator, SlotsControllerCreator slotsContrCreator)
+            public Factory(DiContainer container, Building visual)
             {
+                _container = container;
                 _visual = visual;
-                _buildingImpCreator = buildingImpCreator;
-                _slotsContrCreator = slotsContrCreator;
             }
 
-            public Building Create(BuildingType type, Side side)
+            public Building Create()
             {
-                return null;
+                Building building;
+
+                if (_container != null)
+                {
+                    building = _container.InstantiatePrefabForComponent<Building>(_visual);
+                }
+                else
+                {
+                    building = Instantiate(_visual.gameObject).GetComponent<Building>();
+                }
+                return building;
             }
         }
     }

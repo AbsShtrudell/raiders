@@ -37,12 +37,13 @@ namespace Raiders
                 _buildingsGraph.pathAlgorithm = new APathBuildings();
                 foreach (var node in _buildingsGraph.Nodes)
                 {
-                    
+                    node.Value.graph = _buildingsGraph;
+                    node.Value.squadPrefab = squadPrefab;
                 }
             }
             else
             {
-                _buildingFactory = new Building.Factory(_buildingVisual, null, null);
+                _buildingFactory = new Building.Factory(null, _buildingVisual);
                 _roadFactory = new Road.Factory(_roadVisual);
                 if (_buildingFactory == null)
                     _buildingsGraph = new Graph<Building>(new APathBuildings());
@@ -51,7 +52,7 @@ namespace Raiders
 
         public void AddBuilding()
         {
-            Building building = _buildingFactory.Create(BuildingType.Simple, Side.Rebels);
+            Building building = _buildingFactory.Create();
 
             Undo.RegisterCreatedObjectUndo(building.gameObject, "create building");
             Undo.RecordObject(this, "add buildnig");
