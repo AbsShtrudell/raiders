@@ -22,7 +22,7 @@ namespace Raiders
 
         public virtual int DefenseMultyplier => _buildingData.DefenseMultyplier;
 
-        public virtual TroopsType TroopsType => _buildingData.TroopsType;
+        public virtual SquadTypeInfo SquadTypeInfo => _buildingData.SquadTypeInfo;
 
         public virtual Mesh Mesh => _buildingData.Mesh;
 

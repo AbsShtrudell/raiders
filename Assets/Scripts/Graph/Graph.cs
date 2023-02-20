@@ -90,5 +90,17 @@ namespace Raiders.Graphs
             }
             return null;
         }
+
+        public HashSet<Node<T>> GetAdjacents(Node<T> node)
+        {
+            HashSet<Node<T>> adj = new HashSet<Node<T>>();
+
+            foreach(int id in node.Adjacents)
+            {
+                adj.Add(Find(id));
+            }
+
+            return adj;
+        }
     }
 }
