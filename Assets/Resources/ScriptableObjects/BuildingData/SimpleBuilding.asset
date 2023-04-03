@@ -16,9 +16,9 @@ MonoBehaviour:
   _squadRecoveryTime: 0.5
   _income: 10
   _upkeep: 0
-  _defenseMultyplier: 0
+  _defenseMultyplier: 1
   _type: 0
-  _troopsType: 0
+  _squadTypeInfo: {fileID: 11400000, guid: 77a97ca5db08dab458f30489df155c34, type: 2}
   _mesh: {fileID: 0}
   _previous: {fileID: 0}
   _upgrades: []

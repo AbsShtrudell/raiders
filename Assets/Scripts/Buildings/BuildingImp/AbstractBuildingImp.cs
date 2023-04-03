@@ -2,12 +2,12 @@ using System;
 
 namespace Raiders
 {
-    public abstract class BaseBuildingImp : IBuildingImp
+    public abstract class AbstractBuildingImp : IBuildingImp
     {
         private IBuildingData _buildingData;
         protected ISlotList _slotList;
 
-        ISlotList IBuildingImp.SlotList => _slotList;
+        IReadOnlySlotList IBuildingImp.SlotList => _slotList.ReadOnlySlotList;
         IBuildingData IBuildingImp.BuildingData 
         { 
             get => _buildingData; 
@@ -19,7 +19,7 @@ namespace Raiders
 
         public event Action<Side> Captured;
 
-        public BaseBuildingImp(IBuildingData data)
+        public AbstractBuildingImp(IBuildingData data)
         {
             _buildingData = data;
             _slotList = new SlotList(_buildingData.SquadSlots, _buildingData.SquadRecoveryTime);

@@ -11,6 +11,8 @@ namespace Raiders.Graphs
 
         public Path<Building> FindPath(Node<Building> sourceNode, Node<Building> targetNode, Graph<Building> graph)
         {
+            if(sourceNode == null || targetNode == null) return null;
+
             Side currentSide = sourceNode.Value.Side;
 
             var queue = new Queue<List<Node<Building>>>();

@@ -5,7 +5,7 @@ using System;
 
 namespace Raiders
 {
-    public class SlotList : ISlotList
+    public class SlotList : IReadOnlySlotList, ISlotList
     {
         private float enemySpeed = 1f;
         private float extraDecaySpeed = 1f;
@@ -44,6 +44,8 @@ namespace Raiders
         { get { return _blokcedSlots > 0; } }
         public int ExtraSlotsCount
         { get { return _extraSlots.Count; } }
+
+        public IReadOnlySlotList ReadOnlySlotList => this;
 
         public SlotList(int size, float squadRecoveryTime)
         {

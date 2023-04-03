@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,17 +6,24 @@ using UnityEngine;
 namespace Raiders.Graphs
 {
     [System.Serializable]
-    public class Graph<T>
+    public class Graph<T> : IGraph<T>
     {
-        public IPathAlgorithm<T> pathAlgorithm
+        public IPathAlgorithm<T> PathAlgorithm
         { get; set; }
 
         [SerializeField]
         private List<Node<T>> _nodes = new List<Node<T>>();
+
         public List<Node<T>> Nodes
         { get { return _nodes; } }
 
-        public Graph(IPathAlgorithm<T> pathAlgorithm) => this.pathAlgorithm = pathAlgorithm;
+        public Graph(IPathAlgorithm<T> pathAlgorithm) => PathAlgorithm = pathAlgorithm;
+        public Graph() { }
+ 
+        public Node<T> this[int index]
+        {
+            get => Find(index);
+        }
 
         public void AddNode(T value)
         {
@@ -24,51 +32,32 @@ namespace Raiders.Graphs
 
         public bool RemoveNode(T value)
         {
-            Node<T> buf = null;
-            foreach (var node in _nodes)
-            {
-                if (node.Value.Equals(value))
-                {
-                    buf = node;
-                    _nodes.Remove(node);
-                    break;
-                }
-            }
-            if (buf == null) return false;
-
-            foreach (var id in buf.Adjacents)
-            {
-                //node.Adjacents.Remove(buf);
-            }
-
-            return true;
+            return RemoveNode_(Find(value));
         }
 
         public bool RemoveNode(int index)
         {
-            Node<T> buf = null;
-            foreach (var node in _nodes)
-            {
-                if (node.Index == index)
-                {
-                    buf = node;
-                    _nodes.Remove(node);
-                    break;
-                }
-            }
-            if (buf == null) return false;
+            return RemoveNode_(Find(index));
+        }
 
-            foreach (var id in buf.Adjacents)
-            {
-                //node.Adjacents.Remove(buf);
-            }
+        private bool RemoveNode_(Node<T> node)
+        {
+            if(node == null) return false;
 
-            return true;
+            foreach (var id in node.Adjacents)
+                Find(id).Adjacents.Remove(node.Index);
+
+            return _nodes.Remove(node);
         }
 
         public bool AddEdge(Node<T> node1, Node<T> node2)
         {
             return node1.Bind(node2);
+        }
+
+        public bool RemoveEdge(Node<T> node1, Node<T> node2)
+        {
+            return node1.Unbind(node2);
         }
 
         public Node<T> Find(int id)

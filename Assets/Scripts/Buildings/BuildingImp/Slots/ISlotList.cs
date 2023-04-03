@@ -14,6 +14,7 @@ namespace Raiders
         public float GeneralProgress { get; }
         public bool IsBlocked { get; }
         public int ExtraSlotsCount { get; }
+        public IReadOnlySlotList ReadOnlySlotList { get; }
 
         public void Update();
         public bool UnblockSlot();

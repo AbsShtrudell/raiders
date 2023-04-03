@@ -34,11 +34,10 @@ namespace Raiders
         {
             if (Application.isPlaying)
             {
-                _buildingsGraph.pathAlgorithm = new APathBuildings();
+                _buildingsGraph.PathAlgorithm = new APathBuildings();
                 foreach (var node in _buildingsGraph.Nodes)
                 {
-                    node.Value.graph = _buildingsGraph;
-                    node.Value.squadPrefab = squadPrefab;
+                    node.Value.SquadPrefab = squadPrefab;
                 }
             }
             else
@@ -97,10 +96,10 @@ namespace Raiders
                 }
                 else
                 {
-                    var tempRoads = b.Value.roads;
+                    var tempRoads = b.Value.Roads;
                     for (int i = 0; i < tempRoads.Count; i++)
                     {
-                        if (b.Value.roads[i] == null)
+                        if (b.Value.Roads[i] == null)
                         {
                             destroyedRoadInBuilding.Push(new Tuple<Building, int>(b.Value, i));
                         }
@@ -109,7 +108,7 @@ namespace Raiders
                     foreach (var i in b.Adjacents)
                     {
                         var a = graph.Find(i);
-                        var road = b.Value.roads.Find(r => r == null ? false : r.HasConnectionWith(i));
+                        var road = b.Value.Roads.Find(r => r == null ? false : r.HasConnectionWith(i));
 
                         if (a.Value == null || road == null)
                         {
@@ -158,7 +157,7 @@ namespace Raiders
                             recordedObjects.Add(br.Item1);
                             Undo.RegisterCompleteObjectUndo(br.Item1, "b");
                         }
-                        br.Item1.roads.RemoveAt(br.Item2);
+                        br.Item1.Roads.RemoveAt(br.Item2);
                     }
 
                     foreach (var br in connectedRoadsToDestroy)
@@ -169,7 +168,7 @@ namespace Raiders
                             recordedObjects.Add(br.Item1);
                             Undo.RegisterCompleteObjectUndo(br.Item1, "b");
                         }
-                        br.Item1.roads.Remove(br.Item2);
+                        br.Item1.Roads.Remove(br.Item2);
                         Undo.DestroyObjectImmediate(br.Item2.gameObject);
                     }
 
@@ -222,7 +221,7 @@ namespace Raiders
 
                         foreach (var node in _buildingsGraph.Nodes)
                         {
-                            foreach (var road in node.Value.roads)
+                            foreach (var road in node.Value.Roads)
                             {
                                 if (!_roads.Contains(road))
                                 {
@@ -256,8 +255,8 @@ namespace Raiders
 
                     _roads.Add(road);
 
-                    b1.Value.roads.Add(road);
-                    b2.Value.roads.Add(road);
+                    b1.Value.Roads.Add(road);
+                    b2.Value.Roads.Add(road);
 
                 }
             }
@@ -265,13 +264,13 @@ namespace Raiders
             {
                 if (b1.Unbind(b2))
                 {
-                    foreach (var road in b1.Value.roads)
+                    foreach (var road in b1.Value.Roads)
                     {
                         if (road.HasConnectionWith(b2.Index))
                         {
                             _roads.Remove(road);
-                            b1.Value.roads.Remove(road);
-                            b2.Value.roads.Remove(road);
+                            b1.Value.Roads.Remove(road);
+                            b2.Value.Roads.Remove(road);
                             Undo.DestroyObjectImmediate(road.gameObject);
 
                             break;

@@ -2,14 +2,14 @@ using Raiders.Graphs;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Raiders.AI;
 
 namespace Raiders
 {
     [RequireComponent(typeof(BuildingsGraphEditor))]
-    public class LevelController : MonoBehaviour
+    public class LevelController : MonoBehaviour, IBuildingQueueHandler
     {
         private Graph<Building> _graph;
-        private List<Road> _roads;
         private Dictionary<Side, SideController> _sideControllers = new Dictionary<Side, SideController>();
         private bool _isUpdateStoped = false;
 
@@ -23,9 +23,14 @@ namespace Raiders
         private void Awake()
         {
             BuildingsGraphEditor graphEditor = GetComponent<BuildingsGraphEditor>();
+            SideAI sideAI = GetComponent<SideAI>();
 
             _graph = graphEditor.graph;
-            _roads = graphEditor.roads;
+
+            foreach (var node in _graph.Nodes)
+                node.Value.BuildingQueueHandler = this;
+
+            sideAI._buildings = _graph;
 
             InitSideControllers();
         }
@@ -33,11 +38,6 @@ namespace Raiders
         private void OnEnable()
         {
             StartCoroutine(BuildingsUpdateTimer());
-
-            foreach (Node<Building> building in _graph.Nodes)
-            {
-                building.Value.UpgradeQueue += UpgradeBuilding;
-            }
         }
 
         private void OnDisable()
@@ -61,8 +61,6 @@ namespace Raiders
 
                 foreach (var sideController in _sideControllers)
                 {
-                    Debug.Log("Update coins for: " + sideController.Key.ToString());
-
                     foreach (Node<Building> building in _graph.Nodes)
                         if (building.Value.Side == sideController.Key)
                             sideController.Value.AddCoins((uint)building.Value.BuildingImp.BuildingData.Income);
@@ -74,18 +72,30 @@ namespace Raiders
             }
         }
 
-        private void UpgradeBuilding(IBuildingData data, bool free, Building building)
+        //-------------------- IBuildingQueue -----------------------
+
+        public void Upgrade(IBuildingData buildingData, bool free, Building notifyer) 
         {
-            SideController sideController = _sideControllers[building.Side];
+            SideController sideController = _sideControllers[notifyer.Side];
 
             if (sideController == null) return;
 
             if (!free)
-                if (sideController.CanSpendCoins(data.Cost))
-                    sideController.SpendCoins(data.Cost);
+                if (sideController.CanSpendCoins(buildingData.Cost))
+                    sideController.SpendCoins(buildingData.Cost);
                 else return;
 
-            building.ChangeBuilding(data);
+            notifyer.ChangeBuilding(buildingData);
+        }
+
+        public Path<Building> GetPath(Building target, Building notifyer)
+        {
+            return _graph.PathAlgorithm.FindPath(_graph.Find(notifyer), _graph.Find(target), _graph);
+        }
+
+        public void SquadSent(Building destination, SquadTypeInfo squadTypeInfo, Building notifyer)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

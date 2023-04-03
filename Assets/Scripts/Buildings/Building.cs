@@ -3,13 +3,12 @@ using System;
 using Zenject;
 using System.Collections.Generic;
 using Dreamteck.Splines;
+using Raiders.Graphs;
 
 namespace Raiders
 {
     public class Building : MonoBehaviour
     {
-        [Inject]
-        private DiContainer container;
         [Inject]
         private BuildingImpCreator _buildingImpCreator;
         [Inject]
@@ -20,38 +19,23 @@ namespace Raiders
         [SerializeField]
         private BuildingType _type;
         [SerializeField]
-        private Transform _visual;
-        [SerializeField]
         private MeshRenderer _meshRenderer;
         [SerializeField]
         private List<Road> _roads;
 
-        private MeshFilter _meshFilter;
-        private Collider _collider;
         private SlotsController _slotsUI;
         private UpgradeController _upgradeUI;
 
-        private IBuildingImp _buildingImp;
-
         public Side Side { get { return _side; } set { _side = value; } }
         public BuildingType Type { get { return _type; } set { _type = value; } } 
-        public GameObject squadPrefab { get; set; }
-        public List<Road> roads => _roads;
-        public IBuildingImp BuildingImp => _buildingImp;
-        public Graphs.Graph<Building> graph { get; set; }
-
-        public Action<Building> Selected;
-        public Action<Building> Deselected;
-        public Action<IBuildingData, bool, Building> UpgradeQueue;
-        public Action Disabled;
+        public GameObject SquadPrefab { get; set; }
+        public List<Road> Roads => _roads;
+        public IBuildingImp BuildingImp { get; private set; }
+        public IBuildingQueueHandler BuildingQueueHandler { private get; set; }
 
         private void Awake()
         {
-            if (_visual == null) _visual = transform;
-
-            _meshRenderer = _visual.GetComponent<MeshRenderer>();
-            _meshFilter = _visual.GetComponent<MeshFilter>();
-            _collider = _visual.GetComponent<Collider>();
+            _meshRenderer = GetComponent<MeshRenderer>();
         }
 
         private void OnEnable()
@@ -60,26 +44,21 @@ namespace Raiders
             InitUI();
         }
 
-        private void OnDisable()
-        {
-            Disabled?.Invoke();
-        }
-
         private void Start()
         {
         }
 
         private void Update()
         {
-            _buildingImp?.Update();
+            BuildingImp?.Update();
 
             _slotsUI.transform.localPosition = Vector3.up * 2;
         }
 
         private void InitUI()
         {
-            _slotsUI = _slotsContrCreator?.Create(_side, _buildingImp);
-            _slotsUI.gameObject.transform.SetParent(_visual);
+            _slotsUI = _slotsContrCreator?.Create(_side, BuildingImp);
+            _slotsUI.gameObject.transform.SetParent(transform);
             _upgradeUI = _slotsUI.GetComponent<UpgradeController>();
             if (_upgradeUI != null)
                 _upgradeUI.InitButtons(BuildingImp.BuildingData, OnUpgradeQueued);
@@ -92,23 +71,23 @@ namespace Raiders
 
         private void InitBuildingImp(BuildingType type, Side side)
         {
-            _buildingImp = _buildingImpCreator?.Create(type, side);
+            BuildingImp = _buildingImpCreator?.Create(type, side);
 
-            _buildingImp.Captured += ChangeTeam;
+            BuildingImp.Captured += ChangeTeam;
         }
 
         private void ChangeTeam(Side side)
         {
             _side = side;
 
-            if (_buildingImp.BuildingData.PreviousLevel != null)
+            if (BuildingImp.BuildingData.PreviousLevel != null)
             {
-                InitBuildingImp(_buildingImp.BuildingData.PreviousLevel.Type, side);
-                _type = _buildingImp.BuildingData.Type;
+                InitBuildingImp(BuildingImp.BuildingData.PreviousLevel.Type, side);
+                _type = BuildingImp.BuildingData.Type;
             }
             else
             {
-                InitBuildingImp(_buildingImp.BuildingData.Type, side);
+                InitBuildingImp(BuildingImp.BuildingData.Type, side);
             }
             Destroy(_slotsUI.gameObject);
             InitUI();
@@ -118,23 +97,21 @@ namespace Raiders
         {
             if (side != _side)
             {
-                _buildingImp.GotAttacked(side, null);
+                BuildingImp.GotAttacked(side, null);
             }
             else
             {
-                _buildingImp.Reinforcement();
+                BuildingImp.Reinforcement();
             }
         }
 
         public void Select()
         {
-            Selected?.Invoke(this);
             _meshRenderer.material.color = Color.red;
         }
 
         public void Deselect()
         {
-            Deselected?.Invoke(this);
             _meshRenderer.material.color = Color.white;
         }
 
@@ -143,11 +120,11 @@ namespace Raiders
             if (variant < 0)
             {
                 if (BuildingImp.BuildingData.PreviousLevel != null)
-                    UpgradeQueue.Invoke(BuildingImp.BuildingData.PreviousLevel, true, this);
+                    BuildingQueueHandler.Upgrade(BuildingImp.BuildingData.PreviousLevel, true, this);
             }
             else if (BuildingImp.BuildingData.Upgrades.Count > variant)
             {
-                UpgradeQueue.Invoke(BuildingImp.BuildingData.Upgrades[variant], false, this);
+                BuildingQueueHandler.Upgrade(BuildingImp.BuildingData.Upgrades[variant], false, this);
             }
         }
 
@@ -155,30 +132,25 @@ namespace Raiders
         {
             BuildingImp.BuildingData = buildingData;
 
-            GameObject.Destroy(_slotsUI.gameObject);
+            Destroy(_slotsUI.gameObject);
             InitUI();
         }
 
         public void SendTroops(Building target)
         {
-            var source = graph.Find(this);
-            var destination = graph.Find(target);
+            var path = BuildingQueueHandler.GetPath(target, this);
 
-            var path = graph.pathAlgorithm.FindPath(source, destination, graph);
-
-            if (path == null || !_buildingImp.SendTroops())
-            {
+            if (path == null || !BuildingImp.SendTroops())
                 return;
-            }
 
             var pathRoads = new Queue<Tuple<SplineComputer, Squad.Direction>>();
-            var squad = container.InstantiatePrefab(squadPrefab).GetComponent<Squad>();
+            var squad = container.InstantiatePrefab(SquadPrefab).GetComponent<Squad>();
             squad.SetSide(_side);
             squad.SetTarget(target);
 
             for (int i = 0; i < path.nodes.Count - 1; i++)
             {
-                foreach (var road in path.nodes[i].Value.roads)
+                foreach (var road in path.nodes[i].Value.Roads)
                 {
                     if (road.HasConnectionWith(path.nodes[i + 1].Index))
                     {
@@ -218,6 +190,7 @@ namespace Raiders
                 {
                     building = Instantiate(_visual.gameObject).GetComponent<Building>();
                 }
+
                 return building;
             }
         }

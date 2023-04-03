@@ -1,7 +1,7 @@
 
 namespace Raiders
 {
-    public class DefaultBuildingImp : BaseBuildingImp
+    public class DefaultBuildingImp : AbstractBuildingImp
     {
         public DefaultBuildingImp(IBuildingData buildingData) : base(buildingData)
         {
