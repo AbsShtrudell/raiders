@@ -3,12 +3,13 @@ using System;
 using Zenject;
 using System.Collections.Generic;
 using Dreamteck.Splines;
-using Raiders.Graphs;
 
 namespace Raiders
 {
     public class Building : MonoBehaviour
     {
+        [Inject]
+        private DiContainer container;
         [Inject]
         private BuildingImpCreator _buildingImpCreator;
         [Inject]
@@ -136,12 +137,12 @@ namespace Raiders
             InitUI();
         }
 
-        public void SendTroops(Building target)
+        public bool SendTroops(Building target)
         {
             var path = BuildingQueueHandler.GetPath(target, this);
 
             if (path == null || !BuildingImp.SendTroops())
-                return;
+                return false;
 
             var pathRoads = new Queue<Tuple<SplineComputer, Squad.Direction>>();
             var squad = container.InstantiatePrefab(SquadPrefab).GetComponent<Squad>();
@@ -163,8 +164,12 @@ namespace Raiders
                 }
             }
 
+            BuildingQueueHandler.SquadSent(target, null, this);
+
             squad.SetRoads(pathRoads);
             squad.MakeSoldiers();
+
+            return true;
         }
 
         public class Factory : IFactory<Building>

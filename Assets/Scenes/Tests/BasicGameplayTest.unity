@@ -547,7 +547,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _side: 0
   _type: 0
-  _visual: {fileID: 0}
   _meshRenderer: {fileID: 0}
   _roads:
   - {fileID: 1415110279}
@@ -790,7 +789,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _side: 2
   _type: 0
-  _visual: {fileID: 0}
   _meshRenderer: {fileID: 0}
   _roads:
   - {fileID: 1420424032}
@@ -5277,7 +5275,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _side: 1
   _type: 0
-  _visual: {fileID: 0}
   _meshRenderer: {fileID: 0}
   _roads:
   - {fileID: 1238413593}
@@ -5406,9 +5403,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422a7bb40f1e1c247b4ce9982ec7a899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _side: 0
+  _side: 1
   _type: 0
-  _visual: {fileID: 0}
   _meshRenderer: {fileID: 0}
   _roads:
   - {fileID: 1420424032}

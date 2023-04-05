@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Raiders.AI;
+using Raiders.AI.Events;
 
 namespace Raiders
 {
@@ -18,19 +19,22 @@ namespace Raiders
         [SerializeField]
         private List<Side> _sides;
 
+        private SideAI _sideAi;
+
         public Dictionary<Side, SideController> SideControllers => _sideControllers;
 
         private void Awake()
         {
             BuildingsGraphEditor graphEditor = GetComponent<BuildingsGraphEditor>();
-            SideAI sideAI = GetComponent<SideAI>();
+            _sideAi = GetComponent<SideAI>();
 
             _graph = graphEditor.graph;
 
             foreach (var node in _graph.Nodes)
                 node.Value.BuildingQueueHandler = this;
 
-            sideAI._buildings = _graph;
+            _sideAi._buildings = _graph;
+            _sideAi.sideController = _sideControllers.GetValueOrDefault(_sideAi.Side);
 
             InitSideControllers();
         }
@@ -95,7 +99,7 @@ namespace Raiders
 
         public void SquadSent(Building destination, SquadTypeInfo squadTypeInfo, Building notifyer)
         {
-            throw new System.NotImplementedException();
+            _sideAi.RecieveEvent(new EnemySquadSentEvent(notifyer, destination, squadTypeInfo));
         }
     }
 }

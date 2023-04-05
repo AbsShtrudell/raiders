@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Raiders.Graphs
@@ -80,13 +81,23 @@ namespace Raiders.Graphs
             return null;
         }
 
-        public HashSet<Node<T>> GetAdjacents(Node<T> node)
+        public IEnumerable<Node<T>> GetAdjacents(Node<T> node)
+        {
+            return GetAdjacents_(node);
+        }
+
+        public IEnumerable<Node<T>> GetAdjacents(int id)
+        {
+            return GetAdjacents_(Find(id));
+        }
+
+        private IEnumerable<Node<T>> GetAdjacents_(Node<T> node)
         {
             HashSet<Node<T>> adj = new HashSet<Node<T>>();
 
-            foreach(int id in node.Adjacents)
+            foreach (int indexes in node.Adjacents)
             {
-                adj.Add(Find(id));
+                adj.Add(Find(indexes));
             }
 
             return adj;
