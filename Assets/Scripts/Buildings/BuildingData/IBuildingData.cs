@@ -12,7 +12,7 @@ namespace Raiders
         public uint Income { get; }
         public uint Upkeep { get; }
         public int DefenseMultyplier { get; }
-        public TroopsType TroopsType { get; }
+        public SquadTypeInfo SquadTypeInfo { get; }
         public Mesh Mesh { get; }
         public List<IBuildingData> Upgrades { get; }
         public IBuildingData PreviousLevel { get; }

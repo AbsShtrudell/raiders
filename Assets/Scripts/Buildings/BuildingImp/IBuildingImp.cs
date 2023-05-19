@@ -9,7 +9,7 @@ namespace Raiders
     {
         public IBuildingData BuildingData { get; set; }
 
-        public ISlotList SlotList { get; }
+        public IReadOnlySlotList SlotList { get; }
 
         public event Action<Side> Captured;
 

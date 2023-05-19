@@ -30,6 +30,7 @@ namespace Raiders.Graphs
             if (node == null || _adjacents.Contains(node._index) || node == this) return false;
 
             if (!node.Adjacents.Contains(Index)) node.Adjacents.Add(Index);
+
             _adjacents.Add(node._index);
             return true;
         }

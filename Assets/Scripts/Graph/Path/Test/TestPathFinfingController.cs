@@ -23,7 +23,7 @@ namespace Raiders.Graphs.Test
             _graph.Nodes[4].Bind(_graph.Nodes[3]);
             _graph.Nodes[3].Bind(_graph.Nodes[5]);
             _graph.Nodes[0].Bind(_graph.Nodes[5]);
-            var path = _graph.pathAlgorithm.FindPath(_graph.Nodes[4], _graph.Nodes[0], _graph);
+            var path = _graph.PathAlgorithm.FindPath(_graph.Nodes[4], _graph.Nodes[0], _graph);
             string p = "";
             if(path.nodes != null)
             foreach (var n in path.nodes)
