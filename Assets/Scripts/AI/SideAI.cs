@@ -17,7 +17,7 @@ namespace Raiders.AI
         //side controller
 
         private Queue<IEvent> _eventsQueue = new Queue<IEvent>();
-        private PriorityQueue<>
+        //private PriorityQueue<>
         private IEventSolver _eventSolver;
 
         [SerializeField]

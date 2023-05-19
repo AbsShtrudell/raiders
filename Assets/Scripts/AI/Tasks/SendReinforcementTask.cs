@@ -1,6 +1,4 @@
-﻿using Raiders.Assets.Scripts.AI.Tasks;
-
-namespace Raiders.AI.Tasks
+﻿namespace Raiders.AI.Tasks
 {
     public class SendReinforcementTask : ITask
     {
