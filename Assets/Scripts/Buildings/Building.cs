@@ -3,10 +3,11 @@ using System;
 using Zenject;
 using System.Collections.Generic;
 using Dreamteck.Splines;
+using Unity.Netcode;
 
 namespace Raiders
 {
-    public class Building : MonoBehaviour
+    public class Building : NetworkBehaviour
     {
         [Inject]
         private DiContainer container;
@@ -37,23 +38,31 @@ namespace Raiders
         private void Awake()
         {
             _meshRenderer = GetComponent<MeshRenderer>();
+            Init();
         }
 
-        private void OnEnable()
+        private void Init()
         {
             InitBuildingImp(_type, _side);
             InitUI();
         }
 
-        private void Start()
-        {
-        }
-
         private void Update()
         {
+            _slotsUI.transform.localPosition = Vector3.up * 2;
             BuildingImp?.Update();
 
-            _slotsUI.transform.localPosition = Vector3.up * 2;
+            if (!IsHost) return;
+
+            ClientSlotList.NetworkData data = new ClientSlotList.NetworkData(
+                BuildingImp.SlotList.OccupyingSide,
+                BuildingImp.SlotList.IsBlocked,
+                BuildingImp.SlotList.GeneralProgress,
+                BuildingImp.SlotList.Slots.ToArray(),
+                BuildingImp.SlotList.ExtraSlots.ToArray()
+            );
+
+            UpdateSlotsClientRpc(data);
         }
 
         private void InitUI()
@@ -74,7 +83,11 @@ namespace Raiders
         {
             BuildingImp = _buildingImpCreator?.Create(type, side);
 
-            BuildingImp.Captured += ChangeTeam;
+            BuildingImp.Captured += (side) =>
+            {
+                ChangeTeamClientRpc(side);
+                ChangeTeam(side);
+            };
         }
 
         private void ChangeTeam(Side side)
@@ -96,6 +109,8 @@ namespace Raiders
 
         public void SquadEnter(Side side, TroopsType type)
         {
+            if (!IsHost) return;
+
             if (side != _side)
             {
                 BuildingImp.GotAttacked(side, null);
@@ -118,14 +133,24 @@ namespace Raiders
 
         public void OnUpgradeQueued(int variant)
         {
-            if (variant < 0)
+            if (!IsHost)
             {
-                if (BuildingImp.BuildingData.PreviousLevel != null)
-                    BuildingQueueHandler.Upgrade(BuildingImp.BuildingData.PreviousLevel, true, this);
+                UpgradeQueueServerRpc(variant);
             }
-            else if (BuildingImp.BuildingData.Upgrades.Count > variant)
+            else
             {
-                BuildingQueueHandler.Upgrade(BuildingImp.BuildingData.Upgrades[variant], false, this);
+                if (variant < 0)
+                {
+                    if (BuildingImp.BuildingData.PreviousLevel != null)
+                        if (IsHost)
+                            if (BuildingQueueHandler.Upgrade(BuildingImp.BuildingData.PreviousLevel, true, this))
+                                UpgradeClientRpc(variant);
+                }
+                else if (BuildingImp.BuildingData.Upgrades.Count > variant)
+                {
+                    if (BuildingQueueHandler.Upgrade(BuildingImp.BuildingData.Upgrades[variant], false, this))
+                        UpgradeClientRpc(variant);
+                }
             }
         }
 
@@ -137,7 +162,7 @@ namespace Raiders
             InitUI();
         }
 
-        public bool SendTroops(Building target)
+        public bool SendTroops(Building target) //sync with client
         {
             var path = BuildingQueueHandler.GetPath(target, this);
 
@@ -170,6 +195,49 @@ namespace Raiders
             squad.MakeSoldiers();
 
             return true;
+        }
+
+        //--------------------Client----------------------//
+
+        [ClientRpc]
+        public void ChangeTeamClientRpc(Side side)
+        {
+            if (IsOwner) return;
+
+            ChangeTeam(side);
+        }
+
+        [ClientRpc]
+        public void UpdateSlotsClientRpc(ClientSlotList.NetworkData data)
+        {
+            if (IsOwner) return;
+
+            if(((ClientSlotList)BuildingImp.SlotList) != null) 
+                ((ClientSlotList)BuildingImp.SlotList).SetData(data);
+        }
+
+        [ClientRpc]
+        public void UpgradeClientRpc(int variant)
+        {
+            if (IsOwner) return;
+
+            if (variant < 0)
+            {
+                if (BuildingImp.BuildingData.PreviousLevel != null)
+                    ChangeBuilding(BuildingImp.BuildingData.PreviousLevel);
+            }
+            else if (BuildingImp.BuildingData.Upgrades.Count > variant)
+            {
+                ChangeBuilding(BuildingImp.BuildingData.Upgrades[variant]);
+            }
+        }
+
+        //--------------------Server----------------------//
+
+        [ServerRpc(RequireOwnership = false)]
+        public void UpgradeQueueServerRpc(int variant)
+        {
+            OnUpgradeQueued(variant);
         }
 
         public class Factory : IFactory<Building>

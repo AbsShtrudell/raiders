@@ -51,6 +51,7 @@ namespace Raiders
 
         public void AddBuilding()
         {
+#if (UNITY_EDITOR)
             Building building = _buildingFactory.Create();
 
             Undo.RegisterCreatedObjectUndo(building.gameObject, "create building");
@@ -59,10 +60,12 @@ namespace Raiders
             _buildingsGraph.AddNode(building);
 
             Undo.SetCurrentGroupName("Add Building");
+#endif
         }
 
         private void Update()
         {
+#if (UNITY_EDITOR)
             if (Application.isPlaying)
                 return;
 
@@ -238,10 +241,12 @@ namespace Raiders
                     }
                 }
             }
+#endif
         }
 
         public void ChangeBindStatus(bool bind, int i1, int i2)
         {
+#if (UNITY_EDITOR)
             var b1 = _buildingsGraph.Nodes[i1];
             var b2 = _buildingsGraph.Nodes[i2];
 
@@ -278,6 +283,7 @@ namespace Raiders
                     }
                 }
             }
+#endif
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Raiders
 {
     public interface IBuildingQueueHandler
     {
-        public void Upgrade(IBuildingData buildingData, bool free, Building notifyer);
+        public bool Upgrade(IBuildingData buildingData, bool free, Building notifyer);
         public Graphs.Path<Building> GetPath(Building target, Building notifyer);
         public void SquadSent(Building destination, SquadTypeInfo squadTypeInfo, Building notifyer);
     }
