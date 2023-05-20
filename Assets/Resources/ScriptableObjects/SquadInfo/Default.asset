@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Default
   m_EditorClassIdentifier: 
   _damage: 1
-  _unitInfo: {fileID: 0}
+  _unitInfo: {fileID: 11400000, guid: acfa3e94e2d106e4c980176416d44da6, type: 2}

@@ -47,13 +47,13 @@ namespace Raiders
     {
         public override SplineComputer path { get; protected set; }
         [SerializeField] protected float _speed = 5f;
-        protected Queue<Tuple<SplineComputer, Squad.Direction>> _paths;
+        protected Queue<ValueTuple<SplineComputer, Squad.Direction>> _paths;
         protected Squad.Direction _direction;
         protected float _destination = 1f;
 
         public float speed => _speed;
 
-        public PrimaryFollowerBehavior(Queue<Tuple<SplineComputer, Squad.Direction>> paths, Transform transform, float speed)
+        public PrimaryFollowerBehavior(Queue<ValueTuple<SplineComputer, Squad.Direction>> paths, Transform transform, float speed)
             : base(transform)
         {
             _paths = paths;
@@ -161,7 +161,7 @@ namespace Raiders
             _behavior?.Move();
         }
 
-        public PrimaryFollowerBehavior MakePrimary(Queue<Tuple<SplineComputer, Squad.Direction>> paths, float speed)
+        public PrimaryFollowerBehavior MakePrimary(Queue<ValueTuple<SplineComputer, Squad.Direction>> paths, float speed)
         {
             _behavior = new PrimaryFollowerBehavior(paths, transform, speed);
             _behavior.ReachedDestination += () => { Destroy(this.gameObject); };

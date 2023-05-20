@@ -48,5 +48,10 @@ MonoBehaviour:
   _side: 0
   soldiersAmount: 8
   _speed: 40
-  distanceFromPrimary: 5
-  xDistance: 0.03
+  distanceFromPrimary: 0.5
+  xDistance: 0.3
+  <UnitInfo>k__BackingField: {fileID: 0}
+  _isSplineMovement: 1
+  _followingSpeedModifier: 2
+  _followingAccelerationModifier: 5
+  _stoppingDistanceModifier: 5

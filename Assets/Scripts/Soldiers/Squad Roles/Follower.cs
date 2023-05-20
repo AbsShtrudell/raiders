@@ -30,6 +30,7 @@ namespace Raiders
 
         private IEnumerator Following()
         {
+            yield return new WaitUntil(() => leader.hasPath);
             yield return new WaitWhile(() => leader.pathPending);
 
             while (leader.hasPath)

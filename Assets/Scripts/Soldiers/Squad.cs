@@ -13,13 +13,11 @@ namespace Raiders
         [SerializeField] private GameObject soldierPrefab;
         [SerializeField] private Side _side;
         [SerializeField, Min(1)] private int soldiersAmount = 3;
-        private Queue<Tuple<SplineComputer, Direction>> _roads;
         [SerializeField, Min(0f)] private float _speed = 5f;
         [SerializeField] private float distanceFromPrimary = 1f;
         [SerializeField] private float xDistance = 0.05f;
-        [SerializeField] private UnitInfo _unitInfo;
-        [SerializeField] private SplineComputer _spline;
-        [SerializeField] private bool _isSplineMovement = false;
+        [field: SerializeField] public UnitInfo UnitInfo { get; set; }
+        [SerializeField] private bool _isSplineMovement = true;
 
         [Header("Followers")]        
         [SerializeField] private float _followingSpeedModifier = 2f;
@@ -32,8 +30,8 @@ namespace Raiders
         private SecondaryFollowerBehavior[] secondaryFollowers;
         private Building building;
 
+        public Queue<ValueTuple<SplineComputer, Direction>> Roads { get; set; }
         public IControllable mainControllable => this;
-        public SplineComputer spline => _spline;
         public float followingSpeedModifier => _followingSpeedModifier;
         public float followingAccelerationModifier => _followingAccelerationModifier;
         public float stoppingDistanceModifier => _stoppingDistanceModifier;
@@ -49,7 +47,7 @@ namespace Raiders
         {
             InitializeSoldier(0);
             var f = _soldiers[0].GetComponent<TestPathFollower>();
-            primaryFollower = f.MakePrimary(_roads, _speed);
+            primaryFollower = f.MakePrimary(Roads, _speed);
             primaryFollower.ReachedDestination += () => { building.SquadEnter(_side, TroopsType.Default); };
             for (int i = 1; i < _soldiers.Length; i++)
             {
@@ -67,19 +65,24 @@ namespace Raiders
             _soldiers[i].ChangeItems();
             _soldiers[i].AddRenderPriority(_soldiers.Length - i);
             _soldiers[i].squad = this;
-            _soldiers[i].SetHealth(_unitInfo.Health);
+            _soldiers[i].SetHealth(UnitInfo.Health);
         }
 
         public void SpawnEmptySoldiers()
         {
             InitializeSoldier(0);
-            _soldiers[0].squadRole = new Leader(_soldiers[0], this);
+
+            var leader = new Leader(_soldiers[0], this);
+            leader.ReachedDestination += () => { building.SquadEnter(_side, TroopsType.Default); };
+            _soldiers[0].squadRole = leader;
 
             for (int i = 1; i < _soldiers.Length; i++)
             {
                 InitializeSoldier(i);
                 _soldiers[i].squadRole = new Follower(_soldiers[i], this);
             }
+
+            GoTo(building.transform.position);
         }
 
         private void OnValidate()
@@ -96,11 +99,6 @@ namespace Raiders
             }
         }
 
-        public void SetRoads(Queue<Tuple<SplineComputer, Direction>> roads)
-        {
-            _roads = roads;
-        }
-
         public void SetSide(Side side)
         {
             _side = side;
@@ -115,8 +113,6 @@ namespace Raiders
         {
             (_soldiers[0].squadRole as Leader).currentDestination = destination;
             _soldiers[0].squadRole.Move();
-
-            var normal = Vector3.Cross(_soldiers[0].direction, Vector3.up);
 
             for (int i = 1; i < _soldiers.Length; i++)
             {

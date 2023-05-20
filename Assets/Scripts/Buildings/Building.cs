@@ -144,8 +144,9 @@ namespace Raiders
             if (path == null || !BuildingImp.SendTroops())
                 return false;
 
-            var pathRoads = new Queue<Tuple<SplineComputer, Squad.Direction>>();
+            var pathRoads = new Queue<ValueTuple<SplineComputer, Squad.Direction>>();
             var squad = container.InstantiatePrefab(SquadPrefab).GetComponent<Squad>();
+            squad.transform.position = transform.position;
             squad.SetSide(_side);
             squad.SetTarget(target);
 
@@ -157,17 +158,18 @@ namespace Raiders
                     {
                         var direction = road.Ends[1].Index == path.nodes[i].Index ? Squad.Direction.Backward : Squad.Direction.Forward;
 
-                        pathRoads.Enqueue(new Tuple<SplineComputer, Squad.Direction>(road.PathCreator, direction));
+                        pathRoads.Enqueue(new ValueTuple<SplineComputer, Squad.Direction>(road.PathCreator, direction));
 
                         break;
                     }
                 }
             }
 
-            BuildingQueueHandler.SquadSent(target, null, this);
+            BuildingQueueHandler.SquadSent(target, BuildingImp.BuildingData.SquadTypeInfo, this);
 
-            squad.SetRoads(pathRoads);
-            squad.MakeSoldiers();
+            squad.UnitInfo = BuildingImp.BuildingData.SquadTypeInfo.UnitInfo;
+            squad.Roads = pathRoads;
+            squad.SpawnEmptySoldiers();
 
             return true;
         }

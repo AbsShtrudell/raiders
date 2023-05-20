@@ -9,9 +9,10 @@ namespace Raiders
     public class RoadsDrawer : MonoBehaviour
     {
         [SerializeField] private Terrain _terrain;
-        [SerializeField] private List<SplineComputer> _roads;
         [SerializeField] Vector2Int _textureSize;
         [SerializeField] int _roadWidth = 3;
+
+        [field: SerializeField] public List<SplineComputer> Roads { get; set; }
 
         public void Draw()
         {
@@ -35,7 +36,7 @@ namespace Raiders
 
             texture.Apply();
 
-            foreach (var spline in _roads)
+            foreach (var spline in Roads)
             {
                 DrawSpline(texture, spline);
             }
