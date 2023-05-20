@@ -14,6 +14,11 @@ namespace Raiders
 
         [field: SerializeField] public List<SplineComputer> Roads { get; set; }
 
+        private void Start()
+        {
+            Draw();
+        }
+
         public void Draw()
         {
             Debug.Log("Draw Terrain Roads");
