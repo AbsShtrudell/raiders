@@ -17,6 +17,9 @@ namespace Raiders
         [SerializeField] private float distanceFromPrimary = 1f;
         [SerializeField] private float xDistance = 0.05f;
         [field: SerializeField] public UnitInfo UnitInfo { get; set; }
+        [SerializeField] private GameObject flagPrefab;
+        [SerializeField] private Vector3 flagPosition;
+        [SerializeField] private Vector3 flagEuler = new Vector3(0, 188, 0);
         [SerializeField] private bool _isSplineMovement = true;
 
         [Header("Followers")]        
@@ -75,6 +78,11 @@ namespace Raiders
             var leader = new Leader(_soldiers[0], this);
             leader.ReachedDestination += () => { building.SquadEnter(_side, TroopsType.Default); };
             _soldiers[0].squadRole = leader;
+
+            var flag = container.InstantiatePrefab(flagPrefab);
+            flag.transform.parent = _soldiers[0].GetComponentInChildren<Weapon>().transform;
+            flag.transform.localPosition = flagPosition;
+            flag.transform.localEulerAngles = flagEuler;
 
             for (int i = 1; i < _soldiers.Length; i++)
             {

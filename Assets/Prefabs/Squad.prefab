@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544878860613824860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.268331, y: 1.8044505, z: -1.53621}
+  m_LocalPosition: {x: -7.88, y: 0.95, z: -3.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -51,6 +51,8 @@ MonoBehaviour:
   distanceFromPrimary: 0.5
   xDistance: 0.3
   <UnitInfo>k__BackingField: {fileID: 0}
+  flagPrefab: {fileID: 6992352557928618691, guid: 7ecdb8487a4d24e4ba280ae3cbf5d16c, type: 3}
+  flagPosition: {x: -7.88, y: 0.95, z: -3.29}
   _isSplineMovement: 1
   _followingSpeedModifier: 2
   _followingAccelerationModifier: 5
