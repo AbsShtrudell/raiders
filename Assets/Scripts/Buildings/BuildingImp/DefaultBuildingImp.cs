@@ -35,16 +35,19 @@ namespace Raiders
 
         public override void GotAttacked(Side side, SquadTypeInfo squadInfo)
         {
-            if (_slotList.ExtraSlotsCount > 0)
+            for (int i = 0; i < squadInfo.Damage; i++)
             {
-                _slotList.RemoveExtraSlot();
-            }
-            else
-            {
-                if (_slotList.IsBlocked && _slotList.OccupyingSide != side)
-                    _slotList.UnblockSlot();
+                if (_slotList.ExtraSlotsCount > 0)
+                {
+                    _slotList.RemoveExtraSlot();
+                }
                 else
-                    _slotList.BlockSlot(side);
+                {
+                    if (_slotList.IsBlocked && _slotList.OccupyingSide != side)
+                        _slotList.UnblockSlot();
+                    else
+                        _slotList.BlockSlot(side);
+                }
             }
         }
 

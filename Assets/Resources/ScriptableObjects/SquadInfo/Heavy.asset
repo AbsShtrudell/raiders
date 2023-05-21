@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 483e3f9352968324895c9768a3e36bdb, type: 3}
+  m_Name: Heavy
+  m_EditorClassIdentifier: 
+  _damage: 2
+  _unitInfo: {fileID: 11400000, guid: acfa3e94e2d106e4c980176416d44da6, type: 2}
+  <TroopType>k__BackingField: 1

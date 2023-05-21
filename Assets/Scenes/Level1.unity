@@ -411,7 +411,7 @@ MonoBehaviour:
     - First: 1
       Second: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
     - First: 2
-      Second: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+      Second: {fileID: 11400000, guid: 7384bd07f4802df419e471ccf81af33c, type: 2}
     - First: 3
       Second: {fileID: 11400000, guid: 098f5f2215eb01445aa41f9a53947791, type: 2}
   - side: 1
@@ -421,9 +421,9 @@ MonoBehaviour:
     - First: 1
       Second: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
     - First: 2
-      Second: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+      Second: {fileID: 11400000, guid: 7384bd07f4802df419e471ccf81af33c, type: 2}
     - First: 3
-      Second: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
+      Second: {fileID: 11400000, guid: 098f5f2215eb01445aa41f9a53947791, type: 2}
   - side: 2
     buildingsData:
     - First: 0

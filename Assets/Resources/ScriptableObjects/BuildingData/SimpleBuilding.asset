@@ -22,5 +22,5 @@ MonoBehaviour:
   _mesh: {fileID: -2432090755550338912, guid: 2ef97580211a1524ea9694c78f92c16a, type: 3}
   _previous: {fileID: 0}
   _upgrades: []
-  _icon: {fileID: 21300000, guid: 61a7c182e171c2044a940ee00853b18a, type: 3}
+  _icon: {fileID: 21300000, guid: d45d0d31a8f29794ba6ad9aeb9bac0a9, type: 3}
   _cost: 5

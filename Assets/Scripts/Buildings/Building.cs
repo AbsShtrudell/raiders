@@ -114,7 +114,7 @@ namespace Raiders
 
             if (side != _side)
             {
-                BuildingImp.GotAttacked(side, null);
+                BuildingImp.GotAttacked(side, type);
             }
             else
             {

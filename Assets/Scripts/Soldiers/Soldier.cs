@@ -132,6 +132,14 @@ namespace Raiders
             _weapon.UnflipX();
         }
 
+        public void SetTroopType(TroopsType type)
+        {
+            TroopType = type;
+
+            if (IsHost)
+                SetTroopTypeClientRpc(type);
+        }
+
         public void ChangeItems()
         {
             if (arsenal == null) arsenal = SoilderItemsInstaller.arsenal;
@@ -190,6 +198,14 @@ namespace Raiders
 
             this.direction = direction;
             LookTowardDirection();
+        }
+
+        [ClientRpc]
+        private void SetTroopTypeClientRpc(TroopsType type)
+        {
+            if (IsOwner) return;
+
+            TroopType = type;
         }
     }
 }

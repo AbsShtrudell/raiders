@@ -54,9 +54,9 @@ namespace Raiders
             _soldiers[i].AddRenderPriority(_soldiers.Length - i);
             _soldiers[i].squad = this;
             _soldiers[i].SetHealth(SquadInfo.UnitInfo.Health);
-            _soldiers[i].TroopType = SquadInfo.TroopType;
             _soldiers[i].GetComponent<NetworkObject>().Spawn();
             _soldiers[i].side = _side;
+            _soldiers[i].SetTroopType(SquadInfo.TroopType);
             _soldiers[i].ChangeItems();
         }
 
