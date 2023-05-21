@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -18,6 +19,7 @@ namespace Raiders
         private NavMeshAgent _agent;
 
         public Squad squad { get; set; }
+        public TroopsType TroopType { get; set; }
         public SquadRole squadRole { get; set; }
         public Vector3 direction { get; set; }
 
@@ -137,13 +139,14 @@ namespace Raiders
             if(IsHost)
                 ChangeItemsClientRpc(side);
 
-            foreach (var item in _items)
+            foreach (var (type, item) in _items)
             {
-                var sprites = arsenal[side].items[item.Key];
+                var sprites = arsenal[side].items[type];
 
-            	_currentSprites[item.Key] = sprites[Random.Range(0, sprites.Length)];
+                var correctSprites = (from s in sprites where s.TroopType == TroopType select s).ToArray();
+            	_currentSprites[type] = correctSprites[Random.Range(0, correctSprites.Length)];
 
-            	item.Value.SetSprite(_currentSprites[item.Key].front);
+            	item.SetSprite(_currentSprites[type].front);
             }
         }
 

@@ -12,6 +12,7 @@ namespace Raiders
         {
             [SerializeField] private Sprite _front;
             [SerializeField] private Sprite _back;
+            [field: SerializeField] public TroopsType TroopType {get; private set;}
 
             public Sprite front => _front;
             public Sprite back => _back;
