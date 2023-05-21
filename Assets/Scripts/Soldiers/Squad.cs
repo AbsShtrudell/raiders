@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Raiders
 {
-    public class Squad : MonoBehaviour, IControllable
+    public class Squad : NetworkBehaviour, IControllable
     {
         [System.Serializable]
         public enum Direction { Forward = 1, Backward = -1 }
@@ -29,7 +29,7 @@ namespace Raiders
         [SerializeField] private float _stoppingDistanceModifier = 5f;
 
         [Zenject.Inject] private Zenject.DiContainer container;
-        [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> arsenal;
+        [Zenject.Inject(Id = "Arsenal")] public Dictionary<Side, SoldierItems> arsenal;
         private Soldier[] _soldiers;
         private PrimaryFollowerBehavior primaryFollower = null;
         private SecondaryFollowerBehavior[] secondaryFollowers;
@@ -44,6 +44,7 @@ namespace Raiders
 
         private void Awake()
         {
+            GetComponent<NetworkObject>().Spawn();
             _soldiers = new Soldier[soldiersAmount];
             secondaryFollowers = new SecondaryFollowerBehavior[soldiersAmount - 1];
         }
@@ -66,13 +67,13 @@ namespace Raiders
         private void InitializeSoldier(int i)
         {
             _soldiers[i] = Instantiate(soldierPrefab, transform.position, transform.rotation).GetComponent<Soldier>();
-            _soldiers[i].GetComponent<NetworkObject>().Spawn();
             _soldiers[i].side = _side;
             _soldiers[i].arsenal = arsenal;
             _soldiers[i].ChangeItems();
             _soldiers[i].AddRenderPriority(_soldiers.Length - i);
             _soldiers[i].squad = this;
             _soldiers[i].SetHealth(UnitInfo.Health);
+            _soldiers[i].GetComponent<NetworkObject>().Spawn();
         }
 
         public void SpawnEmptySoldiers()
