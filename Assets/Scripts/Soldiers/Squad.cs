@@ -80,7 +80,16 @@ namespace Raiders
             InitializeSoldier(0);
 
             var leader = new Leader(_soldiers[0], this);
-            leader.ReachedDestination += () => { building.SquadEnter(_side, TroopsType.Default); };
+            leader.ReachedDestination += () =>
+            {
+                building.SquadEnter(_side, TroopsType.Default);
+                foreach (var soldier in _soldiers)
+                {
+                    Destroy(soldier.gameObject);
+                };
+
+                Destroy(gameObject);
+            };
             _soldiers[0].squadRole = leader;
 
             var flag = container.InstantiatePrefab(flagPrefab);

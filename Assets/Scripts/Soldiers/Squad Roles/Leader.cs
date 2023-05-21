@@ -56,6 +56,8 @@ namespace Raiders
                     yield return new WaitUntil(() => Vector3.Distance(soldier.transform.position, hit.position) <= 1);
                 }
             }
+            
+            yield return new WaitUntil(() => _agent.velocity.sqrMagnitude < 0.1);
 
             ReachedDestination?.Invoke();
 
