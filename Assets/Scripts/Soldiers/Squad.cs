@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Raiders
 {
-    public class Squad : NetworkBehaviour, IControllable
+    public class Squad : MonoBehaviour, IControllable
     {
         [System.Serializable]
         public enum Direction { Forward = 1, Backward = -1 }
@@ -44,7 +44,6 @@ namespace Raiders
 
         private void Awake()
         {
-            GetComponent<NetworkObject>().Spawn();
             _soldiers = new Soldier[soldiersAmount];
             secondaryFollowers = new SecondaryFollowerBehavior[soldiersAmount - 1];
         }
@@ -52,13 +51,12 @@ namespace Raiders
         private void InitializeSoldier(int i)
         {
             _soldiers[i] = Instantiate(soldierPrefab, transform.position, transform.rotation).GetComponent<Soldier>();
-            _soldiers[i].side = _side;
-            _soldiers[i].arsenal = arsenal;
-            _soldiers[i].ChangeItems();
             _soldiers[i].AddRenderPriority(_soldiers.Length - i);
             _soldiers[i].squad = this;
             _soldiers[i].SetHealth(SquadInfo.UnitInfo.Health);
             _soldiers[i].GetComponent<NetworkObject>().Spawn();
+            _soldiers[i].side = _side;
+            _soldiers[i].ChangeItems();
         }
 
         public void SpawnEmptySoldiers()

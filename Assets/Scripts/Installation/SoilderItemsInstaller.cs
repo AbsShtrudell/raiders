@@ -8,18 +8,23 @@ namespace Raiders
     {
         [SerializeField] private SoldierItems vikingItems;
         [SerializeField] private SoldierItems englishItems;
-        private Dictionary<Side, SoldierItems> arsenal = null;
+
+        public static Dictionary<Side, SoldierItems> arsenal;
 
         public override void InstallBindings()
         {
+            arsenal = null;
+
             if (arsenal == null)
             {
                 vikingItems.Awake();
                 englishItems.Awake();
 
-                arsenal = new Dictionary<Side, SoldierItems>();
-                arsenal.Add(Side.Vikings, vikingItems);
-                arsenal.Add(Side.English, englishItems);
+                arsenal = new Dictionary<Side, SoldierItems>
+                {
+                    { Side.Vikings, vikingItems },
+                    { Side.English, englishItems }
+                };
             }
 
             Container.BindInstance(arsenal).WithId("Arsenal").AsSingle();
