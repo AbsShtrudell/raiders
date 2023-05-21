@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Raiders
 {
-    public class Squad : NetworkBehaviour, IControllable
+    public class Squad : MonoBehaviour, IControllable
     {
         [System.Serializable]
         public enum Direction { Forward = 1, Backward = -1 }
@@ -44,36 +44,19 @@ namespace Raiders
 
         private void Awake()
         {
-            GetComponent<NetworkObject>().Spawn();
             _soldiers = new Soldier[soldiersAmount];
             secondaryFollowers = new SecondaryFollowerBehavior[soldiersAmount - 1];
-        }
-
-        public void MakeSoldiers()
-        {
-            InitializeSoldier(0);
-            var f = _soldiers[0].GetComponent<TestPathFollower>();
-            primaryFollower = f.MakePrimary(Roads, _speed);
-            primaryFollower.ReachedDestination += () => { building.SquadEnter(_side, TroopsType.Default); };
-            for (int i = 1; i < _soldiers.Length; i++)
-            {
-                InitializeSoldier(i);
-                f = _soldiers[i].GetComponent<TestPathFollower>();
-                secondaryFollowers[i - 1] =
-                    f.MakeSecondary(primaryFollower, distanceFromPrimary * ((i + 1) / 2), xDistance * i * (i % 2 == 0 ? 1 : -1));
-            }
         }
 
         private void InitializeSoldier(int i)
         {
             _soldiers[i] = Instantiate(soldierPrefab, transform.position, transform.rotation).GetComponent<Soldier>();
-            _soldiers[i].side = _side;
-            _soldiers[i].arsenal = arsenal;
-            _soldiers[i].ChangeItems();
             _soldiers[i].AddRenderPriority(_soldiers.Length - i);
             _soldiers[i].squad = this;
             _soldiers[i].SetHealth(UnitInfo.Health);
             _soldiers[i].GetComponent<NetworkObject>().Spawn();
+            _soldiers[i].side = _side;
+            _soldiers[i].ChangeItems();
         }
 
         public void SpawnEmptySoldiers()

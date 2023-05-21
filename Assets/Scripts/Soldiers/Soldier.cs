@@ -35,6 +35,8 @@ namespace Raiders
 
         private void Awake()
         {
+            arsenal = SoilderItemsInstaller.arsenal;
+
             var children = GetComponentsInChildren<ClothingItem>();
 
             foreach (var item in children)
@@ -130,6 +132,11 @@ namespace Raiders
 
         public void ChangeItems()
         {
+            if (arsenal == null) arsenal = SoilderItemsInstaller.arsenal;
+
+            if(IsHost)
+                ChangeItemsClientRpc(side);
+
             foreach (var item in _items)
             {
                 var sprites = arsenal[side].items[item.Key];
@@ -179,7 +186,7 @@ namespace Raiders
             if (IsOwner) return;
 
             this.direction = direction;
-            _shield.Rotate(direction);
+            LookTowardDirection();
         }
     }
 }
