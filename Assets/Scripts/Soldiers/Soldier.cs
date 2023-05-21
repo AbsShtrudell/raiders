@@ -11,8 +11,8 @@ namespace Raiders
         [SerializeField] private Side _side;
         [SerializeField] private float _currentHealth;
 
-        private Dictionary<ClothingItem.Type, ClothingItem> _items;
-        private Dictionary<ClothingItem.Type, SoldierItems.FrontBackSprites> _currentSprites;
+        private Dictionary<ClothingItem.Type, ClothingItem> _items = new Dictionary<ClothingItem.Type, ClothingItem>();
+        private Dictionary<ClothingItem.Type, SoldierItems.FrontBackSprites> _currentSprites = new Dictionary<ClothingItem.Type, SoldierItems.FrontBackSprites>();
         private Shield _shield;
         private Weapon _weapon;
         private NavMeshAgent _agent;
@@ -35,9 +35,6 @@ namespace Raiders
 
         private void Awake()
         {
-            _items = new Dictionary<ClothingItem.Type, ClothingItem>();
-            _currentSprites = new Dictionary<ClothingItem.Type, SoldierItems.FrontBackSprites>();
-
             var children = GetComponentsInChildren<ClothingItem>();
 
             foreach (var item in children)
@@ -54,6 +51,8 @@ namespace Raiders
         
         private void Update()
         {
+            if (!IsHost) return;
+
             if (!_agent.hasPath)
                 return;
 
@@ -62,7 +61,7 @@ namespace Raiders
                 direction = _agent.nextPosition - transform.position;
                 direction.Set(direction.x, 0, direction.z);
                 direction = direction.normalized;
-
+                UpdateDirectionClientRpc(direction);
                 LookTowardDirection();
             }
 
@@ -163,6 +162,24 @@ namespace Raiders
         {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, transform.position + direction);
+        }
+
+        [ClientRpc]
+        private void ChangeItemsClientRpc(Side side)
+        {
+            if (IsOwner) return;
+
+            _side = side;
+            ChangeItems();
+        }
+
+        [ClientRpc]
+        private void UpdateDirectionClientRpc(Vector3 direction)
+        {
+            if (IsOwner) return;
+
+            this.direction = direction;
+            _shield.Rotate(direction);
         }
     }
 }
