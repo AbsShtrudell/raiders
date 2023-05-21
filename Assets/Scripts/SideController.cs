@@ -8,9 +8,9 @@ namespace Raiders
     public class SideController
     {
         private int _coins;
-        private Side _side;
 
-        public int Coins => _coins;
+        public int Coins
+        { get { return _coins; } set { _coins = value; CoinsChanged?.Invoke(Coins); } }
 
         public event Action<int> CoinsChanged;
 

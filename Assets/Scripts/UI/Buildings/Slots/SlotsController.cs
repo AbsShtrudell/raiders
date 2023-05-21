@@ -1,6 +1,8 @@
 using Raiders;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +18,13 @@ namespace Raiders
 
         private List<SircleSlot> _defaultSlots = new List<SircleSlot>();
         private List<SircleSlot> _extraSlots = new List<SircleSlot>();
+
+        private event System.Action<SlotsController> OnDestroyed;
+
+        private void OnDestroy()
+        {
+            OnDestroyed?.Invoke(this);
+        }
 
         private void SetHolderSize(int count)
         {
@@ -110,8 +119,13 @@ namespace Raiders
                 slotsController._defaultFactory = _defFactory;
                 slotsController._extraFactory = _extraFactory;
 
-                slotsController.GetComponent<Canvas>().worldCamera = Camera.main;
+                slotsController.OnDestroyed += (slotC) =>
+                {
+                    imp.SlotList.DefaultSlotsChanged -= slotC.OnDefaultSlotsChanged;
+                    imp.SlotList.ExtraSlotsChanged -= slotC.OnExtraSlotsChanged;
+                };
 
+                slotsController.GetComponent<Canvas>().worldCamera = Camera.main;
                 return slotsController;
             }
         }

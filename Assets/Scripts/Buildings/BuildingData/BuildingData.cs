@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Raiders
@@ -30,5 +31,10 @@ namespace Raiders
         public IBuildingData PreviousLevel => _previous;
         public BuildingType Type => _type;
         public uint Cost => _cost;
+
+        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

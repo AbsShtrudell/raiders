@@ -15,7 +15,6 @@ namespace Raiders
 
         private float _squadRecoveryTime;
         private int _blokcedSlots = 0;
-        private int _size;
         private Side _occupyingSide;
 
         public event Action AllSlotsEmpty;
@@ -47,6 +46,10 @@ namespace Raiders
 
         public IReadOnlySlotList ReadOnlySlotList => this;
 
+        public List<Slot> Slots => _slots;
+
+        public List<Slot> ExtraSlots => _extraSlots;
+
         public SlotList(int size, float squadRecoveryTime)
         {
             _slots = new List<Slot>(size);
@@ -56,7 +59,6 @@ namespace Raiders
             }
             _extraSlots = new List<Slot>(0);
 
-            _size = size;
             _squadRecoveryTime = squadRecoveryTime;
         }
 
@@ -133,7 +135,7 @@ namespace Raiders
 
         private void BlockSlot()
         {
-            if (_blokcedSlots >= _size) return;
+            if (_blokcedSlots >= _slots.Count) return;
 
             for (int i = _slots.Count - 1; i >= 0; i--)
             {

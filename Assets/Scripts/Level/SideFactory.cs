@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 
 namespace Raiders
 {
@@ -17,7 +18,10 @@ namespace Raiders
 
             if (buildingData == null) throw new System.Exception("Can't find data for this type");
 
-            return new DefaultBuildingImp(buildingData);
+            if (NetworkManager.Singleton.IsHost)
+                return new DefaultBuildingImp(buildingData);
+            else
+                return new ClientBuildingImp(buildingData);
         }
     }
 }
