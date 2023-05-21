@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,6 +23,11 @@ namespace Raiders
 
         private void Awake()
         {
+            if(!NetworkManager.Singleton.IsHost)
+            {
+                _side = Side.English;
+            }
+
             _input = GetComponent<PlayerInput>();
         }
 

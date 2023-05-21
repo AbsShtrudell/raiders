@@ -49,7 +49,7 @@ namespace Raiders
 
         private void Update()
         {
-            _slotsUI.transform.localPosition = Vector3.up * 2;
+            _slotsUI.transform.localPosition = Vector3.up * 3;
             BuildingImp?.Update();
 
             if (!IsHost) return;
@@ -73,7 +73,7 @@ namespace Raiders
             if (_upgradeUI != null)
                 _upgradeUI.InitButtons(BuildingImp.BuildingData, OnUpgradeQueued);
 
-            if (Side == Side.Vikings)
+            if (NetworkManager.Singleton.IsHost? Side == Side.Vikings : Side == Side.English)
                 _upgradeUI.Show();
             else
                 _upgradeUI.Hide();
@@ -103,6 +103,7 @@ namespace Raiders
             {
                 InitBuildingImp(BuildingImp.BuildingData.Type, side);
             }
+            ChangeVisual(BuildingImp.BuildingData);
             Destroy(_slotsUI.gameObject);
             InitUI();
         }
@@ -157,13 +158,25 @@ namespace Raiders
         public void ChangeBuilding(IBuildingData buildingData)
         {
             BuildingImp.BuildingData = buildingData;
-
+            ChangeVisual(buildingData);
             Destroy(_slotsUI.gameObject);
             InitUI();
         }
 
+        public void ChangeVisual(IBuildingData data)
+        {
+            if(data.Mesh != null)
+                GetComponent<MeshFilter>().mesh = data.Mesh;
+        }
+
         public bool SendTroops(Building target) //sync with client
         {
+            if(!IsHost)
+            {
+                SendTroopsServerRpc(target); 
+                return true;
+            }
+
             var path = BuildingQueueHandler.GetPath(target, this);
 
             if (path == null || !BuildingImp.SendTroops())
@@ -240,6 +253,15 @@ namespace Raiders
         public void UpgradeQueueServerRpc(int variant)
         {
             OnUpgradeQueued(variant);
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        public void SendTroopsServerRpc(NetworkBehaviourReference targetBuilding)
+        {
+            if (targetBuilding.TryGet(out Building building))
+            {
+                SendTroops(building);
+            }
         }
 
         public class Factory : IFactory<Building>

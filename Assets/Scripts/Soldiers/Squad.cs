@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Dreamteck.Splines;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Raiders
@@ -28,6 +29,7 @@ namespace Raiders
         [SerializeField] private float _stoppingDistanceModifier = 5f;
 
         [Zenject.Inject] private Zenject.DiContainer container;
+        [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> arsenal;
         private Soldier[] _soldiers;
         private PrimaryFollowerBehavior primaryFollower = null;
         private SecondaryFollowerBehavior[] secondaryFollowers;
@@ -63,8 +65,10 @@ namespace Raiders
 
         private void InitializeSoldier(int i)
         {
-            _soldiers[i] = container.InstantiatePrefab(soldierPrefab, transform.position, transform.rotation, transform).GetComponent<Soldier>();
+            _soldiers[i] = Instantiate(soldierPrefab, transform.position, transform.rotation).GetComponent<Soldier>();
+            _soldiers[i].GetComponent<NetworkObject>().Spawn();
             _soldiers[i].side = _side;
+            _soldiers[i].arsenal = arsenal;
             _soldiers[i].ChangeItems();
             _soldiers[i].AddRenderPriority(_soldiers.Length - i);
             _soldiers[i].squad = this;

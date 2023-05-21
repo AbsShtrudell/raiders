@@ -33,5 +33,7 @@ namespace Raiders
         public virtual BuildingType Type => _buildingData.Type;
 
         public virtual uint Cost => _buildingData.Cost;
+
+        public Sprite Icon => _buildingData.Icon;
     }
 }

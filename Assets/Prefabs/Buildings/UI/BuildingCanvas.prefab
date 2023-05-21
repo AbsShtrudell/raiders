@@ -145,6 +145,7 @@ MonoBehaviour:
   _upgradeButtonRef: {fileID: 3909921298619074351, guid: 4e7c1a12ffd4862418bb1d9041c2795b, type: 3}
   _downgradeButtonRef: {fileID: 9182281473462532667, guid: 7fa9d70be5660ae42bf8c1cfc5df690f, type: 3}
   _upgradeButtonsHolder: {fileID: 8438259705531497545}
+  _upgradeInfoPrefab: {fileID: 7168125287333702497, guid: fa55282532783fb4ba1e97c58771605a, type: 3}
 --- !u!1 &7157867796589717950
 GameObject:
   m_ObjectHideFlags: 0

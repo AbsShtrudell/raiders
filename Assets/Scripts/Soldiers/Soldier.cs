@@ -1,21 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Raiders
 {
-    public class Soldier : MonoBehaviour, IControllable
+    public class Soldier : NetworkBehaviour, IControllable
     {
         [SerializeField] private Side _side;
         [SerializeField] private float _currentHealth;
 
-        [Zenject.Inject(Id = "Arsenal")] private Dictionary<Side, SoldierItems> arsenal;
         private Dictionary<ClothingItem.Type, ClothingItem> _items;
         private Dictionary<ClothingItem.Type, SoldierItems.FrontBackSprites> _currentSprites;
         private Shield _shield;
-    	private Weapon _weapon;
-    	private NavMeshAgent _agent;
+        private Weapon _weapon;
+        private NavMeshAgent _agent;
 
         public Squad squad { get; set; }
         public SquadRole squadRole { get; set; }
@@ -30,6 +30,8 @@ namespace Raiders
         public bool hasPath => _agent.hasPath;
         public bool pathPending => _agent.pathPending;
         public IControllable mainControllable => squad;
+
+        public Dictionary<Side, SoldierItems> arsenal {get; set;}
 
         private void Awake()
         {

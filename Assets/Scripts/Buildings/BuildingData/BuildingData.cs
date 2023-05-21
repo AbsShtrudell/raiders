@@ -19,6 +19,7 @@ namespace Raiders
         [SerializeField] private Mesh _mesh;
         [SerializeField] private BuildingData _previous;
         [SerializeField] private List<BuildingData> _upgrades;
+        [SerializeField] private Sprite _icon;
         [SerializeField, Min(0)] private uint _cost;
         public int SquadSlots => _squadSlot;
         public float SquadRecoveryTime => _squadRecoveryTime;
@@ -28,6 +29,7 @@ namespace Raiders
         public SquadTypeInfo SquadTypeInfo => _squadTypeInfo;
         public Mesh Mesh => _mesh;
         public List<IBuildingData> Upgrades => _upgrades.ToList<IBuildingData>();
+        public Sprite Icon => _icon;
         public IBuildingData PreviousLevel => _previous;
         public BuildingType Type => _type;
         public uint Cost => _cost;

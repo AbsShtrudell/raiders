@@ -16,6 +16,7 @@ namespace Raiders
         public SquadTypeInfo SquadTypeInfo { get; }
         public Mesh Mesh { get; }
         public List<IBuildingData> Upgrades { get; }
+        public Sprite Icon { get; }
         public IBuildingData PreviousLevel { get; }
         public BuildingType Type { get; }
         public uint Cost { get; }

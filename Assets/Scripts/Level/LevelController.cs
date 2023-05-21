@@ -98,7 +98,6 @@ namespace Raiders
 
         private void Start()
         {
-            
             if(IsHost)
                 StartCoroutine(BuildingsUpdateTimer());
         }

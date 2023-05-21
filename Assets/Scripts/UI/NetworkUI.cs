@@ -23,7 +23,7 @@ namespace Raiders
                     NetworkManager.Singleton.OnClientConnectedCallback += (f) =>
                     {
                         if(NetworkManager.Singleton.ConnectedClients.Count > 1)
-                            NetworkManager.Singleton.SceneManager.LoadScene("BasicGameplayTest", LoadSceneMode.Single);
+                            NetworkManager.Singleton.SceneManager.LoadScene("Level1", LoadSceneMode.Single);
                     };
                 };
                 NetworkManager.Singleton.StartHost();
