@@ -51,8 +51,9 @@ MonoBehaviour:
   _speed: 40
   distanceFromPrimary: 0.5
   xDistance: 0.3
-  <UnitInfo>k__BackingField: {fileID: 0}
-  flagPrefab: {fileID: 6992352557928618691, guid: 7ecdb8487a4d24e4ba280ae3cbf5d16c, type: 3}
+  <SquadInfo>k__BackingField: {fileID: 0}
+  vikingFlagPrefab: {fileID: 6992352557928618691, guid: 7ecdb8487a4d24e4ba280ae3cbf5d16c, type: 3}
+  englishFlagPrefab: {fileID: 6992352557928618691, guid: eb3964f3a6a10a340bd2d02e16680037, type: 3}
   flagPosition: {x: -7.88, y: 0.95, z: -3.29}
   flagEuler: {x: 0, y: 188, z: 0}
   _isSplineMovement: 1

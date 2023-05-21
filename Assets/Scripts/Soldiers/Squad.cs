@@ -18,7 +18,8 @@ namespace Raiders
         [SerializeField] private float distanceFromPrimary = 1f;
         [SerializeField] private float xDistance = 0.05f;
         [field: SerializeField] public SquadTypeInfo SquadInfo { get; set; }
-        [SerializeField] private GameObject flagPrefab;
+        [SerializeField] private GameObject vikingFlagPrefab;
+        [SerializeField] private GameObject englishFlagPrefab;
         [SerializeField] private Vector3 flagPosition;
         [SerializeField] private Vector3 flagEuler = new Vector3(0, 188, 0);
         [SerializeField] private bool _isSplineMovement = true;
@@ -77,7 +78,7 @@ namespace Raiders
             };
             _soldiers[0].squadRole = leader;
 
-            var flag = container.InstantiatePrefab(flagPrefab);
+            var flag = container.InstantiatePrefab(_side == Side.Vikings ? vikingFlagPrefab : englishFlagPrefab);
             flag.transform.parent = _soldiers[0].GetComponentInChildren<Weapon>().transform;
             flag.transform.localPosition = flagPosition;
             flag.transform.localEulerAngles = flagEuler;
