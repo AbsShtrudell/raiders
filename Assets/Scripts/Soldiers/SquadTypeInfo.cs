@@ -9,6 +9,7 @@ namespace Raiders
     {
         [SerializeField, Min(0)] private int _damage = 1;
         [SerializeField] private UnitInfo _unitInfo;
+        [field: SerializeField] public TroopsType TroopType {get; private set;}
 
         public int Damage => _damage;
         public UnitInfo UnitInfo=> _unitInfo;

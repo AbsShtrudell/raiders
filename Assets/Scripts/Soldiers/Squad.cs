@@ -17,7 +17,7 @@ namespace Raiders
         [SerializeField, Min(0f)] private float _speed = 5f;
         [SerializeField] private float distanceFromPrimary = 1f;
         [SerializeField] private float xDistance = 0.05f;
-        [field: SerializeField] public UnitInfo UnitInfo { get; set; }
+        [field: SerializeField] public SquadTypeInfo SquadInfo { get; set; }
         [SerializeField] private GameObject flagPrefab;
         [SerializeField] private Vector3 flagPosition;
         [SerializeField] private Vector3 flagEuler = new Vector3(0, 188, 0);
@@ -49,21 +49,6 @@ namespace Raiders
             secondaryFollowers = new SecondaryFollowerBehavior[soldiersAmount - 1];
         }
 
-        public void MakeSoldiers()
-        {
-            InitializeSoldier(0);
-            var f = _soldiers[0].GetComponent<TestPathFollower>();
-            primaryFollower = f.MakePrimary(Roads, _speed);
-            primaryFollower.ReachedDestination += () => { building.SquadEnter(_side, TroopsType.Default); };
-            for (int i = 1; i < _soldiers.Length; i++)
-            {
-                InitializeSoldier(i);
-                f = _soldiers[i].GetComponent<TestPathFollower>();
-                secondaryFollowers[i - 1] =
-                    f.MakeSecondary(primaryFollower, distanceFromPrimary * ((i + 1) / 2), xDistance * i * (i % 2 == 0 ? 1 : -1));
-            }
-        }
-
         private void InitializeSoldier(int i)
         {
             _soldiers[i] = Instantiate(soldierPrefab, transform.position, transform.rotation).GetComponent<Soldier>();
@@ -72,7 +57,7 @@ namespace Raiders
             _soldiers[i].ChangeItems();
             _soldiers[i].AddRenderPriority(_soldiers.Length - i);
             _soldiers[i].squad = this;
-            _soldiers[i].SetHealth(UnitInfo.Health);
+            _soldiers[i].SetHealth(SquadInfo.UnitInfo.Health);
             _soldiers[i].GetComponent<NetworkObject>().Spawn();
         }
 
@@ -83,7 +68,7 @@ namespace Raiders
             var leader = new Leader(_soldiers[0], this);
             leader.ReachedDestination += () =>
             {
-                building.SquadEnter(_side, TroopsType.Default);
+                building.SquadEnter(_side, SquadInfo);
                 foreach (var soldier in _soldiers)
                 {
                     Destroy(soldier.gameObject);

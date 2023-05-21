@@ -108,7 +108,7 @@ namespace Raiders
             InitUI();
         }
 
-        public void SquadEnter(Side side, TroopsType type)
+        public void SquadEnter(Side side, SquadTypeInfo type)
         {
             if (!IsHost) return;
 
@@ -205,7 +205,7 @@ namespace Raiders
 
             BuildingQueueHandler.SquadSent(target, BuildingImp.BuildingData.SquadTypeInfo, this);
 
-            squad.UnitInfo = BuildingImp.BuildingData.SquadTypeInfo.UnitInfo;
+            squad.SquadInfo = BuildingImp.BuildingData.SquadTypeInfo;
             squad.Roads = pathRoads;
             squad.SpawnEmptySoldiers();
 
