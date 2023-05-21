@@ -33,11 +33,15 @@ namespace Raiders
             yield return new WaitUntil(() => leader.hasPath);
             yield return new WaitWhile(() => leader.pathPending);
 
+            float angle = Vector3.SignedAngle(Vector3.forward, leader.direction, Vector3.up);
+            var rotation = Quaternion.Euler(0, angle, 0);
+
             while (leader.hasPath)
             {
-                float angle = Vector3.SignedAngle(Vector3.forward, leader.direction, Vector3.up);
-
-                var delta = Quaternion.Euler(0, angle, 0) * columnPosition;
+                angle = Vector3.SignedAngle(Vector3.forward, leader.direction, Vector3.up);
+                rotation = Quaternion.Lerp(rotation, Quaternion.Euler(0, angle, 0), Time.deltaTime * 3);
+                
+                var delta = rotation * columnPosition;
 
                 var destination = leader.transform.position - delta;
                 _agent.SetDestination(destination);
