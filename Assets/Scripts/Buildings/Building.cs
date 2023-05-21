@@ -35,6 +35,8 @@ namespace Raiders
         public IBuildingImp BuildingImp { get; private set; }
         public IBuildingQueueHandler BuildingQueueHandler { private get; set; }
 
+        public event Action OnSideChanged;
+
         private void Awake()
         {
             _meshRenderer = GetComponent<MeshRenderer>();
@@ -106,6 +108,8 @@ namespace Raiders
             ChangeVisual(BuildingImp.BuildingData);
             Destroy(_slotsUI.gameObject);
             InitUI();
+
+            OnSideChanged?.Invoke();
         }
 
         public void SquadEnter(Side side, SquadTypeInfo type)

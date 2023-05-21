@@ -81,6 +81,8 @@ namespace Raiders
 
         public Dictionary<Side, SideController> SideControllers => _sideControllers;
 
+        public event Action<Side> OnGameEnd;
+
         private void Awake()
         {
             BuildingsGraphEditor graphEditor = GetComponent<BuildingsGraphEditor>();
@@ -88,7 +90,11 @@ namespace Raiders
             _graph = graphEditor.graph;
 
             foreach (var node in _graph.Nodes)
+            {
                 node.Value.BuildingQueueHandler = this;
+
+                node.Value.OnSideChanged += DecideWinner;
+            }
 
             if(IsHost)
                 GetComponent<NetworkObject>().Spawn();
@@ -146,6 +152,19 @@ namespace Raiders
                             sideController.Value.SpendCoins(building.Value.BuildingImp.BuildingData.Upkeep);
                 }
             }
+        }
+
+        private void DecideWinner()
+        {
+            var side = _graph.Nodes[0].Value.Side;
+
+            for (int i = 1; i < _graph.Nodes.Count; i++)
+            {
+                if (_graph.Nodes[i].Value.Side != side)
+                    return;
+            }
+
+            OnGameEnd?.Invoke(side);
         }
 
         //-------------------- IBuildingQueue -----------------------

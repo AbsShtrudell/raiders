@@ -18,6 +18,10 @@ namespace Raiders
         {
             slider.maxValue = rankManager.LeagueCapacity;
             rankManager.onRankChanged += Refresh;
+        }
+
+        private void Start()
+        {
             Refresh();
         }
 
