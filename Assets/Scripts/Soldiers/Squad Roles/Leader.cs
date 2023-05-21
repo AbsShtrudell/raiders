@@ -18,7 +18,9 @@ namespace Raiders
         }
 
         public override void Move()
-        {            
+        {
+            _agent.GetComponentInChildren<MovementSimulation>().StartJumping();
+
             if (_movingRoutine != null)
                 soldier.StopCoroutine(_movingRoutine);                
             

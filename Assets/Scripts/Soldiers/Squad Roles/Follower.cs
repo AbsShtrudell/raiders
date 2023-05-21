@@ -32,10 +32,11 @@ namespace Raiders
         {
             yield return new WaitUntil(() => leader.hasPath);
             yield return new WaitWhile(() => leader.pathPending);
-
             yield return new WaitUntil(() =>
                 Vector3.Distance(_agent.transform.position, leader.transform.position) > columnPosition.magnitude
             );
+
+            _agent.GetComponentInChildren<MovementSimulation>().StartJumping();
 
             float angle = Vector3.SignedAngle(Vector3.forward, leader.direction, Vector3.up);
             var rotation = Quaternion.Euler(0, angle, 0);

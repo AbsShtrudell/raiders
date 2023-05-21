@@ -183,7 +183,8 @@ namespace Raiders
                 return false;
 
             var pathRoads = new Queue<ValueTuple<SplineComputer, Squad.Direction>>();
-            var squad = container.InstantiatePrefab(SquadPrefab).GetComponent<Squad>();
+            var squad = Instantiate(SquadPrefab).GetComponent<Squad>();
+            container.Inject(squad);
             squad.transform.position = transform.position;
             squad.SetSide(_side);
             squad.SetTarget(target);
