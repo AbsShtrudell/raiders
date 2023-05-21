@@ -66,22 +66,23 @@ namespace Raiders
             InitializeSoldier(0);
 
             var leader = new Leader(_soldiers[0], this);
+
+            var flag = Instantiate(_side == Side.Vikings ? vikingFlagPrefab : englishFlagPrefab).GetComponent<Flag>();
+            flag.Tagert = _soldiers[0].GetComponentInChildren<Weapon>().transform;
+            flag.GetComponent<NetworkObject>().Spawn();
+
             leader.ReachedDestination += () =>
             {
                 building.SquadEnter(_side, SquadInfo);
                 foreach (var soldier in _soldiers)
                 {
                     Destroy(soldier.gameObject);
-                };
 
+                };
+                Destroy(flag.gameObject);
                 Destroy(gameObject);
             };
             _soldiers[0].squadRole = leader;
-
-            var flag = container.InstantiatePrefab(_side == Side.Vikings ? vikingFlagPrefab : englishFlagPrefab);
-            flag.transform.parent = _soldiers[0].GetComponentInChildren<Weapon>().transform;
-            flag.transform.localPosition = flagPosition;
-            flag.transform.localEulerAngles = flagEuler;
 
             for (int i = 1; i < _soldiers.Length; i++)
             {
