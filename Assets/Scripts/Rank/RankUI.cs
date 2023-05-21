@@ -8,15 +8,15 @@ namespace Raiders
 {
     public class RankUI : MonoBehaviour
     {
-        [SerializeField] private int maxRank = 100;
         [SerializeField] private Slider slider;
         [SerializeField] private Image image;
         [SerializeField] private RankManager rankManager;
+        [SerializeField] private Sprite placeholderImage;
         [SerializeField] private Sprite[] rankImages;
 
         private void Awake()
         {
-            slider.maxValue = maxRank;
+            slider.maxValue = rankManager.LeagueCapacity;
             rankManager.onRankChanged += Refresh;
             Refresh();
         }
@@ -25,11 +25,15 @@ namespace Raiders
         {
             int overallRank = rankManager.GetRank();
 
-            int rank = overallRank % maxRank;
-            int league = overallRank / maxRank;
+            int rank = overallRank % rankManager.LeagueCapacity;
+            int league = overallRank / rankManager.LeagueCapacity;
 
             slider.value = rank;
-            image.sprite = rankImages[league];
+
+            if (league < rankImages.Length)
+                image.sprite = rankImages[league];
+            else
+                image.sprite = placeholderImage;
         }
     }
 }

@@ -9,10 +9,18 @@ namespace Raiders
         private const string RANK = "rank";
         private const int DEFAULT_VALUE = -1;
 
-        [SerializeField] private int increment = 25;
-        [SerializeField] private int defaultRank = 25;
+        [SerializeField, Min(0)] private int increment = 25;
+        [SerializeField, Min(0)] private int defaultRank = 25;
+        [field: SerializeField, Min(0)] public int LeagueCount { get; private set; } = 3;
+        [field: SerializeField, Min(0)] public int LeagueCapacity { get; private set; } = 100;
 
         public event System.Action onRankChanged;
+
+        public void Awake()
+        {
+            if (!IsRankSet())
+                ResetRank();
+        }
 
         public void SetRank(int rank)
         {
@@ -37,6 +45,11 @@ namespace Raiders
             return rank;
         }
 
+        public bool IsRankSet()
+        {
+            return PlayerPrefs.GetInt(RANK, DEFAULT_VALUE) != DEFAULT_VALUE;
+        }
+
         public void IncrementRank()
         {
             int rank = GetRank();
@@ -49,8 +62,10 @@ namespace Raiders
         {
             int rank = GetRank();
             
-            if (rank != DEFAULT_VALUE && rank - increment >= 0)
-                SetRank(rank - increment);
+            if (rank == DEFAULT_VALUE)
+                return;
+
+            SetRank(Mathf.Clamp(rank - increment, 0, int.MaxValue));
         }
     }
 }

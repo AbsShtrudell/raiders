@@ -240,6 +240,10 @@ PrefabInstance:
       propertyPath: rankManager
       value: 
       objectReference: {fileID: 1950953149}
+    - target: {fileID: 1237064383913616690, guid: 19dbe7cd6da20d441b3efe1985e722c8, type: 3}
+      propertyPath: placeholderImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 7fd3cda14282bb7429b8eeb6c121e5bb, type: 3}
     - target: {fileID: 1237064383913616691, guid: 19dbe7cd6da20d441b3efe1985e722c8, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1638,7 +1642,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7352800303309596900, guid: 39321341df9f93f4496e8f5312a13603, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7352800303309596900, guid: 39321341df9f93f4496e8f5312a13603, type: 3}
       propertyPath: m_LocalPosition.x
