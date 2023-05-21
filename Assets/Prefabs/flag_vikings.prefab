@@ -108,7 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6992352557928618688}
   m_Layer: 0
-  m_Name: flag
+  m_Name: flag_vikings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
