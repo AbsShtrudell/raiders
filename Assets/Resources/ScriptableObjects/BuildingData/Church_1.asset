@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd7f8a66e074684e9e2617d93034ac2, type: 3}
+  m_Name: Church_1
+  m_EditorClassIdentifier: 
+  _squadSlot: 1
+  _squadRecoveryTime: 0.2
+  _income: 3
+  _upkeep: 0
+  _defenseMultyplier: 1
+  _type: 2
+  _squadTypeInfo: {fileID: 11400000, guid: 77a97ca5db08dab458f30489df155c34, type: 2}
+  _mesh: {fileID: -2432090755550338912, guid: 78dfcaa7db0edf84f8fbf02a2444c32b, type: 3}
+  _previous: {fileID: 0}
+  _upgrades:
+  - {fileID: 11400000, guid: f03c21c17e7598e47a1eeb594d270c11, type: 2}
+  _icon: {fileID: 21300000, guid: cbfd2a1f78dbd0243a7ae41370a2755d, type: 3}
+  _cost: 10

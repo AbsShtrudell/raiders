@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd7f8a66e074684e9e2617d93034ac2, type: 3}
+  m_Name: Castle_2
+  m_EditorClassIdentifier: 
+  _squadSlot: 2
+  _squadRecoveryTime: 0.2
+  _income: 0
+  _upkeep: 2
+  _defenseMultyplier: 2
+  _type: 1
+  _squadTypeInfo: {fileID: 11400000, guid: 77a97ca5db08dab458f30489df155c34, type: 2}
+  _mesh: {fileID: -2432090755550338912, guid: 7cfd3457a44c7384aa1e39008aac4b82, type: 3}
+  _previous: {fileID: 11400000, guid: a8d23bed470c2e24da032ab900ff8384, type: 2}
+  _upgrades:
+  - {fileID: 11400000, guid: f97bd77dbd974d24588124332d23478d, type: 2}
+  _icon: {fileID: 21300000, guid: d6a161c538a7c144b86e8eef1dce7dd3, type: 3}
+  _cost: 20

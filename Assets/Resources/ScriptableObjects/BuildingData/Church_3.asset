@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6dd7f8a66e074684e9e2617d93034ac2, type: 3}
-  m_Name: Barack_Grade1
+  m_Name: Church_3
   m_EditorClassIdentifier: 
   _squadSlot: 3
-  _squadRecoveryTime: 0.5
+  _squadRecoveryTime: 0.3
   _income: 10
   _upkeep: 0
   _defenseMultyplier: 1
-  _type: 3
-  _squadTypeInfo: {fileID: 11400000, guid: fbe8fa339a0f3814ebe1ee3beaa93ca5, type: 2}
-  _mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  _previous: {fileID: 0}
+  _type: 2
+  _squadTypeInfo: {fileID: 11400000, guid: 77a97ca5db08dab458f30489df155c34, type: 2}
+  _mesh: {fileID: -2432090755550338912, guid: e9328806b30683642b64ea356b48f718, type: 3}
+  _previous: {fileID: 11400000, guid: f03c21c17e7598e47a1eeb594d270c11, type: 2}
   _upgrades: []
-  _icon: {fileID: 21300000, guid: 3d854b2e34a6c5b43abe6742ba5ad64f, type: 3}
-  _cost: 0
+  _icon: {fileID: 21300000, guid: cbfd2a1f78dbd0243a7ae41370a2755d, type: 3}
+  _cost: 30

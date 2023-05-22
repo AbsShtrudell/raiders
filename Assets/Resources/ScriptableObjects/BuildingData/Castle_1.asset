@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6dd7f8a66e074684e9e2617d93034ac2, type: 3}
-  m_Name: Church_Grade1
+  m_Name: Castle_1
   m_EditorClassIdentifier: 
-  _squadSlot: 3
-  _squadRecoveryTime: 0.5
-  _income: 10
-  _upkeep: 0
-  _defenseMultyplier: 1
-  _type: 2
+  _squadSlot: 1
+  _squadRecoveryTime: 0.1
+  _income: 0
+  _upkeep: 1
+  _defenseMultyplier: 2
+  _type: 1
   _squadTypeInfo: {fileID: 11400000, guid: 77a97ca5db08dab458f30489df155c34, type: 2}
-  _mesh: {fileID: -2432090755550338912, guid: b9941a496babff54c9a64c6d6ee080b2, type: 3}
+  _mesh: {fileID: -2432090755550338912, guid: 29c2270be264f6543bf6beb01a9e0bb0, type: 3}
   _previous: {fileID: 0}
-  _upgrades: []
-  _icon: {fileID: 21300000, guid: cbfd2a1f78dbd0243a7ae41370a2755d, type: 3}
-  _cost: 5
+  _upgrades:
+  - {fileID: 11400000, guid: 4705e4d4ff2249842b34a560cd3a356a, type: 2}
+  _icon: {fileID: 21300000, guid: d6a161c538a7c144b86e8eef1dce7dd3, type: 3}
+  _cost: 10

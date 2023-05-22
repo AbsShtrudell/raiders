@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6dd7f8a66e074684e9e2617d93034ac2, type: 3}
-  m_Name: SimpleBuilding
+  m_Name: Barack_3
   m_EditorClassIdentifier: 
-  _squadSlot: 3
-  _squadRecoveryTime: 0.5
-  _income: 10
+  _squadSlot: 4
+  _squadRecoveryTime: 0.45
+  _income: 0
   _upkeep: 0
   _defenseMultyplier: 1
-  _type: 0
-  _squadTypeInfo: {fileID: 11400000, guid: 77a97ca5db08dab458f30489df155c34, type: 2}
-  _mesh: {fileID: -2432090755550338912, guid: 2ef97580211a1524ea9694c78f92c16a, type: 3}
-  _previous: {fileID: 0}
+  _type: 3
+  _squadTypeInfo: {fileID: 11400000, guid: fbe8fa339a0f3814ebe1ee3beaa93ca5, type: 2}
+  _mesh: {fileID: -2432090755550338912, guid: f14375085adfcfc46b2c6b797710b6c7, type: 3}
+  _previous: {fileID: 11400000, guid: 584c4ed0ef424174b977ee75fc1271ad, type: 2}
   _upgrades: []
-  _icon: {fileID: 21300000, guid: d45d0d31a8f29794ba6ad9aeb9bac0a9, type: 3}
-  _cost: 5
+  _icon: {fileID: 21300000, guid: 3d854b2e34a6c5b43abe6742ba5ad64f, type: 3}
+  _cost: 30
