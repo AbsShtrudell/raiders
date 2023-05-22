@@ -13,11 +13,13 @@ namespace Raiders.Graphs
         {
             if(sourceNode == null || targetNode == null) return null;
 
+            List<Node<Building>> visited = new List<Node<Building>>();
             Side currentSide = sourceNode.Value.Side;
 
             var queue = new Queue<List<Node<Building>>>();
             queue.Enqueue(new List<Node<Building>>());
             queue.Peek().Add(sourceNode);
+            visited.Add(sourceNode);
 
             while (queue.Count > 0)
             {
@@ -33,7 +35,8 @@ namespace Raiders.Graphs
                 {
                     var newPath = new List<Node<Building>>(path);
                     Node<Building> adj = graph.Find(adjacent);
-                    if (adj == null) continue;
+                    if (adj == null || visited.Contains(adj)) continue;
+                    visited.Add(adj);
                     newPath.Add(adj);
                     queue.Enqueue(newPath);
                 }

@@ -51,7 +51,7 @@ namespace Raiders
 
         private void Update()
         {
-            _slotsUI.transform.localPosition = Vector3.up * 3;
+            _slotsUI.transform.localPosition = Vector3.up * 5;
             BuildingImp?.Update();
 
             if (!IsHost) return;
