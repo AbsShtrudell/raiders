@@ -20,7 +20,7 @@ MonoBehaviour:
   _type: 2
   _squadTypeInfo: {fileID: 11400000, guid: 77a97ca5db08dab458f30489df155c34, type: 2}
   _mesh: {fileID: -2432090755550338912, guid: 78dfcaa7db0edf84f8fbf02a2444c32b, type: 3}
-  _previous: {fileID: 0}
+  _previous: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
   _upgrades:
   - {fileID: 11400000, guid: f03c21c17e7598e47a1eeb594d270c11, type: 2}
   _icon: {fileID: 21300000, guid: cbfd2a1f78dbd0243a7ae41370a2755d, type: 3}

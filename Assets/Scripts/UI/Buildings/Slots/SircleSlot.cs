@@ -18,6 +18,8 @@ namespace Raiders
         private Image _fillImage;
         [SerializeField]
         private Image _backImage;
+        [SerializeField]
+        private Image _crossImage;
 
         private void OnEnable()
         {
@@ -32,7 +34,7 @@ namespace Raiders
 
         public void SetBlockState(bool value)
         {
-
+            _crossImage.gameObject.SetActive(value);
         }
 
         public class Factory

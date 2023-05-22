@@ -15,12 +15,12 @@ MonoBehaviour:
   _squadSlot: 1
   _squadRecoveryTime: 0.1
   _income: 0
-  _upkeep: 1
+  _upkeep: 0
   _defenseMultyplier: 2
   _type: 1
   _squadTypeInfo: {fileID: 11400000, guid: 77a97ca5db08dab458f30489df155c34, type: 2}
   _mesh: {fileID: -2432090755550338912, guid: 29c2270be264f6543bf6beb01a9e0bb0, type: 3}
-  _previous: {fileID: 0}
+  _previous: {fileID: 11400000, guid: 7e54fa454790d8f4794c27fe10844966, type: 2}
   _upgrades:
   - {fileID: 11400000, guid: 4705e4d4ff2249842b34a560cd3a356a, type: 2}
   _icon: {fileID: 21300000, guid: d6a161c538a7c144b86e8eef1dce7dd3, type: 3}
