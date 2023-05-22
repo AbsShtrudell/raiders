@@ -156,15 +156,20 @@ namespace Raiders
 
         private void DecideWinner()
         {
-            var side = _graph.Nodes[0].Value.Side;
-
-            for (int i = 1; i < _graph.Nodes.Count; i++)
+            int viking = 0;
+            int english = 0;
+            foreach (var node in _graph.Nodes)
             {
-                if (_graph.Nodes[i].Value.Side != side)
-                    return;
+                if (node.Value.Side == Side.Vikings)
+                    viking++;
+                else if (node.Value.Side == Side.English)
+                    english++;
             }
 
-            OnGameEnd?.Invoke(side);
+            if (viking == 0)
+                OnGameEnd?.Invoke(Side.English);
+            else if (english == 0)
+                OnGameEnd?.Invoke(Side.Vikings);
         }
 
         //-------------------- IBuildingQueue -----------------------
