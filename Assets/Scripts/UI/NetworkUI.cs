@@ -13,12 +13,18 @@ namespace Raiders
     {
         [SerializeField] private Button hostButton;
         [SerializeField] private Button clientButton;
+        [SerializeField] private Button exitButton;
         [SerializeField] private AddresUIController addresUIController;
         private bool client = false;
         public void Awake()
         {
 
             addresUIController.onBack += Show;
+
+            exitButton.onClick.AddListener(() =>
+            {
+                Application.Quit();
+            });
 
             hostButton.onClick.AddListener(() =>
             {

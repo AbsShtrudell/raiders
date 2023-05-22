@@ -13,6 +13,7 @@ namespace Raiders
         [SerializeField, Min(0)] private int defaultRank = 25;
         [field: SerializeField, Min(0)] public int LeagueCount { get; private set; } = 3;
         [field: SerializeField, Min(0)] public int LeagueCapacity { get; private set; } = 100;
+        public int Increment { get => increment;  }
 
         public event System.Action onRankChanged;
 
