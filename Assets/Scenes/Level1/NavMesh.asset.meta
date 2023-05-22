@@ -1,12 +1,6 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scenes/Level1/NavMesh.asset.meta
 guid: f97fe603472307541bd548af574a6e0a
 NativeFormatImporter:
-========
-guid: a98c1b686465b524b96435ee80963300
-folderAsset: yes
-DefaultImporter:
->>>>>>>> origin/ai:Assets/Scripts/AI/Events/NewFolder1.meta
   externalObjects: {}
   mainObjectFileID: 23800000
   userData: 
