@@ -86,11 +86,21 @@ namespace Raiders
             }
             else
             {
+                foreach (var slot in _slots)
+                {
+                    if (slot.IsBlocked) break;
+
+                    if (slot.IsFull) continue;
+
+                    slot.Recover(_squadRecoveryTime);
+                    break;
+                }
+
                 for (int i = _slots.Count - 1; i >= 0; i--)
                 {
                     if (_slots[i].IsEmpty) continue;
 
-                    if (_slots[i].IsBlocked) _slots[i].Decay(enemySpeed);
+                    if (_slots[i].IsBlocked)  _slots[i].Decay(enemySpeed);
 
                     break;
                 }
@@ -157,14 +167,16 @@ namespace Raiders
         public bool EmptySlot()
         {
 
-            if (_slots[0].IsFull && !_slots[0].IsBlocked)
+            for (int i = _slots.Count - 1; i >= 0; i--)
             {
-                _slots.RemoveAt(0);
-                _slots.Add(new Slot(0f));
-                DefaultSlotsChanged?.Invoke(_slots);
-                return true;
+                if (_slots[i].IsFull && !_slots[i].IsBlocked)
+                {
+                    _slots[i].Empty();
+                    DefaultSlotsChanged?.Invoke(_slots);
+                    return true;
+                }
             }
-            else return false;
+            return false;
         }
 
         public bool FillSlot()
