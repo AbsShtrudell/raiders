@@ -67,7 +67,7 @@ Material:
     - _SymbolRotation: 90
     - _WindDirection: 1272.6
     - _WindHeight: 0.6
-    - _WindStrength: 0
+    - _WindStrength: 8
     - _WorkflowMode: 0
     - _ZTest: 4
     - _ZWrite: 1

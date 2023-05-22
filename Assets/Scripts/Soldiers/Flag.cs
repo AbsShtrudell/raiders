@@ -7,7 +7,7 @@ namespace Raiders
 {
     public class Flag : MonoBehaviour
     {
-        [SerializeField] Vector3 offset;
+        [field: SerializeField] public Vector3 Offset {get; set;}
         public Transform Tagert { get; set; }
 
         // Update is called once per frame
@@ -15,7 +15,8 @@ namespace Raiders
         {
             if(Tagert != null)
             {
-                transform.position = Tagert.position + offset;
+                transform.position = Tagert.position + Offset;
+                transform.rotation = Tagert.rotation;
             }
         }
     }

@@ -70,6 +70,7 @@ namespace Raiders
             var flag = Instantiate(_side == Side.Vikings ? vikingFlagPrefab : englishFlagPrefab).GetComponent<Flag>();
             flag.Tagert = _soldiers[0].GetComponentInChildren<Weapon>().transform;
             flag.GetComponent<NetworkObject>().Spawn();
+            flag.Offset = flagPosition;
 
             leader.ReachedDestination += () =>
             {
