@@ -2,10 +2,7 @@ using Raiders.Graphs;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Raiders.AI;
-using Raiders.AI.Events;
 using Unity.Netcode;
-using Raiders.Util.Collections;
 using System;
 
 namespace Raiders
@@ -93,7 +90,7 @@ namespace Raiders
             {
                 node.Value.BuildingQueueHandler = this;
 
-                node.Value.OnSideChanged += DecideWinner;
+                node.Value.SideVariable.OnValueChanged += DecideWinner;
             }
 
             if(IsHost)
@@ -154,7 +151,7 @@ namespace Raiders
             }
         }
 
-        private void DecideWinner()
+        private void DecideWinner(Side oldSide, Side newSide)
         {
             int viking = 0;
             int english = 0;

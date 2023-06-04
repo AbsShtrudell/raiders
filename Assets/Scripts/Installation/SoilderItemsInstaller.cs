@@ -8,8 +8,12 @@ namespace Raiders
     {
         [SerializeField] private SoldierItems vikingItems;
         [SerializeField] private SoldierItems englishItems;
+        [SerializeField] private Transform _squadPrefab;
+        [SerializeField] private Transform _soldierPrefab;
 
         public static Dictionary<Side, SoldierItems> arsenal;
+
+
 
         public override void InstallBindings()
         {
@@ -28,6 +32,8 @@ namespace Raiders
             }
 
             Container.BindInstance(arsenal).WithId("Arsenal").AsSingle();
+
+            Container.Bind<IFactory<Squad>>().FromInstance(new Squad.Factory(new Soldier.Factory(_soldierPrefab, arsenal), _squadPrefab));
         }
     }
 }

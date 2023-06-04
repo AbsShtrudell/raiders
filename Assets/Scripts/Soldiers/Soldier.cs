@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 namespace Raiders
 {
-    public class Soldier : NetworkBehaviour, IControllable
+    public class Soldier : NetworkBehaviour, ISoldier, IControllable
     {
         [SerializeField] private Side _side;
         [SerializeField] private float _currentHealth;
@@ -33,11 +33,11 @@ namespace Raiders
         public bool pathPending => _agent.pathPending;
         public IControllable mainControllable => squad;
 
-        public Dictionary<Side, SoldierItems> arsenal {get; set;}
+        private Dictionary<Side, SoldierItems> _arsenal;
 
         private void Awake()
         {
-            arsenal = SoilderItemsInstaller.arsenal;
+            _arsenal = SoilderItemsInstaller.arsenal;
 
             var children = GetComponentsInChildren<ClothingItem>();
 
@@ -142,14 +142,14 @@ namespace Raiders
 
         public void ChangeItems()
         {
-            if (arsenal == null) arsenal = SoilderItemsInstaller.arsenal;
+            if (_arsenal == null) _arsenal = SoilderItemsInstaller.arsenal;
 
             if(IsHost)
                 ChangeItemsClientRpc(side);
 
             foreach (var (type, item) in _items)
             {
-                var sprites = arsenal[side].items[type];
+                var sprites = _arsenal[side].items[type];
 
                 var correctSprites = (from s in sprites where s.TroopType == TroopType select s).ToArray();
             	_currentSprites[type] = correctSprites[Random.Range(0, correctSprites.Length)];
@@ -206,6 +206,30 @@ namespace Raiders
             if (IsOwner) return;
 
             TroopType = type;
+        }
+
+        public class Factory : IFactory<Transform, Soldier>
+        {
+            private readonly Dictionary<Side, SoldierItems> _arsenal;
+            private readonly Transform _soldierPrefab;
+
+            public Factory(Transform soldierPrefab, Dictionary<Side, SoldierItems> arsenal)
+            {
+                _soldierPrefab = soldierPrefab;
+                _arsenal = arsenal;
+            }
+
+            public Soldier Create(Transform parent)
+            {
+                Instantiate(_soldierPrefab, parent.position, parent.rotation).TryGetComponent(out Soldier soldier);
+
+                if (!soldier) return null; 
+
+                soldier.GetComponent<NetworkObject>().Spawn();
+                soldier._arsenal = _arsenal;
+
+                return soldier;
+            }
         }
     }
 }

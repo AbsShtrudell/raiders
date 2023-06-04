@@ -14,9 +14,9 @@ namespace Raiders.Graphs.Test
             {
                 _graph.AddNode(b);
             }
-            buildings[0].Side = Side.Vikings;
-            buildings[1].Side = Side.English;
-            buildings[4].Side = Side.English;
+            //buildings[0].Side = Side.Vikings;
+            //buildings[1].Side = Side.English;
+            //buildings[4].Side = Side.English;
             _graph.Nodes[0].Bind(_graph.Nodes[1]);
             _graph.Nodes[1].Bind(_graph.Nodes[2]);
             _graph.Nodes[1].Bind(_graph.Nodes[4]);

@@ -18,6 +18,11 @@ namespace Raiders.Editors
             {
                 road.Rebuild();
             }
+
+            if (GUILayout.Button("Rebind"))
+            {
+                road.Rebind();
+            }
         }
     }
 }

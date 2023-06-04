@@ -4,38 +4,38 @@ using Zenject;
 using System.Collections.Generic;
 using Dreamteck.Splines;
 using Unity.Netcode;
+using Raiders.Infrastructure;
 
 namespace Raiders
 {
-    public class Building : NetworkBehaviour
+    public class Building : MonoBehaviour
     {
         [Inject]
-        private DiContainer container;
+        private IFactory<Squad> _squadFactory;
         [Inject]
         private BuildingImpCreator _buildingImpCreator;
         [Inject]
         private SlotsControllerCreator _slotsContrCreator;
 
+        [field: SerializeField]
+        public ObservableVariable<Side> SideVariable { get; private set; }
+        [field: SerializeField]
+        public BuildingType Type { get; private set; }
         [SerializeField]
-        private Side _side = Side.Rebels;
-        [SerializeField]
-        private BuildingType _type;
-        [SerializeField]
-        private MeshRenderer _meshRenderer;
-        [SerializeField]
-        private List<Road> _roads;
+        public MeshRenderer _meshRenderer { get; private set; }
+        [field: SerializeField]
+        public List<Road> Roads { get; private set; }
+
+        public IBuildingImp BuildingImp { get; private set; }
+        public IBuildingQueueHandler BuildingQueueHandler { private get; set; }
 
         private SlotsController _slotsUI;
         private UpgradeController _upgradeUI;
 
-        public Side Side { get { return _side; } set { _side = value; } }
-        public BuildingType Type { get { return _type; } set { _type = value; } } 
-        public GameObject SquadPrefab { get; set; }
-        public List<Road> Roads => _roads;
-        public IBuildingImp BuildingImp { get; private set; }
-        public IBuildingQueueHandler BuildingQueueHandler { private get; set; }
-
-        public event Action OnSideChanged;
+        public Side Side
+        {
+            get { return SideVariable.Value; } private set { SideVariable.Value = value; } 
+        }
 
         private void Awake()
         {
@@ -45,7 +45,7 @@ namespace Raiders
 
         private void Init()
         {
-            InitBuildingImp(_type, _side);
+            InitBuildingImp(Type, Side);
             InitUI();
         }
 
@@ -53,23 +53,11 @@ namespace Raiders
         {
             _slotsUI.transform.localPosition = Vector3.up * 5;
             BuildingImp?.Update();
-
-            if (!IsHost) return;
-
-            ClientSlotList.NetworkData data = new ClientSlotList.NetworkData(
-                BuildingImp.SlotList.OccupyingSide,
-                BuildingImp.SlotList.IsBlocked,
-                BuildingImp.SlotList.GeneralProgress,
-                BuildingImp.SlotList.Slots.ToArray(),
-                BuildingImp.SlotList.ExtraSlots.ToArray()
-            );
-
-            UpdateSlotsClientRpc(data);
         }
 
         private void InitUI()
         {
-            _slotsUI = _slotsContrCreator?.Create(_side, BuildingImp);
+            _slotsUI = _slotsContrCreator?.Create(Side, BuildingImp);
             _slotsUI.gameObject.transform.SetParent(transform);
             _upgradeUI = _slotsUI.GetComponent<UpgradeController>();
             if (_upgradeUI != null)
@@ -85,21 +73,17 @@ namespace Raiders
         {
             BuildingImp = _buildingImpCreator?.Create(type, side);
 
-            BuildingImp.Captured += (side) =>
-            {
-                ChangeTeamClientRpc(side);
-                ChangeTeam(side);
-            };
+            BuildingImp.Captured += (side) => ChangeTeam(side);
         }
 
-        private void ChangeTeam(Side side)
+        public void ChangeTeam(Side side)
         {
-            _side = side;
+            Side = side;
 
             if (BuildingImp.BuildingData.PreviousLevel != null)
             {
                 InitBuildingImp(BuildingImp.BuildingData.PreviousLevel.Type, side);
-                _type = BuildingImp.BuildingData.Type;
+                Type = BuildingImp.BuildingData.Type;
             }
             else
             {
@@ -108,15 +92,11 @@ namespace Raiders
             ChangeVisual(BuildingImp.BuildingData);
             Destroy(_slotsUI.gameObject);
             InitUI();
-
-            OnSideChanged?.Invoke();
         }
 
         public void SquadEnter(Side side, SquadTypeInfo type)
         {
-            if (!IsHost) return;
-
-            if (side != _side)
+            if (side != Side)
             {
                 BuildingImp.GotAttacked(side, type);
             }
@@ -138,24 +118,22 @@ namespace Raiders
 
         public void OnUpgradeQueued(int variant)
         {
-            if (!IsHost)
+            //if (!IsHost)
+            //{
+            //UpgradeQueueServerRpc(variant);
+            //}
+            //else
+            if (variant < 0)
             {
-                UpgradeQueueServerRpc(variant);
+                if (BuildingImp.BuildingData.PreviousLevel != null)
+                    //if (IsHost)
+                    BuildingQueueHandler.Upgrade(BuildingImp.BuildingData.PreviousLevel, true, this);
+                //UpgradeClientRpc(variant);
             }
-            else
+            else if (BuildingImp.BuildingData.Upgrades.Count > variant)
             {
-                if (variant < 0)
-                {
-                    if (BuildingImp.BuildingData.PreviousLevel != null)
-                        if (IsHost)
-                            if (BuildingQueueHandler.Upgrade(BuildingImp.BuildingData.PreviousLevel, true, this))
-                                UpgradeClientRpc(variant);
-                }
-                else if (BuildingImp.BuildingData.Upgrades.Count > variant)
-                {
-                    if (BuildingQueueHandler.Upgrade(BuildingImp.BuildingData.Upgrades[variant], false, this))
-                        UpgradeClientRpc(variant);
-                }
+                BuildingQueueHandler.Upgrade(BuildingImp.BuildingData.Upgrades[variant], false, this);
+                //UpgradeClientRpc(variant);
             }
         }
 
@@ -173,13 +151,13 @@ namespace Raiders
                 GetComponent<MeshFilter>().mesh = data.Mesh;
         }
 
-        public bool SendTroops(Building target) //sync with client
+        public bool SendTroops(Building target)
         {
-            if(!IsHost)
-            {
-                SendTroopsServerRpc(target); 
-                return true;
-            }
+            //if(!IsHost)
+            //{
+                //SendTroopsServerRpc(target); 
+                //return true;
+            //}
 
             var path = BuildingQueueHandler.GetPath(target, this);
 
@@ -187,10 +165,9 @@ namespace Raiders
                 return false;
 
             var pathRoads = new Queue<ValueTuple<SplineComputer, Squad.Direction>>();
-            var squad = Instantiate(SquadPrefab).GetComponent<Squad>();
-            container.Inject(squad);
+            var squad = _squadFactory.Create();
             squad.transform.position = transform.position;
-            squad.SetSide(_side);
+            squad.SetSide(Side);
             squad.SetTarget(target);
 
             for (int i = 0; i < path.nodes.Count - 1; i++)
@@ -215,58 +192,6 @@ namespace Raiders
             squad.SpawnEmptySoldiers();
 
             return true;
-        }
-
-        //--------------------Client----------------------//
-
-        [ClientRpc]
-        public void ChangeTeamClientRpc(Side side)
-        {
-            if (IsOwner) return;
-
-            ChangeTeam(side);
-        }
-
-        [ClientRpc]
-        public void UpdateSlotsClientRpc(ClientSlotList.NetworkData data)
-        {
-            if (IsOwner) return;
-
-            if(((ClientSlotList)BuildingImp.SlotList) != null) 
-                ((ClientSlotList)BuildingImp.SlotList).SetData(data);
-        }
-
-        [ClientRpc]
-        public void UpgradeClientRpc(int variant)
-        {
-            if (IsOwner) return;
-
-            if (variant < 0)
-            {
-                if (BuildingImp.BuildingData.PreviousLevel != null)
-                    ChangeBuilding(BuildingImp.BuildingData.PreviousLevel);
-            }
-            else if (BuildingImp.BuildingData.Upgrades.Count > variant)
-            {
-                ChangeBuilding(BuildingImp.BuildingData.Upgrades[variant]);
-            }
-        }
-
-        //--------------------Server----------------------//
-
-        [ServerRpc(RequireOwnership = false)]
-        public void UpgradeQueueServerRpc(int variant)
-        {
-            OnUpgradeQueued(variant);
-        }
-
-        [ServerRpc(RequireOwnership = false)]
-        public void SendTroopsServerRpc(NetworkBehaviourReference targetBuilding)
-        {
-            if (targetBuilding.TryGet(out Building building))
-            {
-                SendTroops(building);
-            }
         }
 
         public class Factory : IFactory<Building>

@@ -40,6 +40,18 @@ namespace Raiders
             _splineComputer.SetPoints(points);
         }
 
+        public void Rebind()
+        {
+            if (!IsConnected()) return;
+
+
+           foreach (var point in _ends)
+            {
+                if(!point.Value.Roads.Contains(this))
+                    point.Value.Roads.Add(this);
+            }
+        }
+
         public bool HasConnectionWith(int index)
         {
             return _ends != null && _ends.Length == 2 && (_ends[0].Index == index || _ends[1].Index == index);

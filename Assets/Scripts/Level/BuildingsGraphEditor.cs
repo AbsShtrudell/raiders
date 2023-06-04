@@ -35,10 +35,6 @@ namespace Raiders
             if (Application.isPlaying)
             {
                 _buildingsGraph.PathAlgorithm = new APathBuildings();
-                foreach (var node in _buildingsGraph.Nodes)
-                {
-                    node.Value.SquadPrefab = squadPrefab;
-                }
             }
             else
             {

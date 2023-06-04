@@ -8,10 +8,9 @@ namespace Raiders
 {
     public class Squad : MonoBehaviour, IControllable
     {
-        [System.Serializable]
+        [Serializable]
         public enum Direction { Forward = 1, Backward = -1 }
 
-        [SerializeField] private GameObject soldierPrefab;
         [SerializeField] private Side _side;
         [SerializeField, Min(1)] private int soldiersAmount = 3;
         [SerializeField, Min(0f)] private float _speed = 5f;
@@ -21,7 +20,6 @@ namespace Raiders
         [SerializeField] private GameObject vikingFlagPrefab;
         [SerializeField] private GameObject englishFlagPrefab;
         [SerializeField] private Vector3 flagPosition;
-        [SerializeField] private Vector3 flagEuler = new Vector3(0, 188, 0);
         [SerializeField] private bool _isSplineMovement = true;
 
         [Header("Followers")]        
@@ -29,12 +27,12 @@ namespace Raiders
         [SerializeField] private float _followingAccelerationModifier = 5f;
         [SerializeField] private float _stoppingDistanceModifier = 5f;
 
-        [Zenject.Inject] private Zenject.DiContainer container;
-        [Zenject.Inject(Id = "Arsenal")] public Dictionary<Side, SoldierItems> arsenal;
         private Soldier[] _soldiers;
         private PrimaryFollowerBehavior primaryFollower = null;
         private SecondaryFollowerBehavior[] secondaryFollowers;
         private Building building;
+
+        private IFactory<Transform, Soldier> _soldierFactory;
 
         public Queue<ValueTuple<SplineComputer, Direction>> Roads { get; set; }
         public IControllable mainControllable => this;
@@ -51,11 +49,10 @@ namespace Raiders
 
         private void InitializeSoldier(int i)
         {
-            _soldiers[i] = Instantiate(soldierPrefab, transform.position, transform.rotation).GetComponent<Soldier>();
+            _soldiers[i] = _soldierFactory.Create(transform);
             _soldiers[i].AddRenderPriority(_soldiers.Length - i);
             _soldiers[i].squad = this;
             _soldiers[i].SetHealth(SquadInfo.UnitInfo.Health);
-            _soldiers[i].GetComponent<NetworkObject>().Spawn();
             _soldiers[i].side = _side;
             _soldiers[i].SetTroopType(SquadInfo.TroopType);
             _soldiers[i].ChangeItems();
@@ -133,6 +130,29 @@ namespace Raiders
                 follower.leader = _soldiers[0];
                 follower.columnPosition = columnPosition;
                 follower.Move();
+            }
+        }
+
+        public class Factory : IFactory<Squad>
+        {
+            private IFactory<Transform, Soldier> _soldierFactory;
+            private Transform _squadPrefab;
+
+            public Factory(IFactory<Transform, Soldier> soldierFactory, Transform squadPrefab)
+            {
+                _soldierFactory = soldierFactory;
+                _squadPrefab = squadPrefab;
+            }
+
+            public Squad Create()
+            {
+                Instantiate(_squadPrefab).TryGetComponent(out Squad squad);
+
+                if (!squad) return null;
+
+                squad._soldierFactory = _soldierFactory;
+
+                return squad;
             }
         }
     }
